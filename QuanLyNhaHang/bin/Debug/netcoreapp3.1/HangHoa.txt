@@ -1,0 +1,7 @@
+HH1#Khoai tay chien#66000
+HH2#Bo xao rau#198000
+HH3#Ga hap la chanh#218000
+HH4#Chim cau rang tuong#198000
+HH5#Sup ga ngo kem#45000
+HH50#Rau xao#20000
+HH17#Thit kho hot vit#30000
