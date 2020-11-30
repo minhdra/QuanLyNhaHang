@@ -153,6 +153,7 @@ namespace QuanLyNhaHang.DAL
             sw2.Close();
         }
 
+        // Kiểm tra số điện thoại đã tồn tại chưa
         public int checkSDT(string SDT)
         {
             StreamReader sr = new StreamReader(FileText);
@@ -332,5 +333,6 @@ namespace QuanLyNhaHang.DAL
 
             return result;
         }
+
     }
 }

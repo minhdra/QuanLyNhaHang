@@ -1,7 +1,8 @@
 ﻿using QuanLyNhaHang.BUS;
 using System;
+using QuanLyNhaHang.Constraint;
 
-namespace QuanLyNhaHang.SHOW
+namespace QuanLyNhaHang.Presentation
 {
     // 1 Khách hàng
     class KhachHangPre
@@ -9,8 +10,9 @@ namespace QuanLyNhaHang.SHOW
         private KhachHangBUS khBUS = new KhachHangBUS();
         private HangHoaBUS hhBUS = new HangHoaBUS();
         private HoaDonBUS hdBUS = new HoaDonBUS();
+        private constraint conP = new constraint();
 
-        public virtual void HienMenuKH(string maKH)
+        public void HienMenuKH(string maKH)
         {
             
             while (true)
@@ -154,7 +156,7 @@ namespace QuanLyNhaHang.SHOW
             }
         }
 
-        private void ThemThongTin(string maKH)
+        public void ThemThongTin(string maKH)
         {
             Console.Clear();
             Console.WriteLine("Thêm thông tin hoặc nhấn 'Enter' để thoát!");
@@ -174,58 +176,18 @@ namespace QuanLyNhaHang.SHOW
                     Console.Write("Nhập lại (dưới 17 ký tự): ");
                     dchi = Console.ReadLine();
                 }
-                // SDT có 10 ký tự và bắt đầu bằng số 0
+                
                 Console.Write("Số điện thoại (10 số): ");
                 string SDT = Console.ReadLine();
-                while(true)
-                {
-                    
-                    for (int x = 0; x < SDT.Length; x++)
-                    {
-                        if (!char.IsDigit(SDT[x])
-                            || SDT.Length != 10
-                            || SDT[0] != '0'
-                            || khBUS.checkSDT(SDT) == 1)
-                        {
-                            Console.Write("Nhập lại: ");
-                            SDT = Console.ReadLine();
-                            x = -1;
-                        }
-                    }
-                    if (SDT == "")
-                    {
-                        Console.Write("Nhập lại: ");
-                        SDT = Console.ReadLine();
-                    }
-                    else
-                        break;
-                }
+                SDT = conP.NumberPhone(SDT);
+
                 Console.Write("Email (Nếu có, ...@gmail.com): ");
                 string e = Console.ReadLine(), email = "<Trống>";
-                bool c = false;
                 if (e != "")
-                    while (!c)
-                    {
-                        for (int x = 0; x < e.Length; x++)
-                        {
-                            while (e.Length > 17)
-                            {
-                                Console.Write("Nhập lại (...@gmail.com và dưới 17 ký tự): ");
-                                e = Console.ReadLine();
-                            }
-                            if ((e[x] >=0 && e[x] < 48)
-                                || (e[x] > 57 && e[x] < 65)
-                                || (e[x] > 90 && e[x] < 97) || e[x] > 122)
-                            {
-                                x = -1;
-                                Console.Write("Nhập lại (...@gmail.com): ");
-                                e = Console.ReadLine();
-                            }
-                        }
-                        email = e + "@gmail.com";
-                        c = true;
-                    }
-                khBUS.Them(maKH, tenKH, dchi, SDT, email);
+                    email = conP.Email(e);
+
+
+                khBUS.Them(maKH, conP.Capitalize(tenKH), conP.Capitalize(dchi), SDT, email);
 
                 Console.WriteLine("Bạn đã thêm thông tin thành công!");
             }
@@ -270,83 +232,58 @@ namespace QuanLyNhaHang.SHOW
                 Console.Write("\n\t\t             ╚═══╩═════════════════════════════════════╝                 ");
                 Console.SetCursorPosition(61, 24);
                 char key = char.ToUpper(Console.ReadKey(true).KeyChar);
-
+                string t;
                 switch (key)
                 {
                     case '1':
                         Console.Clear();
-                        Console.Write("Họ tên mới: ");
-                        tenKH = Console.ReadLine();
-                        while (tenKH == "" || tenKH.Length > 27)
+                        Console.Write("Họ tên mới (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if(t != "")
                         {
-                            Console.Write("Nhập lại (dưới 27 ký tự): ");
-                            tenKH = Console.ReadLine();
+                            tenKH = t;
+                            while (tenKH == "" || tenKH.Length > 27)
+                            {
+                                Console.Write("Nhập lại (dưới 27 ký tự): ");
+                                tenKH = Console.ReadLine();
+                            }
                         }
+
                         break;
                     case '2':
                         Console.Clear();
-                        Console.Write("Địa chỉ: ");
-                        dchi = Console.ReadLine();
-                        while (dchi == "" || dchi.Length > 17)
+                        Console.Write("Địa chỉ (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if(t != "")
                         {
-                            Console.Write("Nhập lại (dưới 17 ký tự): ");
-                            dchi = Console.ReadLine();
+                            dchi = t;
+                            while (dchi == "" || dchi.Length > 17)
+                            {
+                                Console.Write("Nhập lại (dưới 17 ký tự): ");
+                                dchi = Console.ReadLine();
+                            }
                         }
                         break;
                     case '3':
-                        Console.Write("Số điện thoại: ");
-                        SDT = Console.ReadLine();
-                        while (true)
+                        Console.Clear();
+                        Console.Write("Số điện thoại (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if(t != "")
                         {
-
-                            for (int x = 0; x < SDT.Length; x++)
-                            {
-                                if (!char.IsDigit(SDT[x])
-                                    || SDT.Length != 10
-                                    || SDT[0] != '0'
-                                    || khBUS.checkSDT(SDT) == 1)
-                                {
-                                    Console.Write("Nhập lại: ");
-                                    SDT = Console.ReadLine();
-                                    x = -1;
-                                }
-                            }
-                            if (SDT == "")
-                            {
-                                Console.Write("Nhập lại: ");
-                                SDT = Console.ReadLine();
-                            }
-                            else
-                                break;
+                            SDT = t;
+                            SDT = conP.NumberPhone(SDT);
                         }
+
                         break;
                     case '4':
                         Console.Clear();
-                        Console.Write("Email (Nếu có, ...@gmail.com): ");
-                        string e = Console.ReadLine();
-                        bool c = false;
-                        if (e != "")
-                            while (!c)
-                            {
-                                for (int x = 0; x < e.Length; x++)
-                                {
-                                    while (e.Length > 17)
-                                    {
-                                        Console.Write("Nhập lại (...@gmail.com và dưới 17 ký tự): ");
-                                        e = Console.ReadLine();
-                                    }
-                                    if ((e[x] >= 0 && e[x] < 48)
-                                        || (e[x] > 57 && e[x] < 65)
-                                        || (e[x] > 90 && e[x] < 97) || e[x] > 122)
-                                    {
-                                        x = -1;
-                                        Console.Write("Nhập lại (...@gmail.com): ");
-                                        e = Console.ReadLine();
-                                    }
-                                }
-                                email = e + "@gmail.com";
-                                c = true;
-                            }
+                        Console.Write("Email (...@gmail.com hoặc Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
+                        {
+                            email = t;
+                            email = conP.Email(email);
+                        }
                         break;
                     case '9':
                         check = true;
@@ -356,7 +293,14 @@ namespace QuanLyNhaHang.SHOW
                         break;
                 }
 
-                khBUS.Sua(maKH, tenKH, dchi, SDT, email);
+                khBUS.Sua(maKH, conP.Capitalize(tenKH), conP.Capitalize(dchi), SDT, email);
+                // Cập nhật tên khách hàng vào hóa đơn
+                string[] tmp2 = hdBUS.LayThongTin(maKH).Split('\n');
+                for(int x = 0; x < tmp2.Length - 1; x++)
+                {
+                    string[] tmp3 = tmp2[x].Split('\t');
+                    hdBUS.Sua(tmp3[0], conP.Capitalize(tenKH), DateTime.Parse(tmp3[2]), tmp3[3], double.Parse(tmp3[4]));
+                }
             }
         }
 
@@ -382,7 +326,6 @@ namespace QuanLyNhaHang.SHOW
             Console.Clear();
             QLHangHoa qlHH = new QLHangHoa();
             qlHH.Show();
-            double tong = 0;
             Console.WriteLine();
             Console.WriteLine("\t\tĐặt món hoặc nhấn 'Enter' để thoát.");
             Console.Write("\t\tMời bạn chọn ID muốn đặt: ");
@@ -391,18 +334,10 @@ namespace QuanLyNhaHang.SHOW
             {
                 if (khBUS.Laythongtin(maKH) != "")
                 {
-                    // Lay du lieu tong truoc do
-                    //string[] temp = hdBUS.LayThongTin(maKH).Split('\n');
-                    //for(int x = 0; x < temp.Length; x++)
-                    //{
-                    //    string[] temp2 = temp[x].Split('\t');
-                    //    if (temp2[2] == DateTime.Now.ToString("dd/MM/yyyy")
-                    //        && Convert.ToInt32(temp2[4]) != 0)
-                    //        tong = Convert.ToInt32(temp2[4]);
-                    //}
                     string[] tmp = khBUS.Laythongtin(maKH).Split('\t');
                     DateTime date = DateTime.Now;
                     bool c = false;
+                    double total = 0;
                     while (!c)
                     {
                         if (hhBUS.Laythongtin(ID) != "")
@@ -421,8 +356,9 @@ namespace QuanLyNhaHang.SHOW
                                 }
                             }
                             int c1 = 0;
-                            hdBUS.Them(tmp[1], date, maKH);
+                            hdBUS.Them(tmp[1], date, maKH, total);
                             string maHD = hdBUS.LayMaHD(maKH, date);
+                            // Cập nhật số lượng 
                             for(int x = 0; x < hdBUS.HienChiTiet(maHD).Count; x++)
                             {
                                 string[] tmp2 = hdBUS.HienChiTiet(maHD)[x].Split('\t');
@@ -451,6 +387,17 @@ namespace QuanLyNhaHang.SHOW
                             ID = Console.ReadLine().ToUpper();
                             if (ID == "")
                                 c = true;
+                        }
+                    }
+                    // Cập nhật lại hóa đơn
+                    string[] tmp3 = hdBUS.LayThongTin(maKH).Split('\n');
+                    for(int x = 0; x < tmp3.Length - 1; x++)
+                    {
+                        string[] tmp4 = tmp3[x].Split('\t');
+                        if(tmp4[3] == maKH && tmp4[2] == DateTime.Now.ToString("dd/MM/yyyy"))
+                        {
+                            total = hdBUS.TongTien(maKH, tmp4[2]);
+                            hdBUS.Sua(tmp4[0], conP.Capitalize(tmp4[1]), DateTime.Parse(tmp4[2]), tmp4[3], total);
                         }
                     }
                 }
@@ -507,23 +454,25 @@ namespace QuanLyNhaHang.SHOW
             // Hiển thị hóa đơn nhưng không hiện mã khách hàng
 
             Console.SetWindowSize(140, 30);
+            double sum = 0;
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("\t\t║                    Hóa đơn của {0,-27}     ║",name[1]);
-            Console.WriteLine("\t\t╠═════════╦══════════════════════════════════╦═══════════════════╣");
-            Console.WriteLine("\t\t║    Mã   ║         Tên khách hàng           ║        Ngày       ║");
-            Console.WriteLine("\t\t╠═════════╬══════════════════════════════════╬═══════════════════╣");
+            Console.WriteLine("\t\t╔══════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("\t\t║                                 Hóa đơn của {0,-27}              ║",name[1]);
+            Console.WriteLine("\t\t╠═════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╣");
+            Console.WriteLine("\t\t║    Mã   ║         Tên khách hàng           ║        Ngày       ║         Tổng        ║");
+            Console.WriteLine("\t\t╠═════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╣");
             for (int x = 0; x < tmp.Length - 1; x++)
             {
                 string[] tmp2 = tmp[x].Split('\t');
-                Console.WriteLine("\t\t║ {0,-7} ║\t{1,-27}  ║  {2,-10}       ║", tmp2[0], tmp2[1], tmp2[2]);
+                sum += double.Parse(tmp2[4]);
+                Console.WriteLine("\t\t║ {0,-7} ║\t{1,-27}  ║  {2,-10}       ║  {3,-15}    ║", tmp2[0], tmp2[1], tmp2[2], double.Parse(tmp2[4]).ToString("N0"));
             }
-            Console.WriteLine("\t\t╚═════════╩══════════════════════════════════╩═══════════════════╝");
+            Console.WriteLine("\t\t╚═════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╝");
 
-            Console.WriteLine();
+            //Console.WriteLine();
             Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("\t\t║ Tổng tiền của tất cả hóa đơn:  {0,-24}        ║", 0);//hdBUS.TongTien(maKH).ToString("N0")
+            Console.WriteLine("\t\t║ Tổng tiền của tất cả hóa đơn:  {0,-24}        ║", sum.ToString("N0"));
             Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
 
             Console.WriteLine();

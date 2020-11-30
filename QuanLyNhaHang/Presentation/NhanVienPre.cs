@@ -1,14 +1,16 @@
 ﻿using QuanLyNhaHang.BUS;
+using QuanLyNhaHang.Constraint;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace QuanLyNhaHang.SHOW
+namespace QuanLyNhaHang.Presentation
 {
     // 1 Nhân viên
     class NhanVienPre
     {
         private NhanVienBUS nvBUS = new NhanVienBUS();
+        private constraint conP = new constraint();
 
         public void HienMenuNV(string maNV)
         {
@@ -122,7 +124,7 @@ namespace QuanLyNhaHang.SHOW
             }
         }
 
-        private void ThemThongTin(string maNV)
+        public void ThemThongTin(string maNV)
         {
             Console.Clear();
             Console.WriteLine("Thêm thông tin hoặc nhấn 'Enter' để thoát!");
@@ -137,28 +139,7 @@ namespace QuanLyNhaHang.SHOW
                 }
                 Console.Write("Sinh nhật (dd/MM/yyyy): ");
                 string tmp = Console.ReadLine();
-                DateTime date = new DateTime();
-                bool check = false;
-                while (!check)
-                {
-
-                    try
-                    {
-                        date = DateTime.Parse(tmp);
-                    }
-                    catch
-                    {
-                        Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
-                        tmp = Console.ReadLine();
-                    }
-                    if (date.ToString("dd/MM/yyyy") == "01/01/0001" || date.Year > 2002)
-                    {
-                        Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
-                        tmp = Console.ReadLine();
-                    }
-                    else
-                        check = true;
-                }
+                DateTime date = conP.date(tmp);
 
                 Console.Write("Giới tính (1 : Nam, 0: Nữ): ");
                 string chose = Console.ReadLine();
@@ -182,55 +163,13 @@ namespace QuanLyNhaHang.SHOW
                 // SDT có 10 ký tự và bắt đầu bằng số 0
                 Console.Write("Số điện thoại: ");
                 string SDT = Console.ReadLine();
-                while (true)
-                {
-
-                    for (int x = 0; x < SDT.Length; x++)
-                    {
-                        if (!char.IsDigit(SDT[x])
-                            || SDT.Length != 10
-                            || SDT[0] != '0'
-                            || nvBUS.checkSDT(SDT) == 1)
-                        {
-                            Console.Write("Nhập lại: ");
-                            SDT = Console.ReadLine();
-                            x = -1;
-                        }
-                    }
-                    if (SDT == "")
-                    {
-                        Console.Write("Nhập lại: ");
-                        SDT = Console.ReadLine();
-                    }
-                    else
-                        break;
-                }
+                SDT = conP.NumberPhone(SDT);
 
                 Console.Write("Email (...@gmail.com): ");
-                string e = Console.ReadLine(), email = "";
-                bool c = false;
-                while (!c)
-                {
-                    for (int x = 0; x < e.Length; x++)
-                    {
-                        while (e.Length > 17)
-                        {
-                            Console.Write("Nhập lại (...@gmail.com và dưới 17 ký tự): ");
-                            e = Console.ReadLine();
-                        }
-                        if ((e[x] >= 0 && e[x] < 48)
-                            || (e[x] > 57 && e[x] < 65)
-                            || (e[x] > 90 && e[x] < 97) || e[x] > 122)
-                        {
-                            x = -1;
-                            Console.Write("Mời bạn nhập lại (...@gmail.com): ");
-                            e = Console.ReadLine();
-                        }
-                    }
-                    email = e + "@gmail.com";
-                    c = true;
-                }
-                nvBUS.ThemNV(maNV, tenNV, date, GT, dchi, SDT, email);
+                string e = Console.ReadLine();
+                string email = conP.Email(e);
+                
+                nvBUS.ThemNV(maNV, conP.Capitalize(tenNV), date, GT, conP.Capitalize(dchi), SDT, email);
 
                 Console.WriteLine("Bạn đã thêm thông tin thành công!");
             }
@@ -286,120 +225,80 @@ namespace QuanLyNhaHang.SHOW
                 Console.Write("\n\t\t             ╚═══╩═════════════════════════════════════╝                 ");
                 Console.SetCursorPosition(61, 30);
                 char key = char.ToUpper(Console.ReadKey(true).KeyChar);
-
+                string t;
                 switch (key)
                 {
                     case '1':
                         Console.Clear();
-                        Console.Write("Họ tên mới: ");
-                        tenNV = Console.ReadLine();
-                        while (tenNV == "" || tenNV.Length > 27)
+                        Console.Write("Họ tên mới (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
                         {
-                            Console.Write("Nhập lại (dưới 27 ký tự): ");
-                            tenNV = Console.ReadLine();
+                            tenNV = t;
+                            while (tenNV == "" || tenNV.Length > 27)
+                            {
+                                Console.Write("Nhập lại (dưới 27 ký tự): ");
+                                tenNV = Console.ReadLine();
+                            }
                         }
                         break;
                     case '2':
-                        Console.Write("Sinh nhật (dd/MM/yyyy): ");
-                        string TMPbirth = Console.ReadLine();
-                        birth = new DateTime();
-                        while (true)
-                        {
+                        Console.Clear();
+                        Console.Write("Sinh nhật (dd/MM/yyyy) (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if(t != "")
+                            birth = conP.date(t);
 
-                            try
-                            {
-                                birth = DateTime.Parse(TMPbirth);
-                            }
-                            catch
-                            {
-                                Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
-                                TMPbirth = Console.ReadLine();
-                            }
-                            if (birth.ToString("dd/MM/yyyy") == "01/01/0001" || birth.Year > 2002)
-                            {
-                                Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
-                                TMPbirth = Console.ReadLine();
-                            }
-                            else
-                                break;
-                        }
                         break;
                     case '3':
-                        Console.Write("Giới tính (1 : Nam, 0: Nữ): ");
-                        string chose = Console.ReadLine();
-                        gen = false;
-                        while (chose != "0" && chose != "1")
+                        Console.Clear();
+                        Console.Write("Giới tính (1 : Nam, 0: Nữ) (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if(t != "")
                         {
-                            Console.Write("Không hợp lệ! Nhập lại: ");
-                            chose = Console.ReadLine().ToUpper();
+                            gen = false;
+                            while (t != "0" && t != "1")
+                            {
+                                Console.Write("Không hợp lệ! Nhập lại: ");
+                                t = Console.ReadLine().ToUpper();
+                            }
+                            if (t == "1")
+                                gen = true;
                         }
-                        if (chose == "1")
-                            gen = true;
                         break;
                     case '4':
                         Console.Clear();
-                        Console.Write("Địa chỉ: ");
-                        dchi = Console.ReadLine();
-                        while (dchi == "" || dchi.Length > 17)
+                        Console.Write("Địa chỉ (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
                         {
-                            Console.Write("Nhập lại (dưới 17 ký tự): ");
-                            dchi = Console.ReadLine();
+                            dchi = t;
+                            while (dchi == "" || dchi.Length > 17)
+                            {
+                                Console.Write("Nhập lại (dưới 17 ký tự): ");
+                                dchi = Console.ReadLine();
+                            }
                         }
                         break;
                     case '5':
-                        Console.Write("Số điện thoại: ");
-                        SDT = Console.ReadLine();
-                        while (true)
+                        Console.Clear();
+                        Console.Write("Số điện thoại (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
                         {
-
-                            for (int x = 0; x < SDT.Length; x++)
-                            {
-                                if (!char.IsDigit(SDT[x])
-                                    || SDT.Length != 10
-                                    || SDT[0] != '0'
-                                    || nvBUS.checkSDT(SDT) == 1)
-                                {
-                                    Console.Write("Nhập lại: ");
-                                    SDT = Console.ReadLine();
-                                    x = -1;
-                                }
-                            }
-                            if (SDT == "")
-                            {
-                                Console.Write("Nhập lại: ");
-                                SDT = Console.ReadLine();
-                            }
-                            else
-                                break;
+                            SDT = t;
+                            SDT = conP.NumberPhone(SDT);
                         }
                         break;
                     case '6':
                         Console.Clear();
-                        Console.Write("Email (Nếu có, ...@gmail.com): ");
-                        string e = Console.ReadLine();
-                        bool c = false;
-                        if (e != "")
-                            while (!c)
-                            {
-                                for (int x = 0; x < e.Length; x++)
-                                {
-                                    while (e.Length > 17)
-                                    {
-                                        Console.Write("Nhập lại (...@gmail.com và dưới 17 ký tự): ");
-                                        e = Console.ReadLine();
-                                    }
-                                    if ((e[x] >= 0 && e[x] < 48)
-                                        || (e[x] > 57 && e[x] < 65)
-                                        || (e[x] > 90 && e[x] < 97) || e[x] > 122)
-                                    {
-                                        x = -1;
-                                        Console.Write("Nhập lại (...@gmail.com): ");
-                                        e = Console.ReadLine();
-                                    }
-                                }
-                                email = e + "@gmail.com";
-                                c = true;
-                            }
+                        Console.Write("Email (...@gmail.com hoặc Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
+                        {
+                            email = t;
+                            email = conP.Email(email);
+                        }
                         break;
                     case '9':
                         //HienMenuNV(maNV);
@@ -410,7 +309,7 @@ namespace QuanLyNhaHang.SHOW
                         break;
                 }
 
-                nvBUS.SuaNV(maNV, tenNV, birth, gen, dchi, SDT, email);
+                nvBUS.SuaNV(maNV, conP.Capitalize(tenNV), birth, gen, conP.Capitalize(dchi), SDT, email);
             }
 
         }

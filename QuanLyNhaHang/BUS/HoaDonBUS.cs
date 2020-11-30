@@ -9,9 +9,9 @@ namespace QuanLyNhaHang.BUS
     {
         private HoaDonDAL hdDAL = new HoaDonDAL();
 
-        public void Them(string tenKH, DateTime ngay, string maKH)
+        public void Them(string tenKH, DateTime ngay, string maKH, double total)
         {
-            hdDAL.Them(tenKH, ngay, maKH);
+            hdDAL.Them(tenKH, ngay, maKH, total);
         }
 
         public void ThemChiTiet(string BillID, string maHH, int SL)
@@ -19,10 +19,10 @@ namespace QuanLyNhaHang.BUS
             hdDAL.ThemChiTiet(BillID, maHH, SL);
         }
 
-        //public void Sua(string BillID, string tenKH, DateTime ngay, string maKH)
-        //{
-        //    hdDAL.Sua(BillID, tenKH, ngay, maKH);
-        //}
+        public void Sua(string BillID, string tenKH, DateTime ngay, string maKH, double total)
+        {
+            hdDAL.Sua(BillID, tenKH, ngay, maKH, total);
+        }
 
         public void SuaChiTiet(string BillID, string maHH, int SL)
         {
@@ -54,9 +54,9 @@ namespace QuanLyNhaHang.BUS
             return hdDAL.Thongkenam(nam);
         }
 
-        public double TongTien(string maKH)
+        public double TongTien(string maKH, string date)
         {
-            return hdDAL.TongTien(maKH);
+            return hdDAL.TongTien(maKH, date);
         }
 
         public List<string> LayDanhSach()

@@ -39,7 +39,7 @@ namespace QuanLyNhaHang.DAL
             return i;
         }
 
-        public void Them(string tenKH, DateTime ngay, string maKH)
+        public void Them(string tenKH, DateTime ngay, string maKH, double total)
         {
             if( !File.Exists( FileText ) )
             {
@@ -61,7 +61,7 @@ namespace QuanLyNhaHang.DAL
             if(d == 0)
             {
                 StreamWriter sw = new StreamWriter(FileText, true);
-                sw.WriteLine(BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH);
+                sw.WriteLine(BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total);
                 sw.Close();
             }
         }
@@ -79,26 +79,26 @@ namespace QuanLyNhaHang.DAL
             sw.Close();
         }
 
-        //public void Sua( string BillID, string tenKH, DateTime ngay, string maKH )
-        //{
-        //    StreamReader sr = new StreamReader( FileText );
-        //    string s, result = "";
+        public void Sua(string BillID, string tenKH, DateTime ngay, string maKH, double total)
+        {
+            StreamReader sr = new StreamReader(FileText);
+            string s, result = "";
 
-        //    while( (s = sr.ReadLine()) != null )
-        //    {
-        //        string[] tmp = s.Split( '#' );
-        //        if( tmp[0] != BillID )
-        //            result += s + "\n";
-        //        else
-        //            result += BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "\n";
-        //    }
+            while ((s = sr.ReadLine()) != null)
+            {
+                string[] tmp = s.Split('#');
+                if (tmp[0] != BillID)
+                    result += s + "\n";
+                else
+                    result += BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total + "\n";
+            }
 
-        //    sr.Close();
+            sr.Close();
 
-        //    StreamWriter sw = new StreamWriter( FileText );
-        //    sw.Write( result );
-        //    sw.Close();
-        //}
+            StreamWriter sw = new StreamWriter(FileText);
+            sw.Write(result);
+            sw.Close();
+        }
 
         public void SuaChiTiet(string BillID, string maHH, int SL)
         {
@@ -287,7 +287,7 @@ namespace QuanLyNhaHang.DAL
             return total;
         }
         // Tổng tiền phải trả của 1 khách hàng
-        public double TongTien(string maKH)
+        public double TongTien(string maKH, string date)
         {
             StreamReader sr1 = new StreamReader(FileText);
 
@@ -296,7 +296,7 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr1.ReadLine()) != null)
             {
                 string[] tmp1 = s.Split('#');
-                if (tmp1[3] == maKH)
+                if (tmp1[3] == maKH && date == tmp1[2])
                 {
 
                     StreamReader sr2 = new StreamReader(FileText_detail);
@@ -335,7 +335,7 @@ namespace QuanLyNhaHang.DAL
             while( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
-                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2];
+                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[4];
                 list.Add( result );
             }
 
@@ -352,7 +352,7 @@ namespace QuanLyNhaHang.DAL
             {
                 string[] tmp = s.Split('#');
                 if (tmp[3] == maKH)
-                    result += tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\n";
+                    result += tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3]  + "\t" + tmp[4] + "\n";
             }
             sr.Close();
             return result;

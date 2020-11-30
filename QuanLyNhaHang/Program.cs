@@ -1,6 +1,6 @@
 ﻿using QuanLyNhaHang.BUS;
 using QuanLyNhaHang.DAL;
-using QuanLyNhaHang.SHOW;
+using QuanLyNhaHang.Presentation;
 using System;
 using System.Buffers.Text;
 using System.Security.Cryptography;
@@ -82,8 +82,10 @@ namespace QuanLyNhaHang
         public static void Main()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            MenuChinh m = new MenuChinh();
-            m.Menu();
+            //Console.BackgroundColor = ConsoleColor.Gray;
+            //Console.ForegroundColor = ConsoleColor.Black;
+            MenuChinh menu = new MenuChinh();
+            menu.Menu();
             
         }
     }

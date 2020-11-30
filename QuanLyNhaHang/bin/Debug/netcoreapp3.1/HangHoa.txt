@@ -1,4 +1,4 @@
-HH1#Khoai tay chien#66000
+HH1#Khoai Tay Chien#66000
 HH2#Bo xao rau#198000
 HH3#Ga hap la chanh#218000
 HH4#Chim cau rang tuong#198000

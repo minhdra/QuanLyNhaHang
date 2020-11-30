@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Text;
 
-namespace QuanLyNhaHang.SHOW
+namespace QuanLyNhaHang.Presentation
 {
     class TaiKhoanPre
     {
@@ -39,6 +39,9 @@ namespace QuanLyNhaHang.SHOW
                     Console.Write("\n\t\t║ ║              ║ 2.║          ĐĂNG KÝ             ║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
+                    Console.Write("\n\t\t║ ║              ║ 3.║       QUÊN MẬT KHẨU          ║                 ║ ║");
+                    Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
+                    Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║ 9.║          QUAY LẠI            ║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
@@ -53,7 +56,7 @@ namespace QuanLyNhaHang.SHOW
                     Console.Write("\n\t\t║ ╚═══════════════════════════════════════════════════════════════════╝ ║");
                     Console.Write("\n\t\t║                                                                       ║");
                     Console.Write("\n\t\t╚═══════════════════════════════════════════════════════════════════════╝");
-                    Console.SetCursorPosition(65, 23);
+                    Console.SetCursorPosition(65, 26);
 
                     char chose = char.ToUpper(Console.ReadKey(true).KeyChar);
 
