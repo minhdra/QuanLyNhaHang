@@ -44,9 +44,9 @@ namespace QuanLyNhaHang.BUS
             khDAL.SuaTK(TK, MK, maKH);
         }
 
-        public string TimKiem(string maKH)
+        public string TimKiem(string name)
         {
-            return khDAL.TimKiem(maKH);
+            return khDAL.TimKiem(name);
         }
 
         public void Xoa(string maKH)

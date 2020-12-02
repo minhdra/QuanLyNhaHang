@@ -96,7 +96,7 @@ namespace QuanLyNhaHang.DAL
             sw.Close();
         }
 
-        public string TimKiem( string maKH )
+        public string TimKiem( string name )
         {
             StreamReader sr = new StreamReader( FileText );
             string s, result = "";
@@ -104,9 +104,10 @@ namespace QuanLyNhaHang.DAL
             while( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
-                if( tmp[0] == maKH )
+                if( tmp[0].ToLower() == name.ToLower() 
+                    || tmp[1].ToLower().Contains(name.ToLower()) )
                 {
-                    result = s;
+                    result += s + "\n";
                     break;
                 }
             }

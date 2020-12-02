@@ -33,16 +33,16 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t║ ║              ╔═══╦══════════════════════════════╗                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 1.║     QUẢN LÝ KHÁCH HÀNG       ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 1.║      QUẢN LÝ KHÁCH HÀNG      ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 2.║     QUẢN LÝ HÀNG HÓA         ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 2.║      QUẢN LÝ NHÂN VIÊN       ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 3.║     QUẢN LÝ HÓA ĐƠN          ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 3.║      QUẢN LÝ HÀNG HÓA        ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 4.║     QUẢN LÝ NHÂN VIÊN        ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 4.║       QUẢN LÝ HÓA ĐƠN        ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║ 9.║         QUAY LẠI             ║                 ║ ║");
@@ -69,13 +69,13 @@ namespace QuanLyNhaHang.Presentation
                         qlK.MenuKH();
                         break;
                     case '2':
-                        qlHH.MenuHH();
+                        qlNV.MenuNV();
                         break;
                     case '3':
-                        qlHD.MenuHD();
+                        qlHH.MenuHH();
                         break;
                     case '4':
-                        qlNV.MenuNV();
+                        qlHD.MenuHD();
                         break;
                     case '9':
                         TaiKhoanPre.QuanLy ql = new TaiKhoanPre.QuanLy();
@@ -122,7 +122,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t║ ║              ║ 2.║        THÊM HÓA ĐƠN          ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 3.║           TÌM KIẾM           ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 3.║          TÌM KIẾM            ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║ 4.║         XÓA HÓA ĐƠN          ║                 ║ ║");
@@ -159,7 +159,6 @@ namespace QuanLyNhaHang.Presentation
                         break;
                     case '3':
                         TimKiem();
-                        Console.ReadKey();
                         break;
                     case '4':
                         Xoa();
@@ -204,7 +203,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t║ ║              ╔═══╦══════════════════════════════╗                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 1.║       THỐNG KÊ NGÀY          ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 1.║        THỐNG KÊ NGÀY         ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║ 2.║       THỐNG KÊ THÁNG         ║                 ║ ║");
@@ -503,6 +502,7 @@ namespace QuanLyNhaHang.Presentation
                     string check = Console.ReadLine().ToUpper();
                     if (check != "")
                     {
+                        Console.Clear();
                         bool c = false;
                         while (!c)
                         {
@@ -518,34 +518,29 @@ namespace QuanLyNhaHang.Presentation
                                 for (int x = 0; x < hdBUS.HienChiTiet(maHD).Count; x++)
                                 {
                                     string[] tmp2 = hdBUS.HienChiTiet(maHD)[x].Split('\t');
-                                    Console.WriteLine("\t\t║  {0,-7}║  {1,-30}║  {2,-9}VND     ║     {3,-5}   ║   {4,-12}VND  ║", tmp2[0], tmp2[1], tmp2[2], tmp2[3], int.Parse(tmp2[2]) * int.Parse(tmp2[3]));
+                                    Console.WriteLine("\t\t║  {0,-7}║  {1,-30}║  {2,-9}        ║     {3,-5}   ║ {4,-12}       ║", tmp2[0], tmp2[1], double.Parse(tmp2[2]).ToString("N0"), tmp2[3], (int.Parse(tmp2[2]) * int.Parse(tmp2[3])).ToString("N0"));
                                     total += int.Parse(tmp2[2]) * int.Parse(tmp2[3]);
                                 }
                                 Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═══════════════════╩═════════════╩════════════════════╝");
 
                                 Console.WriteLine();
                                 Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
-                                Console.WriteLine("\t\t║ Tổng hóa đơn:  {0,-12}VND                                 ║", total.ToString("N2"));
+                                Console.WriteLine("\t\t║ Tổng hóa đơn:  {0,-12}                                    ║", total.ToString("N2"));
                                 Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
                                 Console.Write("\t\tNhấn phím bất kì để kết thúc!");
                                 c = true;
                             }
-                            else
-                            {
-                                Console.Write("\t\tMã hóa đơn không tồn tại! Mời nhập lại (Nhấp 'Enter' để bỏ qua): ");
-                                maHD = Console.ReadLine().ToUpper();
-                                if (maHD == "")
-                                {
-                                    c = true;
-                                    Console.WriteLine("\t\tĐã thoát!");
-                                }
-                            }
                         }
                     }
+                    else
+                        Console.Write("\t\tĐã thoát!");
                 }
+                else
+                    Console.Write("Đã thoát!");
             }
             else
-                Console.Write("\t\tĐã thoát.");
+                Console.Write("Đã thoát!");
+            Console.ReadKey();
         }
 
         private void Xoa()
@@ -1020,13 +1015,16 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t║ ║              ║ 2.║       THÊM NHÂN VIÊN         ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 3.║        SỬA THÔNG TIN         ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 3.║          TÌM KIẾM            ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 4.║        XÓA NHÂN VIÊN         ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 4.║        SỬA THÔNG TIN         ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 5.║    TẠO TÀI KHOẢN NHÂN VIÊN   ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 5.║        XÓA NHÂN VIÊN         ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 6.║    TẠO TÀI KHOẢN NHÂN VIÊN   ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║ 9.║          QUAY LẠI            ║                 ║ ║");
@@ -1058,14 +1056,18 @@ namespace QuanLyNhaHang.Presentation
                         Console.ReadKey();
                         break;
                     case '3':
-                        Sua();
+                        TimKiem();
                         Console.ReadKey();
                         break;
                     case '4':
-                        Xoa();
+                        Sua();
                         Console.ReadKey();
                         break;
                     case '5':
+                        Xoa();
+                        Console.ReadKey();
+                        break;
+                    case '6':
                         TaoTK();
                         Console.ReadKey();
                         break;
@@ -1104,6 +1106,39 @@ namespace QuanLyNhaHang.Presentation
             Console.WriteLine("\t╚═════════╩════════════════════════════════╩═════════════════════╩═══════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
             Console.Write("\tNhấn phím bất kì để kết thúc!");
 
+        }
+
+        private void TimKiem()
+        {
+            Console.Write("Nhập mã hoặc tên nhân viên (Nhấn Enter để thoát): ");
+            string name = Console.ReadLine();
+            if (name != "")
+            {
+                if (nvBUS.TimKiem(name) != "")
+                {
+                    Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+                    string[] tmp = nvBUS.TimKiem(name).Split('#');
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("\t╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                    Console.WriteLine("\t║                                                                  TÌM THẤY {0,-2} KẾT QUẢ                                                              ║", tmp.Length - 1);
+                    Console.WriteLine("\t╠═════════╦════════════════════════════════╦═════════════════════╦═══════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
+                    Console.WriteLine("\t║    Mã   ║             Họ tên             ║       Ngày sinh     ║ Giới tính ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
+                    Console.WriteLine("\t╠═════════╬════════════════════════════════╬═════════════════════╬═══════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");
+                    for (int i = 0; i < tmp.Length - 1; i++)
+                    {
+                        string[] tmp2 = tmp[i].Split('#');
+                        Console.WriteLine("\t║  {0,-7}║\t{1,-27}║  {2,-10}         ║     {3,-3}   ║  {4,-17}║   {5,-10}       ║  {6,-27}║", tmp2[0], tmp2[1], tmp2[2], tmp2[3], tmp2[4], tmp2[5], tmp2[6]);
+
+                    }
+                    Console.WriteLine("\t╚═════════╩════════════════════════════════╩═════════════════════╩═══════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
+                    Console.Write("\tNhấn phím bất kì để kết thúc!");
+                }
+                else
+                    Console.Write("Không có dữ liệu!");
+            }
+            else
+                Console.Write("Đã thoát!");
         }
 
         private void Them()
@@ -1323,10 +1358,13 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t║ ║              ║ 2.║       THÊM KHÁCH HÀNG        ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 3.║        SỬA THÔNG TIN         ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 3.║          TÌM KIẾM            ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 4.║        XÓA KHÁCH HÀNG        ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 4.║        SỬA THÔNG TIN         ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t║ ║              ║ 5.║        XÓA KHÁCH HÀNG        ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║ 9.║          QUAY LẠI            ║                 ║ ║");
@@ -1343,7 +1381,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t║ ╚═══════════════════════════════════════════════════════════════════╝ ║");
                 Console.Write("\n\t\t║                                                                       ║");
                 Console.Write("\n\t\t╚═══════════════════════════════════════════════════════════════════════╝");
-                Console.SetCursorPosition(65, 29);
+                Console.SetCursorPosition(65, 32);
 
                 char chose = char.ToUpper(Console.ReadKey(true).KeyChar);
 
@@ -1358,10 +1396,14 @@ namespace QuanLyNhaHang.Presentation
                         Console.ReadKey();
                         break;
                     case '3':
-                        Sua();
+                        TimKiem();
                         Console.ReadKey();
                         break;
                     case '4':
+                        Sua();
+                        Console.ReadKey();
+                        break;
+                    case '5':
                         Xoa();
                         Console.ReadKey();
                         break;
@@ -1441,10 +1483,45 @@ namespace QuanLyNhaHang.Presentation
             }
         }
 
+        private void TimKiem()
+        {
+            Console.Clear();
+            Console.Write("Nhập mã hoặc tên khách hàng (Nhấn 'Enter' để thoát): ");
+            string name = Console.ReadLine();
+            if (name != "")
+            {
+                if (khBUS.TimKiem(name) != "")
+                {
+                    Console.Clear();
+                    string[] tmp = khBUS.TimKiem(name).Split('\n');
+                    Console.SetWindowSize(140, 30);
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                    Console.WriteLine("\t\t║                                             TÌM THẤY {0,-2} KẾT QUẢ                                                 ║", tmp.Length - 1);
+                    Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
+                    Console.WriteLine("\t\t║    Mã   ║             Họ tên             ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
+                    Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");
+                    for (int i = 0; i < tmp.Length - 1; i++)
+                    {
+                        string[] tmp2 = tmp[i].Split('#');
+                        Console.WriteLine("\t\t║  {0,-7}║\t{1,-27}║  {2,-17}║     {3,-10}     ║  {4,-27}║", tmp2[0], tmp2[1], tmp2[2], tmp2[3], tmp2[4]);
+
+                    }
+                    Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
+                    Console.Write("\t\tNhấn phím bất kì để kết thúc!");
+                    
+                }
+                Console.Write("Không có dữ liệu!");
+            }
+            else
+                Console.Write("Đã thoát!");
+        }
+
         private void Sua()
         {
             Console.Clear();
-            Console.Write("Nhập mã khách hàng muốn sửa (Hoặc nhấn Enter để thoát!): ");
+            Console.Write("Nhập mã khách hàng muốn sửa (Nhấn Enter để thoát!): ");
             string maKH = Console.ReadLine().ToUpper();
             if (maKH != "")
             {

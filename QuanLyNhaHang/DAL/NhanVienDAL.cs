@@ -249,17 +249,18 @@ namespace QuanLyNhaHang.DAL
         //    sw.Close();
         //}
 
-        public string TimKiem( string maNV )
+        public string TimKiem(string name)
         {
-            StreamReader sr = new StreamReader( FileText );
+            StreamReader sr = new StreamReader(FileText);
             string s, result = "";
 
-            while( (s = sr.ReadLine()) != null )
+            while ((s = sr.ReadLine()) != null)
             {
-                string[] tmp = s.Split( '#' );
-                if( tmp[0] == maNV )
+                string[] tmp = s.Split('#');
+                if (tmp[0].ToLower() == name.ToLower()
+                    || tmp[1].ToLower().Contains(name.ToLower()))
                 {
-                    result = s;
+                    result += s + "\n";
                     break;
                 }
             }
