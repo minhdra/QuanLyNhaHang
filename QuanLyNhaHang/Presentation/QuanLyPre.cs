@@ -997,7 +997,7 @@ namespace QuanLyNhaHang.Presentation
             {
                 Console.Clear();
 
-                Console.SetWindowSize(103, 35);
+                Console.SetWindowSize(103, 42);
                 Console.Write("\n\t\t╔═══════════════════════════════════════════════════════════════════════╗");
                 Console.Write("\n\t\t║                  CHƯƠNG TRÌNH QUẢN LÝ NHÀ HÀNG ĂN                     ║");
                 Console.Write("\n\t\t╠═══════════════════════════════════════════════════════════════════════╣");
@@ -1041,7 +1041,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t║ ╚═══════════════════════════════════════════════════════════════════╝ ║");
                 Console.Write("\n\t\t║                                                                       ║");
                 Console.Write("\n\t\t╚═══════════════════════════════════════════════════════════════════════╝");
-                Console.SetCursorPosition(65, 32);
+                Console.SetCursorPosition(65, 35);
 
                 char chose = char.ToUpper(Console.ReadKey(true).KeyChar);
 
