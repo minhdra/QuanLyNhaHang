@@ -10,11 +10,11 @@
         "projectUniqueName": "D:\\Đồ án 1 - Lê Đình Minh\\QuanLyNhaHang\\QuanLyNhaHang\\QuanLyNhaHang.csproj",
         "projectName": "QuanLyNhaHang",
         "projectPath": "D:\\Đồ án 1 - Lê Đình Minh\\QuanLyNhaHang\\QuanLyNhaHang\\QuanLyNhaHang.csproj",
-        "packagesPath": "C:\\Users\\minhd\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\MinhDra\\.nuget\\packages\\",
         "outputPath": "D:\\Đồ án 1 - Lê Đình Minh\\QuanLyNhaHang\\QuanLyNhaHang\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\minhd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MinhDra\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
