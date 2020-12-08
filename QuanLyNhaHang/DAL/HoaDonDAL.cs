@@ -335,7 +335,7 @@ namespace QuanLyNhaHang.DAL
             while( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
-                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[4];
+                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4];
                 list.Add( result );
             }
 

@@ -82,8 +82,8 @@ namespace QuanLyNhaHang
         public static void Main()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            //Console.BackgroundColor = ConsoleColor.Gray;
-            //Console.ForegroundColor = ConsoleColor.Black;
+            //console.backgroundcolor = consolecolor.gray;
+            //console.foregroundcolor = consolecolor.black;
             MenuChinh menu = new MenuChinh();
             menu.Menu();
             

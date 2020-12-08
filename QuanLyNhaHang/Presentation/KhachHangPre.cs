@@ -122,7 +122,7 @@ namespace QuanLyNhaHang.Presentation
                             Console.ReadKey();
                         }
                         else
-                            datMon(maKH);
+                            Order(maKH);
                         break;
                     case '5':
                         if (check == 0)
@@ -321,7 +321,7 @@ namespace QuanLyNhaHang.Presentation
             Console.Write("\t\tNhấn phím bất kì để kết thúc!");
         }
 
-        private void datMon(string maKH)
+        private void Order(string maKH)
         {
             Console.Clear();
             QLHangHoa qlHH = new QLHangHoa();
@@ -375,9 +375,9 @@ namespace QuanLyNhaHang.Presentation
                             else
                                 hdBUS.SuaChiTiet(maHD, ID, SL);
                             Console.Write("\t\tBạn có muốn thêm tiếp không? (Nhấp 'Enter' để tiếp tục): ");
-                            string q = Console.ReadLine();
-                            if (q == "")
-                                datMon(maKH);
+                            ConsoleKeyInfo key = Console.ReadKey();
+                            if (key.Key == ConsoleKey.Enter)
+                                Order(maKH);
 
                             c = true;
                         }
@@ -453,29 +453,64 @@ namespace QuanLyNhaHang.Presentation
             }
             // Hiển thị hóa đơn nhưng không hiện mã khách hàng
 
-            Console.SetWindowSize(140, 30);
             double sum = 0;
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("\t\t╔══════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("\t\t║                                 Hóa đơn của {0,-27}              ║",name[1]);
-            Console.WriteLine("\t\t╠═════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╣");
-            Console.WriteLine("\t\t║    Mã   ║         Tên khách hàng           ║        Ngày       ║         Tổng        ║");
-            Console.WriteLine("\t\t╠═════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╣");
-            for (int x = 0; x < tmp.Length - 1; x++)
+            
+            int count = tmp.Length - 1;
+            // Tổng tất cả hóa đơn
+            for (int x = 0; x < count; x++)
             {
                 string[] tmp2 = tmp[x].Split('\t');
                 sum += double.Parse(tmp2[4]);
-                Console.WriteLine("\t\t║ {0,-7} ║\t{1,-27}  ║  {2,-10}       ║  {3,-15}    ║", tmp2[0], tmp2[1], tmp2[2], double.Parse(tmp2[4]).ToString("N0"));
             }
-            Console.WriteLine("\t\t╚═════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╝");
 
-            //Console.WriteLine();
-            Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("\t\t║ Tổng tiền của tất cả hóa đơn:  {0,-24}        ║", sum.ToString("N0"));
-            Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
+            int start = 0, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
+            int end = count <= 6 ? count : 6;
+            do
+            {
+                Console.Clear();
+                start = (curpage - 1) * 6;
+                end = curpage * 6 < count ? curpage * 6 : count;
 
-            Console.WriteLine();
+                Console.SetWindowSize(140, 30);
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("\t\t╔══════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("\t\t║                                 Hóa đơn của {0,-27}              ║", name[1]);
+                Console.WriteLine("\t\t╠═════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╣");
+                Console.WriteLine("\t\t║    Mã   ║         Tên khách hàng           ║        Ngày       ║         Tổng        ║");
+                Console.WriteLine("\t\t╠═════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╣");
+                for (int x = start; x < end; x++)
+                {
+                    string[] tmp2 = tmp[x].Split('\t');
+                    Console.WriteLine("\t\t║ {0,-7} ║\t{1,-27}  ║  {2,-10}       ║  {3,-15}    ║", tmp2[0], tmp2[1], tmp2[2], double.Parse(tmp2[4]).ToString("N0"));
+                }
+                Console.WriteLine("\t\t╚═════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╝");
+
+                //Console.WriteLine("\n");
+                Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("\t\t║ Tổng tiền của tất cả hóa đơn:  {0,-24}        ║", sum.ToString("N0"));
+                Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
+
+                Console.Write("\t\tTrang " + curpage + "/" + totalpage + "          Ấn <-, -> để xem tiếp, ESC để thoát, nhấn ENTER để xem chi tiết...");
+                ConsoleKeyInfo key = Console.ReadKey();
+                if (key.Key == ConsoleKey.RightArrow)
+                {
+                    if (curpage < totalpage) curpage++;
+                    else curpage = 1;
+                }
+                else if (key.Key == ConsoleKey.LeftArrow)
+                {
+                    if (curpage > 1) curpage--;
+                    else curpage = totalpage;
+                }
+                else if (key.Key == ConsoleKey.Escape)
+                    return;
+                else if (key.Key == ConsoleKey.Enter)
+                    break;
+
+            } while (true);
+            
+            Console.WriteLine("\n");
             Console.Write("\t\tNhập mã hóa đơn để xem chi tiết (Nhấp 'Enter' để thoát): ");
             string maHD = Console.ReadLine().ToUpper();
             if(maHD != "")
@@ -487,35 +522,61 @@ namespace QuanLyNhaHang.Presentation
                     {
                         Console.Clear();
                         int total = 0;
-                        Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                        Console.WriteLine("\t\t║                                Thông tin chi tiết của hóa đơn {0, -7}                           ║", maHD);
-                        Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═══════════════════╦═════════════╦════════════════════╣");
-                        Console.WriteLine("\t\t║  Mã món ║            Tên món             ║        Giá        ║  Số lượng   ║       Tổng         ║");
-                        Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═══════════════════╬═════════════╬════════════════════╣");
-                        for(int x = 0; x < hdBUS.HienChiTiet(maHD).Count; x++)
+
+                        count = hdBUS.HienChiTiet(maHD).Count;
+                        // Tổng tiền của 1 hóa đơn
+                        for (int x = 0; x < count; x++)
                         {
                             string[] tmp2 = hdBUS.HienChiTiet(maHD)[x].Split('\t');
-                            Console.WriteLine("\t\t║ {0,-7} ║ {1,-30} ║ {2,-9}         ║     {3,-5}   ║ {4,-12}       ║", tmp2[0], tmp2[1], int.Parse(tmp2[2]).ToString("N0"), tmp2[3], (int.Parse(tmp2[2]) * int.Parse(tmp2[3])).ToString("N0"));
                             total += int.Parse(tmp2[2]) * int.Parse(tmp2[3]);
                         }
-                        Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═══════════════════╩═════════════╩════════════════════╝");
-                        
-                        Console.WriteLine();
-                        Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
-                        Console.WriteLine("\t\t║ Tổng hóa đơn:  {0,-24}                        ║", total.ToString("N0"));
-                        Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
-                        Console.Write("\t\tXem tiếp nhấn 'Enter' hoặc nhấn bất kỳ phím khác để thoát : ");
-                        string check = Console.ReadLine();
-                        if (check == "")
+
+                        start = 0; curpage = 1; totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
+                        end = count <= 6 ? count : 6;
+                        do
                         {
-                            c = true;
-                            LichSu(maKH);
-                        }
-                        else
-                        {
-                            c = true;
-                            Console.Write("\t\tĐã thoát!");
-                        }
+                            Console.Clear();
+                            start = (curpage - 1) * 6;
+                            end = curpage * 6 < count ? curpage * 6 : count;
+
+                            Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                            Console.WriteLine("\t\t║                                Thông tin chi tiết của hóa đơn {0, -7}                           ║", maHD);
+                            Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═══════════════════╦═════════════╦════════════════════╣");
+                            Console.WriteLine("\t\t║  Mã món ║            Tên món             ║        Giá        ║  Số lượng   ║       Tổng         ║");
+                            Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═══════════════════╬═════════════╬════════════════════╣");
+                            for (int x = start; x < end; x++)
+                            {
+                                string[] tmp2 = hdBUS.HienChiTiet(maHD)[x].Split('\t');
+                                Console.WriteLine("\t\t║ {0,-7} ║ {1,-30} ║ {2,-9}         ║     {3,-5}   ║ {4,-12}       ║", tmp2[0], tmp2[1], int.Parse(tmp2[2]).ToString("N0"), tmp2[3], (int.Parse(tmp2[2]) * int.Parse(tmp2[3])).ToString("N0"));
+                                
+                            }
+                            Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═══════════════════╩═════════════╩════════════════════╝");
+                            Console.WriteLine();
+                            Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
+                            Console.WriteLine("\t\t║ Tổng hóa đơn:  {0,-24}                        ║", total.ToString("N0"));
+                            Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
+
+                            Console.Write("\t\tTrang " + curpage + "/" + totalpage + "          Ấn <-, -> để xem tiếp, ESC để thoát, nhấn ENTER để quay lại...");
+                            ConsoleKeyInfo key = Console.ReadKey();
+                            if (key.Key == ConsoleKey.RightArrow)
+                            {
+                                if (curpage < totalpage) curpage++;
+                                else curpage = 1;
+                            }
+                            else if (key.Key == ConsoleKey.LeftArrow)
+                            {
+                                if (curpage > 1) curpage--;
+                                else curpage = totalpage;
+                            }
+                            else if (key.Key == ConsoleKey.Escape)
+                                return;
+                            else if (key.Key == ConsoleKey.Enter)
+                            {
+                                LichSu(maKH);
+                                return;
+                            }
+
+                        } while (true);
                     }
                     else
                     {
