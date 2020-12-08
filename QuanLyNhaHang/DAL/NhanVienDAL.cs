@@ -252,21 +252,28 @@ namespace QuanLyNhaHang.DAL
         public string TimKiem(string name)
         {
             StreamReader sr = new StreamReader(FileText);
-            string s, result = "";
+            string s, resultName = "", resultID = "";
+            int check = 0;
 
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                if (tmp[0].ToLower() == name.ToLower()
-                    || tmp[1].ToLower().Contains(name.ToLower()))
+                if (tmp[0].ToLower() == name.ToLower())
                 {
-                    result += s + "\n";
+                    check = 1;
+                    resultID = s;
                     break;
+                }
+                else if (tmp[1].ToLower().Contains(name.ToLower()))
+                {
+                    resultName += s + "\n";
                 }
             }
 
             sr.Close();
-            return result;
+            if (check == 1)
+                return resultID;
+            return resultName;
         }
 
         public void Xoa( string maNV )

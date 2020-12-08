@@ -19,6 +19,11 @@ namespace QuanLyNhaHang.BUS
             khDAL.ThemTK(TK, MK);
         }
 
+        public string ThemTKTuDong()
+        {
+            return khDAL.ThemTKTuDong();
+        }
+
         public void DoiMK(string maKH, string MK)
         {
             khDAL.DoiMK(maKH, MK);

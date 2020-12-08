@@ -4,4 +4,4 @@ NV3#Ho Bat Lao#29/05/2000#Nam#Ha Noi#0954854856#ght@gmail.com
 NV4#Vo Trang Nguyen#07/11/2000#Nam#Hung Yen#0983402105#kgl@gmail.com
 NV5#Vu Nham#01/10/2000#Nam#Hung Yen#0949885433#uyt@gmail.com
 NV6#Quynh anh#22/03/2001#Nu#Hung Yen#0923482333#QA223@gmail.com
-NV9#Huy Hoang#10/01/2000#Nam#Tuyen Quang#0923828438#hh123@gmail.com
+NV9#Huy Hoang#12/01/2000#Nam#Tuyen Quang#0923828438#hh123@gmail.com

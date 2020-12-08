@@ -67,11 +67,11 @@ namespace QuanLyNhaHang.Constraint
             return SDT;
         }
 
-        public DateTime date(string tmp)
+        public DateTime Date(string tmp)
         {
             DateTime date = new DateTime();
             bool c = false;
-            while (!c)
+            while (date.ToString("dd/MM/yyyy") == "01/01/0001" || date.Year > 2002)
             {
 
                 try
@@ -83,13 +83,6 @@ namespace QuanLyNhaHang.Constraint
                     Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
                     tmp = Console.ReadLine();
                 }
-                if (date.ToString("dd/MM/yyyy") == "01/01/0001" || date.Year > 2002)
-                {
-                    Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
-                    tmp = Console.ReadLine();
-                }
-                else
-                    c = true;
             }
             return date;
         }

@@ -139,7 +139,7 @@ namespace QuanLyNhaHang.Presentation
                 }
                 Console.Write("Sinh nhật (dd/MM/yyyy): ");
                 string tmp = Console.ReadLine();
-                DateTime date = conP.date(tmp);
+                DateTime date = conP.Date(tmp);
 
                 Console.Write("Giới tính (1 : Nam, 0: Nữ): ");
                 string chose = Console.ReadLine();
@@ -213,7 +213,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t             ║ 5.║  SDT: {0,-10}                    ║                 ", SDT);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 6.║  Email: {0,-27} ║                 ", email);
+                Console.Write("\n\t\t             ║ 6.║  Email: {0,-27} ║  ", email);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
                 Console.Write("\n\t\t             ║ 9.║              Quay lại               ║                 ");
@@ -247,7 +247,7 @@ namespace QuanLyNhaHang.Presentation
                         Console.Write("Sinh nhật (dd/MM/yyyy) (Enter để thoát): ");
                         t = Console.ReadLine();
                         if(t != "")
-                            birth = conP.date(t);
+                            birth = conP.Date(t);
 
                         break;
                     case '3':

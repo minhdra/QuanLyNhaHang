@@ -443,11 +443,15 @@ namespace QuanLyNhaHang.Presentation
             KhachHangBUS khBUS = new KhachHangBUS();
             HangHoaBUS hhBUS = new HangHoaBUS();
             QLHangHoa qlHH = new QLHangHoa();
-            Console.WriteLine("Thêm hóa đơn hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Mã khách hàng: ");
-            string maKH = Console.ReadLine().ToUpper();
-            if (maKH != "")
+            Console.Clear();
+            Console.Write("Nhấn 'Enter' để tiếp tục hoặc nhấn phím khác để thoát!: ");
+            ConsoleKeyInfo key = Console.ReadKey();
+
+            while (key.Key == ConsoleKey.Enter)
             {
+                Console.Clear();
+                Console.Write("Mã khách hàng: ");
+                string maKH = Console.ReadLine().ToUpper();
                 if (khBUS.Laythongtin(maKH) != "")
                 {
                     Console.Clear();
@@ -533,10 +537,13 @@ namespace QuanLyNhaHang.Presentation
                     }
                 }
                 else
-                    Console.WriteLine("\t\tKhách hàng không tồn tại!");
+                    Console.WriteLine("\nKhách hàng không tồn tại!");
+
+                Console.Clear();
+                Console.Write("Bạn có muốn tiếp tục thêm hóa đơn không? (Enter để tiếp tục): ");
+                key = Console.ReadKey();
+
             }
-            else
-                Console.WriteLine("\t\tĐã thoát.");
         }
 
         private void TimKiem()
@@ -900,16 +907,20 @@ namespace QuanLyNhaHang.Presentation
         private void Them()
         {
             Console.Clear();
-            Console.WriteLine("Thêm thông tin hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập tên hàng hóa: ");
-            string tenHH = Console.ReadLine();
-            if (tenHH != "")
+            Console.Write("Nhấn 'Enter' để tiếp tục hoặc nhấn phím khác để thoát!: ");
+            ConsoleKeyInfo key = Console.ReadKey();
+
+            while (key.Key == ConsoleKey.Enter)
             {
-                while (tenHH.Length > 30)
+                Console.Clear();
+                Console.Write("Nhập tên hàng hóa: ");
+                string tenHH = Console.ReadLine();
+                while (tenHH == "" || tenHH.Length > 30)
                 {
                     Console.Write("Nhập lại (dưới 30 ký tự): ");
                     tenHH = Console.ReadLine();
                 }
+
                 int price = 0;
                 while (price <= 0)
                 {
@@ -925,9 +936,10 @@ namespace QuanLyNhaHang.Presentation
                 }
                 hhBUS.Them(conP.Capitalize(tenHH), price);
                 Console.WriteLine("Đã thêm thành công!");
+
+                Console.Write("Bạn có muốn tiếp tục thêm hàng hóa không? (Enter để tiếp tục): ");
+                key = Console.ReadKey();
             }
-            else
-                Console.WriteLine("Đã thoát.");
         }
 
         private void Sua()
@@ -1257,20 +1269,28 @@ namespace QuanLyNhaHang.Presentation
         private void Them()
         {
             Console.Clear();
-            Console.WriteLine("Nhấn 'Enter' để thoát hoặc nhấn phím khác để tiếp tục thêm nhân viên!");
-            string check = Console.ReadLine();
-            if (check != "")
+            Console.Write("Nhấn 'Enter' để tiếp tục hoặc nhấn phím khác để thoát!: ");
+            ConsoleKeyInfo key = Console.ReadKey();
+
+            while (key.Key == ConsoleKey.Enter)
             {
+                Console.Clear();
                 string[] tmp = nvBUS.ThemTK().Split('#');
-                Console.WriteLine("Tài khoản: {0}\nMật khẩu: {1}\nMã nhân viên: {2}", tmp[0], tmp[1], tmp[2]);
-                Console.Write("Tạo tài khoản thành công!");
+                Console.Write(
+                    "Tài khoản được tạo thành công!\n" +
+                    "TÀI KHOẢN      : " + tmp[0] +
+                    "\nMẬT KHẨU     : " + tmp[1] +
+                    "\nMÃ NHÂN VIÊN : " + tmp[2]);
                 Console.ReadKey();
+                Console.Clear();
                 NhanVienPre nvP = new NhanVienPre();
                 nvP.ThemThongTin(tmp[2]);
                 Console.WriteLine("Thêm nhân viên thành công!");
+                Console.ReadKey();
+                Console.Clear();
+                Console.Write("Bạn có muốn tiếp tục thêm nhân viên không? (Enter để tiếp tục): ");
+                key = Console.ReadKey();
             }
-            else
-                Console.WriteLine("Đã thoát!");
         }
 
         private void Sua()
@@ -1581,40 +1601,95 @@ namespace QuanLyNhaHang.Presentation
         private void Them()
         {
             Console.Clear();
-            Console.WriteLine("Thêm khách hàng hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Tài khoản: ");
-            string TK = Console.ReadLine();
-            if (TK != "")
+            Console.Write("Nhấn 'Enter' để tiếp tục hoặc nhấn phím khác để thoát!: ");
+            ConsoleKeyInfo key = Console.ReadKey();
+            
+            while(key.Key == ConsoleKey.Enter)
             {
-                Console.Write("Mật khẩu: ");
-                string MK1 = Console.ReadLine();
-                Console.Write("Nhập lại mật khẩu: ");
-                string MK2 = Console.ReadLine();
-
-
-                if (MK1 == MK2)
+                Console.Clear();
+                Console.Write("Tạo tài khoản tự động (Enter)\n" +
+                              "Tạo thủ công nhấn phím khác: ");
+                key = Console.ReadKey();
+                if(key.Key == ConsoleKey.Enter)
                 {
-                    if (khBUS.CheckTK(TK) == true)
-                        Console.WriteLine("Tài khoản đã tồn tại!");
-                    else
-                    {
-                        khBUS.ThemTK(TK, MK1);
-                        Console.WriteLine("Tạo tài khoản thành công!");
-                        Console.ReadKey();
-
-                        // Lấy mã
-                        Console.Clear();
-                        string[] tmp = khBUS.LaythongtinTK(TK).Split('\t');
-                        string maKH = tmp[2];
-
-                        KhachHangPre khP = new KhachHangPre();
-                        khP.ThemThongTin(maKH);
-                        
-                    }
+                    string acc = khBUS.ThemTKTuDong();
+                    string[] tmp = acc.Split('#');
+                    Console.WriteLine(
+                        "Tài khoản được tạo thành công!\n" +
+                        "TÀI KHOẢN  : " + tmp[1] +
+                        "\nMẬT KHẨU : " + tmp[2] );
+                    Console.ReadKey();
+                    KhachHangPre khP = new KhachHangPre();
+                    khP.ThemThongTin(tmp[2]);
+                    Console.Clear();
                 }
                 else
-                    Console.WriteLine("Đã thoát!");
+                {
+                    do
+                    {
+                        Console.Clear();
+
+                        Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
+                        Console.Write("\n\t║                               TẠO TÀI KHOẢN                           ║");
+                        Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
+                        Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
+                        Console.Write("\n\t║ TẠO TÀI KHOẢN HOẶC NHẤN 'ENTER' ĐỂ QUAY LẠI!                          ║");
+                        Console.Write("\n\t║                                                                       ║");
+                        Console.Write("\n\t║      TÀI KHOẢN       :                                                ║");
+                        Console.Write("\n\t║                                                                       ║");
+                        Console.Write("\n\t║      MẬT KHẨU        :                                                ║");
+                        Console.Write("\n\t║                                                                       ║");
+                        Console.Write("\n\t║  NHẬP LẠI MẬT KHẨU   :                                                ║");
+                        Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
+
+                        Console.SetCursorPosition(34, 7);
+                        string TK = Console.ReadLine();
+                        if (TK == "")
+                        {
+                            Console.Clear();
+                            break;
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(34, 9);
+                            string MK1 = Console.ReadLine();
+                            Console.SetCursorPosition(34, 11);
+                            string MK2 = Console.ReadLine();
+
+
+                            if (MK1 == MK2)
+                            {
+                                if (khBUS.CheckTK(TK) == true)
+                                    Console.Write("\n\n\tTài khoản đã tồn tại!");
+                                else
+                                {
+                                    khBUS.ThemTK(TK, MK1);
+                                    Console.WriteLine("\n\n\tTạo tài khoản thành công!");
+                                    Console.ReadKey();
+
+                                    // Lấy mã
+                                    Console.Clear();
+                                    string[] tmp = khBUS.LaythongtinTK(TK).Split('\t');
+                                    string maKH = tmp[2];
+
+                                    KhachHangPre khP = new KhachHangPre();
+                                    khP.ThemThongTin(maKH);
+                                    Console.Clear();
+                                    break;
+
+                                }
+                            }
+
+                        }
+                        Console.ReadKey();
+                    } while (true);
+                    
+                }
+
+                Console.Write("Bạn có muốn tiếp tục thêm khách hàng không? (Enter để tiếp tục): ");
+                key = Console.ReadKey();
             }
+
         }
 
         private void TimKiem()

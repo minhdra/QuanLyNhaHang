@@ -3,6 +3,7 @@ using QuanLyNhaHang.DAL;
 using QuanLyNhaHang.Presentation;
 using System;
 using System.Buffers.Text;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -82,6 +83,7 @@ namespace QuanLyNhaHang
         public static void Main()
         {
             Console.OutputEncoding = Encoding.UTF8;
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("vi-VN");
             //console.backgroundcolor = consolecolor.gray;
             //console.foregroundcolor = consolecolor.black;
             MenuChinh menu = new MenuChinh();
