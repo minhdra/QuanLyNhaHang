@@ -1207,8 +1207,8 @@ namespace QuanLyNhaHang.Presentation
         private void Show()
         {
             int count = nvBUS.Laydanhsach().Count;
-            int start = 0, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
-            int end = count <= 6 ? count : 6;
+            int start, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
+            int end;
             do
             {
                 Console.Clear();
@@ -1217,17 +1217,17 @@ namespace QuanLyNhaHang.Presentation
                 Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine("\t╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t║                                                                DANH SÁCH NHÂN VIÊN                                                                ║");
-                Console.WriteLine("\t╠═════════╦════════════════════════════════╦═════════════════════╦═══════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
-                Console.WriteLine("\t║    Mã   ║             Họ tên             ║       Ngày sinh     ║ Giới tính ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
-                Console.WriteLine("\t╠═════════╬════════════════════════════════╬═════════════════════╬═══════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");
+                Console.WriteLine("  ╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("  ║                                                                     DANH SÁCH NHÂN VIÊN                                                                ║");
+                Console.WriteLine("  ╠═════════╦════════════════════════════════╦══════════════╦═══════════╦═══════════════════╦═════════════════╦══════════════╦═════════════════════════════╣");
+                Console.WriteLine("  ║    Mã   ║             Họ tên             ║   Ngày sinh  ║ Giới tính ║      Địa chỉ      ║  Số điện thoại  ║     CCCD     ║            Email            ║");
+                Console.WriteLine("  ╠═════════╬════════════════════════════════╬══════════════╬═══════════╬═══════════════════╬═════════════════╬══════════════╬═════════════════════════════╣");
                 for (int x = start; x < end; x++)
                 {
                     string[] tmp = nvBUS.Laydanhsach()[x].Split('\t');
-                    Console.WriteLine("\t║  {0,-7}║\t{1,-27}║  {2,-10}         ║     {3,-3}   ║  {4,-17}║   {5,-10}       ║  {6,-27}║", tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6]);
+                    Console.WriteLine("  ║  {0,-7}║\t{1,-27}  ║  {2,-10}  ║    {3,-3}    ║  {4,-17}║   {5,-10}    ║ {6,-12} ║  {7,-27}║", tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7]);
                 }
-                Console.WriteLine("\t╚═════════╩════════════════════════════════╩═════════════════════╩═══════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
+                Console.WriteLine("  ╚═════════╩════════════════════════════════╩══════════════╩═══════════╩═══════════════════╩═════════════════╩══════════════╩═════════════════════════════╝");
                 Console.Write("\tTrang " + curpage + "/" + totalpage + "          Ấn <-, -> để xem tiếp, ENTER để thoát...");
 
                 ConsoleKeyInfo key = Console.ReadKey();
@@ -1254,41 +1254,47 @@ namespace QuanLyNhaHang.Presentation
 
         private void TimKiem()
         {
-            Console.Write("Nhập mã hoặc tên nhân viên (Nhấn Enter để thoát): ");
-            string name = Console.ReadLine();
-            if (name != "" && nvBUS.TimKiem(name) != "")
+            while (true)
             {
-                while (true)
+                Console.Clear();
+                Console.Write("Nhập mã hoặc tên nhân viên (Nhấn Enter để thoát): ");
+                string name = Console.ReadLine();
+                if (name != "" && nvBUS.TimKiem(name) != "")
                 {
-                    Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-                    string[] tmp = nvBUS.TimKiem(name).Split('#');
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine("\t╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                    Console.WriteLine("\t║                                                                  TÌM THẤY {0,-2} KẾT QUẢ                                                              ║", tmp.Length - 1);
-                    Console.WriteLine("\t╠═════════╦════════════════════════════════╦═════════════════════╦═══════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
-                    Console.WriteLine("\t║    Mã   ║             Họ tên             ║       Ngày sinh     ║ Giới tính ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
-                    Console.WriteLine("\t╠═════════╬════════════════════════════════╬═════════════════════╬═══════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");
-                    for (int i = 0; i < tmp.Length - 1; i++)
+                    while (true)
                     {
-                        string[] tmp2 = tmp[i].Split('#');
-                        Console.WriteLine("\t║  {0,-7}║\t{1,-27}║  {2,-10}         ║     {3,-3}   ║  {4,-17}║   {5,-10}       ║  {6,-27}║", tmp2[0], tmp2[1], tmp2[2], tmp2[3], tmp2[4], tmp2[5], tmp2[6]);
+                        Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+                        Console.Clear();
+                        string[] tmp = nvBUS.TimKiem(name).Split('\n');
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine("  ╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                        Console.WriteLine("  ║                                                                  TÌM THẤY {0,-2} KẾT QUẢ                                                                   ║", tmp.Length - 1);
+                        Console.WriteLine("  ╠═════════╦════════════════════════════════╦══════════════╦═══════════╦═══════════════════╦═════════════════╦══════════════╦═════════════════════════════╣");
+                        Console.WriteLine("  ║    Mã   ║             Họ tên             ║   Ngày sinh  ║ Giới tính ║      Địa chỉ      ║  Số điện thoại  ║     CCCD     ║            Email            ║");
+                        Console.WriteLine("  ╠═════════╬════════════════════════════════╬══════════════╬═══════════╬═══════════════════╬═════════════════╬══════════════╬═════════════════════════════╣");
+                        for (int i = 0; i < tmp.Length - 1; i++)
+                        {
+                            string[] tmp2 = tmp[i].Split('#');
+                            Console.WriteLine("  ║  {0,-7}║\t{1,-27}  ║  {2,-10}  ║    {3,-3}    ║  {4,-17}║   {5,-10}    ║ {6,-12} ║  {7,-27}║", tmp2[0], tmp2[1], tmp2[2], tmp2[3], tmp2[4], tmp2[5], tmp2[6], tmp2[7]);
 
+                        }
+                        Console.WriteLine("  ╚═════════╩════════════════════════════════╩══════════════╩═══════════╩═══════════════════╩═════════════════╩══════════════╩═════════════════════════════╝");
+
+                        Console.Write("\n  Nhấn ESC để thoát hoặc nhấn ENTER để tiếp tục. . .");
+
+                        ConsoleKeyInfo key = Console.ReadKey();
+                        if (key.Key == ConsoleKey.Enter) break;
+                        else if (key.Key == ConsoleKey.Escape) return;
                     }
-                    Console.WriteLine("\t╚═════════╩════════════════════════════════╩═════════════════════╩═══════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
-
-                    Console.Write("\n\tNhấn ESC để thoát hoặc nhấn ENTER để tiếp tục. . .");
-
-                    ConsoleKeyInfo key = Console.ReadKey();
-                    if (key.Key == ConsoleKey.Enter) break;
-                    else if (key.Key == ConsoleKey.Escape) return;
                 }
-            }
-            else
-            {
-                if (name == "") return;
-                Console.Write("Không tìm thấy kết quả nào!");
-                Console.ReadKey();
+                else
+                {
+                    if (name == "") return;
+                    Console.Write("Không tìm thấy kết quả nào!");
+                    Console.ReadKey();
+                }
+
             }
         }
 
@@ -1326,16 +1332,17 @@ namespace QuanLyNhaHang.Presentation
                 Console.Clear();
                 Console.Write("Nhập mã nhân viên muốn sửa (Hoặc nhấn Enter để thoát!): ");
                 string maNV = Console.ReadLine().ToUpper();
-                if (maNV != "" && nvBUS.TimKiem(maNV) != "")
+                if (maNV != "" && nvBUS.Laythongtin(maNV) != "")
                 {
                     while (true)
                     {
                         Console.Clear();
+                        string[] tmp = nvBUS.Laythongtin(maNV).Split('#');
                         Console.SetWindowSize(103, 35);
                         Console.Write("\n\t\t             ╔═══╦═════════════════════════════════════╗                 ");
                         Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                         Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                        Console.Write("\n\t\t             ║   ║          SỬA NHÂN VIÊN              ║                 ");
+                        Console.Write("\n\t\t             ║   ║    Tên : {0,-27}║     ", tmp[1]);
                         Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                         Console.Write("\n\t\t             ║   ║                                     ║                 ");
                         Console.Write("\n\t\t             ║ 1.║          Sửa thông tin              ║                 ");
@@ -1393,7 +1400,7 @@ namespace QuanLyNhaHang.Presentation
             {
                 Console.Clear();
 
-                string[] tmp = nvBUS.LaythongtinTK(maNV).Split('\t');
+                string[] tmp = nvBUS.LaythongtinTK(maNV).Split('#');
                 string tenTK = tmp[0], MK = tmp[1];
                 Console.SetWindowSize(103, 35);
                 Console.Write("\n\t\t             ╔═══╦═════════════════════════════════════╗                 ");
@@ -1462,7 +1469,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.WriteLine("Xóa nhân viên hoặc nhấn 'Enter' để thoát.");
                 Console.Write("Nhập mã nhân viên muốn xóa: ");
                 string maNV = Console.ReadLine().ToUpper();
-                if (maNV != "" && nvBUS.TimKiem(maNV) != "")
+                if (maNV != "" && nvBUS.Laythongtin(maNV) != "")
                 {
                     Console.Write("Xác nhận xóa? (Y/N): ");
                     string check = Console.ReadLine().ToUpper();
@@ -1594,8 +1601,8 @@ namespace QuanLyNhaHang.Presentation
         private void Show()
         {
             int count = khBUS.Laydanhsach().Count;
-            int start = 0, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
-            int end = count <= 6 ? count : 6;
+            int start, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
+            int end;
             do
             {
                 Console.Clear();
@@ -1788,11 +1795,12 @@ namespace QuanLyNhaHang.Presentation
                     while (true)
                     {
                         Console.Clear();
+                        string[] tmp = khBUS.Laythongtin(maKH).Split('\t');
                         Console.SetWindowSize(103, 35);
                         Console.Write("\n\t\t             ╔═══╦═════════════════════════════════════╗                 ");
                         Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                         Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                        Console.Write("\n\t\t             ║   ║          SỬA KHÁCH HÀNG             ║                 ");
+                        Console.Write("\n\t\t             ║   ║    Tên : {0,-27}║     ", tmp[1]);
                         Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                         Console.Write("\n\t\t             ║   ║                                     ║                 ");
                         Console.Write("\n\t\t             ║ 1.║          Sửa thông tin              ║                 ");

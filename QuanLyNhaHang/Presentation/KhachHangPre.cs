@@ -304,7 +304,7 @@ namespace QuanLyNhaHang.Presentation
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("\t\t║                                       THÔNG TIN CỦA BẠN,   {0, -27}                          ║", tmp[1].ToUpper());
+            Console.WriteLine("\t\t║                                       THÔNG TIN CỦA BẠN,   {0, -27}                          ║", tmp[1]);
             Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
             Console.WriteLine("\t\t║    Mã   ║             Họ tên             ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
             Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");

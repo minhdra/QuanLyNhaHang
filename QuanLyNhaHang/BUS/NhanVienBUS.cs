@@ -10,9 +10,9 @@ namespace QuanLyNhaHang.BUS
     {
         private NhanVienDAL nvDAL = new NhanVienDAL();
 
-        public void ThemNV(string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string Email)
+        public void ThemNV(string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string CMT, string Email)
         {
-            nvDAL.ThemNV(maNV, tenNV, NgaySinh, gioiTinh, DiaChi, SDT, Email);
+            nvDAL.ThemNV(maNV, tenNV, NgaySinh, gioiTinh, DiaChi, SDT, CMT, Email);
         }
 
         //public void ThemPV(string maNV, string maKH)
@@ -45,9 +45,9 @@ namespace QuanLyNhaHang.BUS
             return nvDAL.checkNV(maNV);
         }
 
-        public void SuaNV(string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string Email)
+        public void SuaNV(string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string CMT, string Email)
         {
-            nvDAL.SuaNV(maNV, tenNV, NgaySinh, gioiTinh, DiaChi, SDT, Email);
+            nvDAL.SuaNV(maNV, tenNV, NgaySinh, gioiTinh, DiaChi, SDT, CMT, Email);
         }
 
         //public void SuaPV(string maNV, string maKH)
@@ -75,19 +75,18 @@ namespace QuanLyNhaHang.BUS
             return nvDAL.Laydanhsach();
         }
 
-        public List<string> HienPhucVu(string maNV)
-        {
-            return nvDAL.HienPhucVu(maNV);
-        }
+        //public List<string> HienPhucVu(string maNV)
+        //{
+        //    return nvDAL.HienPhucVu(maNV);
+        //}
 
-        public string LaythongtinTK(string TK)
-        {
-            return nvDAL.LaythongtinTK(TK);
-        }
+        public string LaythongtinTK(string TK) => nvDAL.LaythongtinTK(TK);
 
-        public int checkSDT(string SDT)
+        public string Laythongtin(string maNV) => nvDAL.Laythongtin(maNV);
+
+        public int checkNum(string Num)
         {
-            return nvDAL.checkSDT(SDT);
+            return nvDAL.checkNum(Num);
         }
     }
 }

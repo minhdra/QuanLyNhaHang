@@ -9,7 +9,7 @@ namespace QuanLyNhaHang.DAL
     class NhanVienDAL
     {
         private string FileText = "NhanVien.txt";
-        private string FileText_inCharge = "PhucVu.txt";
+        //private string FileText_inCharge = "PhucVu.txt";
         private string ACC = "TaiKhoanNV.txt";
         private KhachHangDAL khDAL = new KhachHangDAL();
 
@@ -40,7 +40,7 @@ namespace QuanLyNhaHang.DAL
             return i;
         }
 
-        public void ThemNV( string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string Email )
+        public void ThemNV( string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string CMT, string Email )
         {
             if( !File.Exists( FileText ) )
             {
@@ -54,7 +54,7 @@ namespace QuanLyNhaHang.DAL
                 GT = "Nu";
 
             StreamWriter sw = new StreamWriter( FileText, true );
-            sw.WriteLine( maNV + "#" + tenNV + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT + "#" + DiaChi + "#" + SDT + "#" + Email );
+            sw.WriteLine( maNV + "#" + tenNV + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT + "#" + DiaChi + "#" + SDT + "#" + CMT + "#" + Email );
             sw.Close();
         }
 
@@ -206,7 +206,7 @@ namespace QuanLyNhaHang.DAL
             return check;
         }
 
-        public void SuaNV(string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string Email)
+        public void SuaNV(string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string CMT, string Email)
         {
             StreamReader sr = new StreamReader( FileText );
             string s, result = "";
@@ -223,7 +223,7 @@ namespace QuanLyNhaHang.DAL
                 if( tmp[0] != maNV )
                     result += s + "\n";
                 else
-                    result += maNV + "#" + tenNV + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT + "#" + DiaChi + "#" + SDT + "#" + Email;
+                    result += maNV + "#" + tenNV + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT + "#" + DiaChi + "#" + SDT + "#" + CMT + "#" + Email;
             }
             sr.Close();
             StreamWriter sw = new StreamWriter( FileText );
@@ -252,28 +252,20 @@ namespace QuanLyNhaHang.DAL
         public string TimKiem(string name)
         {
             StreamReader sr = new StreamReader(FileText);
-            string s, resultName = "", resultID = "";
-            int check = 0;
+            string s, result = "";
 
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                if (tmp[0].ToLower() == name.ToLower())
+                if (tmp[1].ToLower().Contains(name.ToLower()) 
+                    || tmp[0].ToLower() == name.ToLower())
                 {
-                    check = 1;
-                    resultID = s;
-                    break;
-                }
-                else if (tmp[1].ToLower().Contains(name.ToLower()))
-                {
-                    resultName += s + "\n";
+                    result += s + "\n";
                 }
             }
 
             sr.Close();
-            if (check == 1)
-                return resultID;
-            return resultName;
+            return result;
         }
 
         public void Xoa( string maNV )
@@ -313,7 +305,7 @@ namespace QuanLyNhaHang.DAL
             sw2.Close();
         }
 
-        public int checkSDT(string SDT)
+        public int checkNum(string Num)
         {
             StreamReader sr = new StreamReader(FileText);
             string s;
@@ -321,7 +313,7 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                if (tmp[3] == SDT)
+                if (tmp[3] == Num || tmp[6] == Num)
                 {
                     check = 1;
                 }
@@ -339,7 +331,7 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4] + "\t" + tmp[5] + "\t" + tmp[6];
+                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4] + "\t" + tmp[5] + "\t" + tmp[6] + "\t" + tmp[7];
                 list.Add(result);
             }
             sr.Close();
@@ -347,24 +339,24 @@ namespace QuanLyNhaHang.DAL
             return list;
         }
 
-        public List<string> HienPhucVu(string maNV)
-        {
-            List<string> list = new List<string>();
-            StreamReader sr = new StreamReader(FileText_inCharge);
-            string s, result;
+        //public List<string> HienPhucVu(string maNV)
+        //{
+        //    List<string> list = new List<string>();
+        //    StreamReader sr = new StreamReader(FileText_inCharge);
+        //    string s, result;
 
-            while ((s = sr.ReadLine()) != null)
-            {
-                string[] tmp = s.Split('#');
-                if (maNV == tmp[0])
-                {
-                    result = tmp[0] + "\t" + khDAL.Laythongtin(tmp[1]);
-                }
-            }
-            sr.Close();
+        //    while ((s = sr.ReadLine()) != null)
+        //    {
+        //        string[] tmp = s.Split('#');
+        //        if (maNV == tmp[0])
+        //        {
+        //            result = tmp[0] + "\t" + khDAL.Laythongtin(tmp[1]);
+        //        }
+        //    }
+        //    sr.Close();
 
-            return list;
-        }
+        //    return list;
+        //}
 
         public string LaythongtinTK(string TK)
         {
@@ -376,6 +368,25 @@ namespace QuanLyNhaHang.DAL
                 string[] tmp = s.Split('#');
                 if (tmp[0] == TK || tmp[2] == TK)
                     result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2];
+            }
+
+            sr.Close();
+            return result;
+        }
+
+        public string Laythongtin(string maNV)
+        {
+            StreamReader sr = new StreamReader(FileText);
+            string s, result = "";
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                string[] tmp = s.Split('#');
+                if (tmp[0] == maNV)
+                {
+                    result = s;
+                    break;
+                }
             }
 
             sr.Close();

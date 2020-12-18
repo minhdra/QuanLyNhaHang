@@ -19,7 +19,7 @@ namespace QuanLyNhaHang.Presentation
             {
                 // Kiểm tra khách có tồn tại
                 int check = 0;
-                if (nvBUS.TimKiem(maNV) != "")
+                if (nvBUS.Laythongtin(maNV) != "")
                 {
                     check = 1;
                 }
@@ -150,6 +150,8 @@ namespace QuanLyNhaHang.Presentation
             Console.Write("\n\t\t║ ║                                                   ║ ║");
             Console.Write("\n\t\t║ ║  Số điện thoại  :                                 ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
+            Console.Write("\n\t\t║ ║  CCCD           :                                 ║ ║");
+            Console.Write("\n\t\t║ ║                                                   ║ ║");
             Console.Write("\n\t\t║ ║  Email          :                      @gmail.com ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
@@ -162,31 +164,35 @@ namespace QuanLyNhaHang.Presentation
             Console.SetCursorPosition(38, 8);
             string tenNV = Console.ReadLine();
             if (tenNV == "") return;
-            tenNV = conP.CheckStr2(tenNV, 27, 38, 8, 38, 24);
+            tenNV = conP.CheckStr2(tenNV, 27, 38, 8, 38, 26);
 
             Console.SetCursorPosition(38, 10);
             string dateStr = Console.ReadLine();
-            DateTime date = conP.Date2(dateStr, 38, 10, 38, 24);
+            DateTime date = conP.Date2(dateStr, 38, 10, 38, 26);
 
             Console.SetCursorPosition(38, 13);
             string chose = Console.ReadLine().ToLower();
-            bool GT = conP.Gender2(chose, 38, 13, 38, 24);
+            bool GT = conP.Gender2(chose, 38, 13, 38, 26);
 
             Console.SetCursorPosition(38, 16);
             string dchi = Console.ReadLine();
-            dchi = conP.CheckStr2(dchi, 17, 38, 16, 38, 24);
+            dchi = conP.CheckStr2(dchi, 17, 38, 16, 38, 26);
 
             Console.SetCursorPosition(38, 18);
             string SDT = Console.ReadLine();
-            SDT = conP.NumberPhone2(SDT, 38, 18, 38, 24);
+            SDT = conP.NumberPhone2(SDT, 38, 18, 38, 26);
 
             Console.SetCursorPosition(38, 20);
+            string CMT = Console.ReadLine();
+            CMT = conP.CMT2(CMT, 38, 20, 38, 26);
+
+            Console.SetCursorPosition(38, 22);
             string email = Console.ReadLine();
-            email = conP.Email2(email, 38, 20, 38, 24);
+            email = conP.Email2(email, 38, 22, 38, 26);
 
-            nvBUS.ThemNV(maNV, conP.Capitalize(tenNV), date, GT, conP.Capitalize(dchi), SDT, email);
+            nvBUS.ThemNV(maNV, conP.Capitalize(tenNV), date, GT, conP.Capitalize(dchi), SDT, CMT, email);
 
-            Console.SetCursorPosition(29, 24);
+            Console.SetCursorPosition(29, 26);
             Console.Write("Bạn đã thêm thông tin thành công!!!");
             Console.ReadKey();
 
@@ -200,12 +206,12 @@ namespace QuanLyNhaHang.Presentation
             {
                 Console.Clear();
 
-                string[] tmp = nvBUS.TimKiem(maNV).Split('#');
+                string[] tmp = nvBUS.Laythongtin(maNV).Split('#');
                 DateTime birth = DateTime.Parse(tmp[2]);
                 bool gen = true;
                 if (tmp[3] == "Nu")
                     gen = false;
-                string tenNV = tmp[1], dchi = tmp[4], SDT = tmp[5], email = tmp[6];
+                string tenNV = tmp[1], dchi = tmp[4], SDT = tmp[5], CMT = tmp[6], email = tmp[7];
                 Console.SetWindowSize(103, 35);
                 Console.Write("\n\t\t             ╔═══╦═════════════════════════════════════╗                 ");
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
@@ -222,13 +228,16 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t             ║ 3.║  Giới tính: {0,-3}                     ║                 ", tmp[3]);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 4.║  Địa chỉ: {0,-17}         ║                 ", dchi);
+                Console.Write("\n\t\t             ║ 4.║  Địa chỉ : {0,-17}        ║                 ", dchi);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 5.║  SDT: {0,-10}                    ║                 ", SDT);
+                Console.Write("\n\t\t             ║ 5.║  SDT : {0,-10}                   ║                 ", SDT);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 6.║  Email: {0,-27} ║  ", email);
+                Console.Write("\n\t\t             ║ 6.║  CCCD : {0,-12}                ║                 ", CMT);
+                Console.Write("\n\t\t             ║___║_____________________________________║                 ");
+                Console.Write("\n\t\t             ║   ║                                     ║                 ");
+                Console.Write("\n\t\t             ║ 7.║  Email: {0,-27} ║  ", email);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
                 Console.Write("\n\t\t             ║ 9.║              Quay lại               ║                 ");
@@ -238,7 +247,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║ Bấm phím theo số để chọn:           ║                 ");
                 Console.Write("\n\t\t             ╚═══╩═════════════════════════════════════╝                 ");
-                Console.SetCursorPosition(61, 30);
+                Console.SetCursorPosition(61, 33);
                 char key = char.ToUpper(Console.ReadKey(true).KeyChar);
                 string t;
                 switch (key)
@@ -281,6 +290,13 @@ namespace QuanLyNhaHang.Presentation
                         break;
                     case '6':
                         Console.Clear();
+                        Console.Write("CCCD (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
+                            CMT = conP.CMT(t);
+                        break;
+                    case '7':
+                        Console.Clear();
                         Console.Write("Email (...@gmail.com hoặc Enter để thoát): ");
                         t = Console.ReadLine();
                         if (t != "")
@@ -295,7 +311,7 @@ namespace QuanLyNhaHang.Presentation
                         break;
                 }
 
-                nvBUS.SuaNV(maNV, conP.Capitalize(tenNV), birth, gen, conP.Capitalize(dchi), SDT, email);
+                nvBUS.SuaNV(maNV, conP.Capitalize(tenNV), birth, gen, conP.Capitalize(dchi), SDT, CMT, email);
             }
 
         }
@@ -305,17 +321,17 @@ namespace QuanLyNhaHang.Presentation
             Console.Clear();
 
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-            string[] tmp = nvBUS.TimKiem(maNV).Split('#');
+            string[] tmp = nvBUS.Laythongtin(maNV).Split('#');
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("\t╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("\t║                                                                THÔNG TIN CỦA BẠN,   {0, -27}                                   ║", tmp[1]);
-            Console.WriteLine("\t╠═════════╦════════════════════════════════╦═════════════════════╦═══════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
-            Console.WriteLine("\t║    Mã   ║             Họ tên             ║       Ngày sinh     ║ Giới tính ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
-            Console.WriteLine("\t╠═════════╬════════════════════════════════╬═════════════════════╬═══════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");
-            Console.WriteLine("\t║  {0,-7}║\t{1,-27}║  {2,-10}         ║     {3,-3}   ║  {4,-17}║   {5,-10}       ║  {6,-27}║", tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6]);
-            Console.WriteLine("\t╚═════════╩════════════════════════════════╩═════════════════════╩═══════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
-            Console.Write("\tNhấn phím bất kì để kết thúc!");
+            Console.WriteLine("  ╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("  ║                                                                      THÔNG TIN CỦA BẠN,   {0, -27}                                  ║", tmp[1]);
+            Console.WriteLine("  ╠═════════╦════════════════════════════════╦══════════════╦═══════════╦═══════════════════╦═════════════════╦══════════════╦═════════════════════════════╣");
+            Console.WriteLine("  ║    Mã   ║             Họ tên             ║   Ngày sinh  ║ Giới tính ║      Địa chỉ      ║  Số điện thoại  ║     CCCD     ║            Email            ║");
+            Console.WriteLine("  ╠═════════╬════════════════════════════════╬══════════════╬═══════════╬═══════════════════╬═════════════════╬══════════════╬═════════════════════════════╣");
+            Console.WriteLine("  ║  {0,-7}║\t{1,-27}  ║  {2,-10}  ║    {3,-3}    ║  {4,-17}║   {5,-10}    ║ {6,-12} ║  {7,-27}║", tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7]);
+            Console.WriteLine("  ╚═════════╩════════════════════════════════╩══════════════╩═══════════╩═══════════════════╩═════════════════╩══════════════╩═════════════════════════════╝");
+            Console.Write("\n  Nhấn phím bất kì để kết thúc!");
         }
         
         private void DoiMatKhau(string maNV)

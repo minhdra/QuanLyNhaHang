@@ -99,28 +99,19 @@ namespace QuanLyNhaHang.DAL
         public string TimKiem( string name )
         {
             StreamReader sr = new StreamReader( FileText );
-            string s, resultName = "", resultID = "";
-            int check = 0;
+            string s, result = "";
 
             while ( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
-                if (tmp[0].ToLower() == name.ToLower())
+                if (tmp[0].ToLower() == name.ToLower() || tmp[1].ToLower().Contains(name.ToLower()))
                 {
-                    check = 1;
-                    resultID = s;
-                    break;
-                }
-                else if (tmp[1].ToLower().Contains(name.ToLower()))
-                {
-                    resultName += s + "\n";
+                    result += s + "\n";
                 }
             }
 
             sr.Close();
-            if (check == 1)
-                return resultID;
-            return resultName;
+            return result;
         }
 
         public void Xoa( string maKH )

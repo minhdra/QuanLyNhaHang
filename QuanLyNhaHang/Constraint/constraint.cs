@@ -237,7 +237,7 @@ namespace QuanLyNhaHang.Constraint
         public DateTime Date(string DateStr)
         {
             DateTime date = new DateTime();
-            while (date.ToString("dd/MM/yyyy") == "01/01/0001" || date.Year > 2002)
+            while (date.ToString("dd/MM/yyyy") == "01/01/0001" || date.Year > DateTime.Now.Year - 18)
             {
 
                 try
@@ -249,6 +249,11 @@ namespace QuanLyNhaHang.Constraint
                     Console.Write("Không hợp lệ! Mời nhập lại: ");
                     DateStr = Console.ReadLine();
                 }
+                if (date.Year > DateTime.Now.Year - 18)
+                {
+                    Console.Write("Không đủ 18 tuổi! Mời nhập lại: ");
+                    DateStr = Console.ReadLine();
+                }
             }
             return date;
         }
@@ -257,7 +262,7 @@ namespace QuanLyNhaHang.Constraint
         {
             string tmp;
             DateTime date = new DateTime();
-            while (date.ToString("dd/MM/yyyy") == "01/01/0001" || date.Year > 2002)
+            while (date.ToString("dd/MM/yyyy") == "01/01/0001" || date.Year > DateTime.Now.Year - 18)
             {
 
                 try
@@ -267,6 +272,21 @@ namespace QuanLyNhaHang.Constraint
                 catch
                 {
                     tmp = "Không hợp lệ!";
+                    Console.SetCursorPosition(cursorL2, cursorT2);
+                    Console.Write(tmp);
+
+                    Console.SetCursorPosition(cursorL1, cursorT1);
+                    Console.Write(new string(' ', DateStr.Length));
+
+                    Console.SetCursorPosition(cursorL1, cursorT1);
+                    DateStr = Console.ReadLine();
+
+                    Console.SetCursorPosition(cursorL2, cursorT2);
+                    Console.Write(new string(' ', tmp.Length));
+                }
+                if(date.Year > DateTime.Now.Year - 18)
+                {
+                    tmp = "Không đủ 18 tuổi!";
                     Console.SetCursorPosition(cursorL2, cursorT2);
                     Console.Write(tmp);
 
@@ -299,15 +319,82 @@ namespace QuanLyNhaHang.Constraint
             return result;
         }
 
-        public string ExceptionNotify()
+        public string CMT(string CMTstr)
         {
+            while (true)
+            {
+                for (int x = 0; x < CMTstr.Length; x++)
+                {
+                    // Kiểm tra CCCD
+                    if (!char.IsDigit(CMTstr[x])        // Là số
+                        || CMTstr.Length != 12          // 12 ký tự
+                        || CMTstr[0] != '0'             // Bắt đầu bằng số 0
+                        || khBUS.checkSDT(CMTstr) == 1) // Kiểm tra đã tồn tại chưa
+                    {
+                        Console.Write("Nhập lại: ");
+                        CMTstr = Console.ReadLine();
+                        x = -1;
+                    }
+                }
+                if (CMTstr == "")
+                {
+                    Console.Write("Nhập lại: ");
+                    CMTstr = Console.ReadLine();
+                }
+                else
+                    break;
+            }
+            return CMTstr;
+        }
 
-            
-            string result =
-            "\n\t\t║ ║   ╔═══════════════════════════════════════╗    ║ ║" +
-            "\n\t\t║ ║   ║             KHÔNG HỢP LỆ              ║    ║ ║" +
-            "\n\t\t║ ║   ╚═══════════════════════════════════════╝    ║ ║";
-            return result;
+        public string CMT2(string CMTstr, int cursorL1, int cursorT1, int cursorL2, int cursorT2)
+        {
+            string tmp;
+            while (true)
+            {
+                tmp = "Không hợp lệ!";
+                for (int x = 0; x < CMTstr.Length; x++)
+                {
+                    // Kiểm tra CCCD
+                    if (!char.IsDigit(CMTstr[x])        // Là số
+                        || CMTstr.Length != 12          // 12 ký tự
+                        || CMTstr[0] != '0'             // Bắt đầu bằng số 0
+                        || khBUS.checkSDT(CMTstr) == 1) // Kiểm tra đã tồn tại chưa
+                    {
+
+                        Console.SetCursorPosition(cursorL2, cursorT2);
+                        Console.Write(tmp);
+
+                        Console.SetCursorPosition(cursorL1, cursorT1);
+                        Console.Write(new string(' ', CMTstr.Length));
+
+                        Console.SetCursorPosition(cursorL1, cursorT1);
+                        CMTstr = Console.ReadLine();
+
+                        Console.SetCursorPosition(cursorL2, cursorT2);
+                        Console.Write(new string(' ', tmp.Length));
+
+                        x = -1;
+                    }
+                }
+                if (CMTstr == "")
+                {
+                    Console.SetCursorPosition(cursorL2, cursorT2);
+                    Console.Write(tmp);
+
+                    Console.SetCursorPosition(cursorL1, cursorT1);
+                    Console.Write(new string(' ', CMTstr.Length));
+
+                    Console.SetCursorPosition(cursorL1, cursorT1);
+                    CMTstr = Console.ReadLine();
+
+                    Console.SetCursorPosition(cursorL2, cursorT2);
+                    Console.Write(new string(' ', tmp.Length));
+                }
+                else
+                    break;
+            }
+            return CMTstr;
         }
     }
 }
