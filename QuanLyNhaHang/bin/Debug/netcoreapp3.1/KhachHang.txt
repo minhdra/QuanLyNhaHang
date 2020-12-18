@@ -3,8 +3,4 @@ KH2#Le Hung#Hung Yen#0928943472#abd@gmail.com
 KH3#Nguyen Quang#Ha Noi#0929389242#agc@gmail.com
 KH4#Luu Bang#Pho Noi#0924398443#dfc@gmail.com
 KH5#Ho Đao#Pho Noi#0934348392#khj@gmail.com
-KH60#Le Minh#Ha Noi#0293423848#abc@gmail.com
 KH81#Xuan Dieu#Tuyen Quang#0923848283#<Trống>
-KH39#Dang Hoang Long#Hung Yen#0971603963#danglong2407@gmail.com
-KH8#Abv#Abc#0932472233#<Trống>
-KH14#Nguyen#Ha Noi#0923823483#<Trống>

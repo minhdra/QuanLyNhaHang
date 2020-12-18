@@ -3,7 +3,5 @@ lh#2#KH2
 nq#3#KH3
 lb#4#KH4
 hd#5#KH5
-##KH60
 g#g#KH81
-m#m#KH8
-t#t#KH14
+a#a#KH31

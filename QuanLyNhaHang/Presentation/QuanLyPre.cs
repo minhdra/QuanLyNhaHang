@@ -281,9 +281,9 @@ namespace QuanLyNhaHang.Presentation
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t\t║                                               HÓA ĐƠN                                           ║");
+                Console.WriteLine("\t\t║                                             DANH SÁCH HÓA ĐƠN                                   ║");
                 Console.WriteLine("\t\t╠═════════╦══════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╣");
-                Console.WriteLine("\t\t║    Mã   ║ Mã khách ║         Tên khách hàng           ║        Ngày       ║         Tổng        ║");
+                Console.WriteLine("\t\t║    Mã   ║ Mã khách ║         Tên khách hàng           ║        Ngày       ║     Thành tiền      ║");
                 Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╣");
                 for (int x = start; x < end; x++)
                 {
@@ -965,7 +965,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t             ║ 1.║  Tên: {0,-30}║", tenHH);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 2.║  Giá: {0,-9}VND                  ║                 ", Gia);
+                Console.Write("\n\t\t             ║ 2.║  Giá: {0,-9}                     ║                 ", Gia.ToString("N0"));
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
                 Console.Write("\n\t\t             ║ 3.║              Quay lại               ║                 ");
@@ -1026,64 +1026,83 @@ namespace QuanLyNhaHang.Presentation
 
         private void Xoa()
         {
-            Console.Clear();
-            Console.Write("Nhấp 'Enter' để xem danh sách hàng hóa: ");
-            string check = Console.ReadLine();
-            if (check == "")
-                Show();
-            Console.WriteLine("Xóa hàng hóa hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập mã hàng hóa muốn xóa: ");
-            string maHH = Console.ReadLine().ToUpper();
-            if (maHH != "")
+            while (true)
             {
-                Console.Write("Xác nhận xóa? (Y/N): ");
-                string check2 = Console.ReadLine().ToUpper();
-                while (check2 != "Y" && check2 != "N")
+                Console.Clear();
+                Console.WriteLine("Xóa hàng hóa hoặc nhấn 'Enter' để thoát.");
+                Console.Write("Nhập mã hàng hóa muốn xóa: ");
+                string maHH = Console.ReadLine().ToUpper();
+                if (maHH != "" && hhBUS.Laythongtin(maHH) != "")
                 {
-                    Console.Write("Không hợp lệ! Nhập lại: ");
-                    check2 = Console.ReadLine().ToUpper();
-                }
-                if (check2 == "Y")
-                {
-                    hhBUS.Xoa(maHH);
-                    Console.WriteLine("Đã xóa thành công!!!");
+                    Console.Write("Xác nhận xóa? (Y/N): ");
+                    string check2 = Console.ReadLine().ToUpper();
+                    while (check2 != "Y" && check2 != "N")
+                    {
+                        Console.Write("Không hợp lệ! Nhập lại: ");
+                        check2 = Console.ReadLine().ToUpper();
+                    }
+                    if (check2 == "Y")
+                    {
+                        hhBUS.Xoa(maHH);
+                        Console.Write("Đã xóa thành công!!!");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.Write("Đã hủy xóa!!!");
+                        Console.ReadKey();
+                    }
                 }
                 else
-                    Console.WriteLine("Đã hủy xóa!!!");
+                {
+                    if (maHH == "") return;
+                    Console.Write("Mã hàng hóa {0} không tồn tại!",maHH);
+                    Console.ReadKey();
+                }
             }
-            else
-                Console.WriteLine("Đã thoát.");
         }
 
         private void TimKiem()
         {
-            Console.Clear();
-            Console.WriteLine("Tìm kiếm hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập mã hàng hóa muốn tìm: ");
-            string maHH = Console.ReadLine().ToUpper();
-            if (maHH != "")
+            while (true)
             {
-                if (hhBUS.Laythongtin(maHH) != "")
+                Console.Clear();
+                Console.WriteLine("Tìm kiếm hoặc nhấn 'Enter' để thoát.");
+                Console.Write("Nhập mã hàng hóa muốn tìm: ");
+                string maHH = Console.ReadLine().ToUpper();
+                if (maHH != "" && hhBUS.Laythongtin(maHH) != "")
                 {
-                    Console.Clear();
-                    string[] tmp = hhBUS.Laythongtin(maHH).Split('\t');
-                    Console.SetWindowSize(140, 30);
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine("\t\t╔══════════════════════════════════════════════════════════════════════════╗");
-                    Console.WriteLine("\t\t║                              THỰC ĐƠN                                    ║");
-                    Console.WriteLine("\t\t╠═════════╦════════════════════════════════════════════╦═══════════════════╣");
-                    Console.WriteLine("\t\t║    Mã   ║                    Tên Món                 ║        Giá        ║");
-                    Console.WriteLine("\t\t╠═════════╬════════════════════════════════════════════╬═══════════════════╣");
-                    Console.WriteLine("\t\t║ {0,-7} ║\t{1,-30}         ║  {2,-9} VND    ║", tmp[0], tmp[1], tmp[2]);
-                    Console.WriteLine("\t\t╚═════════╩════════════════════════════════════════════╩═══════════════════╝");
-                    Console.Write("\t\tNhấn phím bất kì để kết thúc!");
+                    while (true)
+                    {
+                        Console.Clear();
+                        string[] tmp = hhBUS.Laythongtin(maHH).Split('\t');
+                        Console.SetWindowSize(140, 30);
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine("\t\t╔══════════════════════════════════════════════════════════════════════════╗");
+                        Console.WriteLine("\t\t║                              THỰC ĐƠN                                    ║");
+                        Console.WriteLine("\t\t╠═════════╦════════════════════════════════════════════╦═══════════════════╣");
+                        Console.WriteLine("\t\t║    Mã   ║                    Tên Món                 ║        Giá        ║");
+                        Console.WriteLine("\t\t╠═════════╬════════════════════════════════════════════╬═══════════════════╣");
+                        Console.WriteLine("\t\t║ {0,-7} ║\t{1,-30}         ║  {2,-9} VND    ║", tmp[0], tmp[1], tmp[2]);
+                        Console.WriteLine("\t\t╚═════════╩════════════════════════════════════════════╩═══════════════════╝");
+                        Console.Write("\n\t\tNhấn ESC để thoát hoặc nhấn ENTER để tiếp tục. . . ");
+
+                        ConsoleKeyInfo key = Console.ReadKey();
+
+                        if (key.Key == ConsoleKey.Enter) break;
+                        else if (key.Key == ConsoleKey.Escape) return;
+
+                    }
+
                 }
                 else
+                {
+                    if (maHH == "") return;
                     Console.WriteLine("Hàng hóa không tồn tại!");
+                }
+
             }
-            else
-                Console.Write("Đã thoát.");
         }
     }
 
@@ -1237,9 +1256,9 @@ namespace QuanLyNhaHang.Presentation
         {
             Console.Write("Nhập mã hoặc tên nhân viên (Nhấn Enter để thoát): ");
             string name = Console.ReadLine();
-            if (name != "")
+            if (name != "" && nvBUS.TimKiem(name) != "")
             {
-                if (nvBUS.TimKiem(name) != "")
+                while (true)
                 {
                     Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                     string[] tmp = nvBUS.TimKiem(name).Split('#');
@@ -1257,13 +1276,20 @@ namespace QuanLyNhaHang.Presentation
 
                     }
                     Console.WriteLine("\t╚═════════╩════════════════════════════════╩═════════════════════╩═══════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
-                    Console.Write("\tNhấn phím bất kì để kết thúc!");
+
+                    Console.Write("\n\tNhấn ESC để thoát hoặc nhấn ENTER để tiếp tục. . .");
+
+                    ConsoleKeyInfo key = Console.ReadKey();
+                    if (key.Key == ConsoleKey.Enter) break;
+                    else if (key.Key == ConsoleKey.Escape) return;
                 }
-                else
-                    Console.Write("Không có dữ liệu!");
             }
             else
-                Console.Write("Đã thoát!");
+            {
+                if (name == "") return;
+                Console.Write("Không tìm thấy kết quả nào!");
+                Console.ReadKey();
+            }
         }
 
         private void Them()
@@ -1295,12 +1321,12 @@ namespace QuanLyNhaHang.Presentation
 
         private void Sua()
         {
-            Console.Clear();
-            Console.Write("Nhập mã nhân viên muốn sửa (Hoặc nhấn Enter để thoát!): ");
-            string maNV = Console.ReadLine().ToUpper();
-            if (maNV != "")
+            while (true)
             {
-                if (nvBUS.TimKiem(maNV) != "")
+                Console.Clear();
+                Console.Write("Nhập mã nhân viên muốn sửa (Hoặc nhấn Enter để thoát!): ");
+                string maNV = Console.ReadLine().ToUpper();
+                if (maNV != "" && nvBUS.TimKiem(maNV) != "")
                 {
                     while (true)
                     {
@@ -1348,10 +1374,16 @@ namespace QuanLyNhaHang.Presentation
                                 break;
                         }
                     }
+                
                 }
                 else
+                {
+                    if (maNV == "") return;
                     Console.Write("Khách hàng không tồn tại!");
+                    Console.ReadKey();
+                }
             }
+            
         }
 
         private void SuaTK(string maNV)
@@ -1423,13 +1455,14 @@ namespace QuanLyNhaHang.Presentation
 
         private void Xoa()
         {
-            Console.Clear();
-            Console.WriteLine("Xóa nhân viên hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập mã nhân viên muốn xóa: ");
-            string maNV = Console.ReadLine().ToUpper();
-            if (maNV != "")
+
+            while (true)
             {
-                if (nvBUS.TimKiem(maNV) != "")
+                Console.Clear();
+                Console.WriteLine("Xóa nhân viên hoặc nhấn 'Enter' để thoát.");
+                Console.Write("Nhập mã nhân viên muốn xóa: ");
+                string maNV = Console.ReadLine().ToUpper();
+                if (maNV != "" && nvBUS.TimKiem(maNV) != "")
                 {
                     Console.Write("Xác nhận xóa? (Y/N): ");
                     string check = Console.ReadLine().ToUpper();
@@ -1442,15 +1475,22 @@ namespace QuanLyNhaHang.Presentation
                     {
                         nvBUS.Xoa(maNV);
                         Console.WriteLine("Đã xóa thành công!!!");
+                        Console.ReadKey();
                     }
                     else
+                    {
                         Console.WriteLine("Đã hủy xóa!!!");
+                        Console.ReadKey();
+                    }
                 }
                 else
-                    Console.WriteLine("Khách hàng không tồn tại!");
+                {
+                    if (maNV == "") return;
+                    Console.Write("Khách hàng không tồn tại!");
+                    Console.ReadKey();
+                }
+
             }
-            else
-                Console.WriteLine("Đã thoát!");
         }
 
         private void TaoTK()
@@ -1458,7 +1498,7 @@ namespace QuanLyNhaHang.Presentation
             Console.Clear();
             string[] tmp = nvBUS.ThemTK().Split('#');
             Console.WriteLine("Tài khoản: {0}\nMật khẩu: {1}\nMã nhân viên: {2}", tmp[0], tmp[1], tmp[2]);
-            Console.WriteLine("Tạo tài khoản thành công");
+            Console.Write("Tạo tài khoản thành công");
         }
     }
 
@@ -1529,11 +1569,9 @@ namespace QuanLyNhaHang.Presentation
                         break;
                     case '3':
                         TimKiem();
-                        Console.ReadKey();
                         break;
                     case '4':
                         Sua();
-                        Console.ReadKey();
                         break;
                     case '5':
                         Xoa();
@@ -1694,47 +1732,58 @@ namespace QuanLyNhaHang.Presentation
 
         private void TimKiem()
         {
-            Console.Clear();
-            Console.Write("Nhập mã hoặc tên khách hàng (Nhấn 'Enter' để thoát): ");
-            string name = Console.ReadLine();
-            if (name != "")
+            while (true)
             {
-                if (khBUS.TimKiem(name) != "")
+                Console.Clear();
+                Console.Write("Nhập mã hoặc tên khách hàng (Nhấn 'Enter' để thoát): ");
+                string name = Console.ReadLine();
+                if (name != "" && khBUS.TimKiem(name) != "")
                 {
-                    Console.Clear();
-                    string[] tmp = khBUS.TimKiem(name).Split('\n');
-                    Console.SetWindowSize(140, 30);
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                    Console.WriteLine("\t\t║                                             TÌM THẤY {0,-2} KẾT QUẢ                                                 ║", tmp.Length - 1);
-                    Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
-                    Console.WriteLine("\t\t║    Mã   ║             Họ tên             ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
-                    Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");
-                    for (int i = 0; i < tmp.Length - 1; i++)
+                    while (true)
                     {
-                        string[] tmp2 = tmp[i].Split('#');
-                        Console.WriteLine("\t\t║  {0,-7}║\t{1,-27}║  {2,-17}║     {3,-10}     ║  {4,-27}║", tmp2[0], tmp2[1], tmp2[2], tmp2[3], tmp2[4]);
+                        Console.Clear();
+                        string[] tmp = khBUS.TimKiem(name).Split('\n');
+                        Console.SetWindowSize(140, 30);
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                        Console.WriteLine("\t\t║                                             TÌM THẤY {0,-2} KẾT QUẢ                                                 ║", tmp.Length - 1);
+                        Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
+                        Console.WriteLine("\t\t║    Mã   ║             Họ tên             ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
+                        Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");
+                        for (int i = 0; i < tmp.Length - 1; i++)
+                        {
+                            string[] tmp2 = tmp[i].Split('#');
+                            Console.WriteLine("\t\t║  {0,-7}║\t{1,-27}║  {2,-17}║     {3,-10}     ║  {4,-27}║", tmp2[0], tmp2[1], tmp2[2], tmp2[3], tmp2[4]);
+
+                        }
+                        Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
+                        Console.Write("\n\t\tNhấn ESC để thoát hoặc nhấn ENTER để tiếp tục . . . ");
+                        ConsoleKeyInfo key = Console.ReadKey();
+                        if (key.Key == ConsoleKey.Escape)
+                            return;
+                        else if (key.Key == ConsoleKey.Enter)
+                            break;
 
                     }
-                    Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
-                    Console.Write("\t\tNhấn phím bất kì để kết thúc!");
-                    
                 }
-                Console.Write("Không có dữ liệu!");
+                else
+                {
+                    if (name == "") return;
+                    Console.Write("Không có dữ liệu!");
+                    Console.ReadKey();
+                }
             }
-            else
-                Console.Write("Đã thoát!");
         }
 
         private void Sua()
         {
-            Console.Clear();
-            Console.Write("Nhập mã khách hàng muốn sửa (Nhấn Enter để thoát!): ");
-            string maKH = Console.ReadLine().ToUpper();
-            if (maKH != "")
+            while (true)
             {
-                if (khBUS.TimKiem(maKH) != "")
+                Console.Clear();
+                Console.Write("Nhập mã khách hàng muốn sửa (Nhấn Enter để thoát!): ");
+                string maKH = Console.ReadLine().ToUpper();
+                if (maKH != "" && khBUS.Laythongtin(maKH) != "")
                 {
                     while (true)
                     {
@@ -1778,15 +1827,17 @@ namespace QuanLyNhaHang.Presentation
                                 Environment.Exit(0);
                                 break;
                             default:
-                                
                                 break;
                         }
                     }
                 }
                 else
+                {
+                    if (maKH == "") return;
                     Console.Write("Khách hàng không tồn tại!");
+                    Console.ReadKey();
+                }
             }
-
         }
 
         private void SuaTK(string maKH)
@@ -1858,34 +1909,37 @@ namespace QuanLyNhaHang.Presentation
 
         private void Xoa()
         {
-            Console.Clear();
-            Console.WriteLine("Xóa khách hàng hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập mã khách hàng muốn xóa: ");
-            string maKH = Console.ReadLine().ToUpper();
-            if (maKH != "")
+            while (true)
             {
-                if (khBUS.Laythongtin(maKH) != "")
+                Console.Clear();
+                Console.WriteLine("Xóa khách hàng hoặc nhấn 'Enter' để thoát.");
+                Console.Write("Nhập mã khách hàng muốn xóa: ");
+                string maKH = Console.ReadLine().ToUpper();
+                if (maKH != "" && khBUS.Laythongtin(maKH) != "")
                 {
-                    Console.Write("Xác nhận xóa? (Y/N): ");
-                    string check = Console.ReadLine().ToUpper();
-                    while (check != "Y" && check != "N")
-                    {
-                        Console.Write("Không hợp lệ! Nhập lại: ");
-                        check = Console.ReadLine().ToUpper();
-                    }
-                    if (check == "Y")
-                    {
-                        khBUS.Xoa(maKH);
-                        Console.WriteLine("Đã xóa thành công!!!");
-                    }
-                    else
-                        Console.WriteLine("Đã hủy xóa!!!");
+                        Console.Write("Xác nhận xóa? (Y/N): ");
+                        string check = Console.ReadLine().ToUpper();
+                        while (check != "Y" && check != "N")
+                        {
+                            Console.Write("Không hợp lệ! Nhập lại: ");
+                            check = Console.ReadLine().ToUpper();
+                        }
+                        if (check == "Y")
+                        {
+                            khBUS.Xoa(maKH);
+                            Console.WriteLine("Đã xóa thành công!!!");
+                        }
+                        else
+                            Console.WriteLine("Đã hủy xóa!!!");
                 }
                 else
-                    Console.WriteLine("Khách hàng không tồn tại!");
+                {
+                    if (maKH == "") return;
+                    Console.Write("Khách hàng không tồn tại!");
+                    Console.ReadKey();
+                }    
+
             }
-            else
-                Console.WriteLine("Đã thoát!");
         }
     }
 }

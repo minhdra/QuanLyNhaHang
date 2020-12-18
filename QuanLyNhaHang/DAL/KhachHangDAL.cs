@@ -220,7 +220,10 @@ namespace QuanLyNhaHang.DAL
             {
                 string[] tmp = s.Split('#');
                 if(tmp[0] == TK || tmp[2] == TK)
+                {
                     result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2];
+                    break;
+                }
             }
 
             sr.Close();
