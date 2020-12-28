@@ -39,17 +39,17 @@ namespace QuanLyNhaHang.BUS
             hdDAL.Xoa(BillID);
         }
 
-        public int ThongKeNgay(DateTime ngay)
+        public double ThongKeNgay(DateTime ngay)
         {
             return hdDAL.Thongkengay(ngay);
         }
 
-        public int ThongKeThang(DateTime thang)
+        public double ThongKeThang(DateTime thang)
         {
             return hdDAL.Thongkethang(thang);
         }
 
-        public int ThongKeNam(DateTime nam)
+        public double ThongKeNam(DateTime nam)
         {
             return hdDAL.Thongkenam(nam);
         }
@@ -78,5 +78,7 @@ namespace QuanLyNhaHang.BUS
         {
             return hdDAL.Laythongtin(maKH);
         }
+
+        
     }
 }

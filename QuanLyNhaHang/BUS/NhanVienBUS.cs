@@ -10,15 +10,10 @@ namespace QuanLyNhaHang.BUS
     {
         private NhanVienDAL nvDAL = new NhanVienDAL();
 
-        public void ThemNV(string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string CMT, string Email)
+        public void ThemNV(string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string CMT, string Email, string ChucVu)
         {
-            nvDAL.ThemNV(maNV, tenNV, NgaySinh, gioiTinh, DiaChi, SDT, CMT, Email);
+            nvDAL.ThemNV(maNV, tenNV, NgaySinh, gioiTinh, DiaChi, SDT, CMT, Email, ChucVu);
         }
-
-        //public void ThemPV(string maNV, string maKH)
-        //{
-        //    nvDAL.ThemPhucVu(maNV, maKH);
-        //}
 
         public string ThemTK()
         {
@@ -50,10 +45,10 @@ namespace QuanLyNhaHang.BUS
             nvDAL.SuaNV(maNV, tenNV, NgaySinh, gioiTinh, DiaChi, SDT, CMT, Email);
         }
 
-        //public void SuaPV(string maNV, string maKH)
-        //{
-        //    nvDAL.SuaPV(maNV, maKH);
-        //}
+        public void SuaCV(string maNV, string ChucVu)
+        {
+            nvDAL.SuaCV(maNV, ChucVu);
+        }
 
         public void SuaTK(string TK, string MK, string maNV)
         {
@@ -75,11 +70,6 @@ namespace QuanLyNhaHang.BUS
             return nvDAL.Laydanhsach();
         }
 
-        //public List<string> HienPhucVu(string maNV)
-        //{
-        //    return nvDAL.HienPhucVu(maNV);
-        //}
-
         public string LaythongtinTK(string TK) => nvDAL.LaythongtinTK(TK);
 
         public string Laythongtin(string maNV) => nvDAL.Laythongtin(maNV);
@@ -88,5 +78,14 @@ namespace QuanLyNhaHang.BUS
         {
             return nvDAL.checkNum(Num);
         }
+        public string QuenMK(string SDT)
+        {
+            return nvDAL.QuenMK(SDT);
+        }
+        public int Count() => nvDAL.Count();
+
+        public int CountAcc() => nvDAL.CountAcc();
+        public List<string> LaydanhsachAcc() => nvDAL.LaydanhsachAcc();
+
     }
 }

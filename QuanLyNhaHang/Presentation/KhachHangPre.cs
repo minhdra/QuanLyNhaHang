@@ -162,47 +162,77 @@ namespace QuanLyNhaHang.Presentation
 
 
             Console.Write("\n\t\t╔═══════════════════════════════════════════════════════╗");
-            Console.Write("\n\t\t║                  THÊM THÔNG TIN                       ║");
+            Console.Write("\n\t\t║                     THÊM THÔNG TIN                    ║");
             Console.Write("\n\t\t╠═══════════════════════════════════════════════════════╣");
             Console.Write("\n\t\t║                                                       ║");
             Console.Write("\n\t\t║ ╔═══════════════════════════════════════════════════╗ ║");
-            Console.Write("\n\t\t║ ║  NHẤN ENTER ĐỂ THOÁT!                             ║ ║");
+            Console.Write("\n\t\t║ ║  NHẤN ENTER ĐỂ THOÁT!  (*) LÀ BẮT BUỘC            ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
-            Console.Write("\n\t\t║ ║  Họ Tên         :                                 ║ ║");
+            Console.Write("\n\t\t║ ║  Họ Tên (*)     :                                 ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
-            Console.Write("\n\t\t║ ║  Địa chỉ        :                                 ║ ║");
+            Console.Write("\n\t\t║ ║  Ngày sinh      :                                 ║ ║");
+            Console.Write("\n\t\t║ ║ (dd/MM/yyyy)                                      ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
-            Console.Write("\n\t\t║ ║  Số điện thoại  :                                 ║ ║");
+            Console.Write("\n\t\t║ ║  Giới tính (*)  :                                 ║ ║");
+            Console.Write("\n\t\t║ ║ (1 : Nam, 2 : Nu)                                 ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
-            Console.Write("\n\t\t║ ║  Email (Nếu có) :                      @gmail.com ║ ║");
+            Console.Write("\n\t\t║ ║  Địa chỉ (*)    :                                 ║ ║");
+            Console.Write("\n\t\t║ ║                                                   ║ ║");
+            Console.Write("\n\t\t║ ║  SDT (*)        :                                 ║ ║");
+            Console.Write("\n\t\t║ ║                                                   ║ ║");
+            Console.Write("\n\t\t║ ║  CCCD           :                                 ║ ║");
+            Console.Write("\n\t\t║ ║                                                   ║ ║");
+            Console.Write("\n\t\t║ ║  Email          :                      @gmail.com ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
             Console.Write("\n\t\t║ ║                                                   ║ ║");
             Console.Write("\n\t\t║ ╚═══════════════════════════════════════════════════╝ ║");
             Console.Write("\n\t\t║                                                       ║");
             Console.Write("\n\t\t╚═══════════════════════════════════════════════════════╝");
 
+            string empty = "<Trống>";
+
             Console.SetCursorPosition(38, 8);
             string tenKH = Console.ReadLine();
             if (tenKH == "") return;
-            tenKH = conP.CheckStr2(tenKH, 27, 38, 8, 38, 18);
+            tenKH = conP.CheckStr2(tenKH, 27, 38, 8, 38, 26);
 
             Console.SetCursorPosition(38, 10);
+            string dateStr = Console.ReadLine();
+            DateTime date;
+            if (dateStr != "")
+                date = conP.Date2(dateStr, 38, 10, 38, 26);
+            else
+                date = new DateTime();
+
+            Console.SetCursorPosition(38, 13);
+            string chose = Console.ReadLine().ToLower();
+            bool GT = conP.Gender2(chose, 38, 13, 38, 26);
+
+            Console.SetCursorPosition(38, 16);
             string dchi = Console.ReadLine();
-            dchi = conP.CheckStr2(dchi, 17, 38, 10, 38, 18);
+            dchi = conP.CheckStr2(dchi, 17, 38, 16, 38, 26);
 
-            Console.SetCursorPosition(38, 12);
+            Console.SetCursorPosition(38, 18);
             string SDT = Console.ReadLine();
-            SDT = conP.NumberPhone2(SDT, 38, 12, 38, 18);
+            SDT = conP.NumberPhone2(SDT, 38, 18, 38, 26);
 
-            Console.SetCursorPosition(38, 14);
-            string e = Console.ReadLine(), email = "<Trống>";
-            if (e != "")
-                email = conP.Email2(e, 38, 14, 38, 18);
+            Console.SetCursorPosition(38, 20);
+            string CMT = Console.ReadLine();
+            if (CMT == "")
+                CMT = empty;
+            else
+                CMT = conP.CMT2(CMT, 38, 20, 38, 26);
 
+            Console.SetCursorPosition(38, 22);
+            string email = Console.ReadLine();
+            if (email == "")
+                email = empty;
+            else
+                email = conP.Email2(email, 38, 22, 38, 26);
 
-            khBUS.Them(maKH, conP.Capitalize(tenKH), conP.Capitalize(dchi), SDT, email);
+            khBUS.Them(maKH, conP.Capitalize(tenKH), date, GT, conP.Capitalize(dchi), SDT, CMT, email);
 
-            Console.SetCursorPosition(29, 18);
+            Console.SetCursorPosition(29, 26);
             Console.Write("Bạn đã thêm thông tin thành công!!!");
             Console.ReadKey();
         }
@@ -215,7 +245,14 @@ namespace QuanLyNhaHang.Presentation
                 Console.Clear();
 
                 string[] tmp = khBUS.Laythongtin(maKH).Split('\t');
-                string tenKH = tmp[1], dchi = tmp[2], SDT = tmp[3], email = tmp[4];
+                DateTime date = DateTime.Parse(tmp[2]);
+                string birth = date.ToString("dd/MM/yyyy");
+                if (birth == "01/01/0001")
+                    birth = "<Trống>";
+                bool gen = true;
+                if (tmp[3] == "Nu")
+                    gen = false;
+                string tenKH = tmp[1], dchi = tmp[4], SDT = tmp[5], CMT = tmp[6], email = tmp[7];
                 Console.SetWindowSize(103, 35);
                 Console.Write("\n\t\t             ╔═══╦═════════════════════════════════════╗                 ");
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
@@ -226,13 +263,22 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t             ║ 1.║  Họ Tên: {0,-27}║", tenKH);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 2.║  Địa chỉ: {0,-17}         ║                 ", dchi);
+                Console.Write("\n\t\t             ║ 2.║  Ngày sinh: {0,-10}              ║                 ", birth);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 3.║  SDT: {0,-10}                    ║                 ", SDT);
+                Console.Write("\n\t\t             ║ 3.║  Giới tính: {0,-3}                     ║                 ", tmp[3]);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 4.║  Email: {0,-27} ║                 ", email);
+                Console.Write("\n\t\t             ║ 4.║  Địa chỉ : {0,-17}        ║                 ", dchi);
+                Console.Write("\n\t\t             ║___║_____________________________________║                 ");
+                Console.Write("\n\t\t             ║   ║                                     ║                 ");
+                Console.Write("\n\t\t             ║ 5.║  SDT : {0,-10}                   ║                 ", SDT);
+                Console.Write("\n\t\t             ║___║_____________________________________║                 ");
+                Console.Write("\n\t\t             ║   ║                                     ║                 ");
+                Console.Write("\n\t\t             ║ 6.║  CCCD : {0,-12}                ║                 ", CMT);
+                Console.Write("\n\t\t             ║___║_____________________________________║                 ");
+                Console.Write("\n\t\t             ║   ║                                     ║                 ");
+                Console.Write("\n\t\t             ║ 7.║  Email: {0,-27} ║  ", email);
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
                 Console.Write("\n\t\t             ║ 9.║              Quay lại               ║                 ");
@@ -242,7 +288,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║ Bấm phím theo số để chọn:           ║                 ");
                 Console.Write("\n\t\t             ╚═══╩═════════════════════════════════════╝                 ");
-                Console.SetCursorPosition(61, 24);
+                Console.SetCursorPosition(61, 33);
                 char key = char.ToUpper(Console.ReadKey(true).KeyChar);
                 string t;
                 switch (key)
@@ -253,24 +299,44 @@ namespace QuanLyNhaHang.Presentation
                         t = Console.ReadLine();
                         if (t != "")
                             tenKH = conP.CheckStr(t, 27);
-
                         break;
                     case '2':
+                        Console.Clear();
+                        Console.Write("Sinh nhật (dd/MM/yyyy) (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
+                            date = conP.Date(t);
+
+                        break;
+                    case '3':
+                        Console.Clear();
+                        Console.Write("Giới tính (1 : Nam, 0: Nữ) (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
+                            gen = conP.Gender(t);
+                        break;
+                    case '4':
                         Console.Clear();
                         Console.Write("Địa chỉ (Enter để thoát): ");
                         t = Console.ReadLine();
                         if (t != "")
                             dchi = conP.CheckStr(t, 17);
                         break;
-                    case '3':
+                    case '5':
                         Console.Clear();
                         Console.Write("Số điện thoại (Enter để thoát): ");
                         t = Console.ReadLine();
                         if (t != "")
                             SDT = conP.NumberPhone(t);
-
                         break;
-                    case '4':
+                    case '6':
+                        Console.Clear();
+                        Console.Write("CCCD (Enter để thoát): ");
+                        t = Console.ReadLine();
+                        if (t != "")
+                            CMT = conP.CMT(t);
+                        break;
+                    case '7':
                         Console.Clear();
                         Console.Write("Email (...@gmail.com hoặc Enter để thoát): ");
                         t = Console.ReadLine();
@@ -278,6 +344,7 @@ namespace QuanLyNhaHang.Presentation
                             email = conP.Email(t);
                         break;
                     case '9':
+                        //HienMenuNV(maNV);
                         check = true;
                         break;
                     case '0':
@@ -285,7 +352,7 @@ namespace QuanLyNhaHang.Presentation
                         break;
                 }
 
-                khBUS.Sua(maKH, conP.Capitalize(tenKH), conP.Capitalize(dchi), SDT, email);
+                khBUS.Sua(maKH, conP.Capitalize(tenKH), date, gen, conP.Capitalize(dchi), SDT, CMT, email);
                 // Cập nhật tên khách hàng vào hóa đơn
                 string[] tmp2 = hdBUS.LayThongTin(maKH).Split('\n');
                 for(int x = 0; x < tmp2.Length - 1; x++)
@@ -299,18 +366,20 @@ namespace QuanLyNhaHang.Presentation
         private void XemThongTin(string maKH)
         {
             Console.Clear();
+
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            
             string[] tmp = khBUS.Laythongtin(maKH).Split('\t');
-            Console.SetWindowSize(140, 30);
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("\t\t║                                       THÔNG TIN CỦA BẠN,   {0, -27}                          ║", tmp[1]);
-            Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═══════════════════╦════════════════════╦═════════════════════════════╣");
-            Console.WriteLine("\t\t║    Mã   ║             Họ tên             ║       Địa chỉ     ║    Số điện thoại   ║            Email            ║");
-            Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═══════════════════╬════════════════════╬═════════════════════════════╣");
-            Console.WriteLine("\t\t║  {0,-7}║\t{1,-27}║  {2,-17}║     {3,-10}     ║  {4,-27}║", tmp[0], tmp[1], tmp[2], tmp[3], tmp[4]);
-            Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═══════════════════╩════════════════════╩═════════════════════════════╝");
-            Console.Write("\t\tNhấn phím bất kì để kết thúc!");
+            Console.WriteLine("  ╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("  ║                                                                      THÔNG TIN CỦA BẠN,   {0, -27}                                  ║", tmp[1]);
+            Console.WriteLine("  ╠═════════╦════════════════════════════════╦══════════════╦═══════════╦═══════════════════╦═════════════════╦══════════════╦═════════════════════════════╣");
+            Console.WriteLine("  ║    Mã   ║             Họ tên             ║   Ngày sinh  ║ Giới tính ║      Địa chỉ      ║  Số điện thoại  ║     CCCD     ║            Email            ║");
+            Console.WriteLine("  ╠═════════╬════════════════════════════════╬══════════════╬═══════════╬═══════════════════╬═════════════════╬══════════════╬═════════════════════════════╣");
+            Console.WriteLine("  ║  {0,-7}║\t{1,-27}  ║  {2,-10}  ║    {3,-3}    ║  {4,-17}║   {5,-10}    ║ {6,-12} ║  {7,-27}║", tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7]);
+            Console.WriteLine("  ╚═════════╩════════════════════════════════╩══════════════╩═══════════╩═══════════════════╩═════════════════╩══════════════╩═════════════════════════════╝");
+            Console.Write("\n  Nhấn phím bất kì để kết thúc!");
         }
 
         private void Order(string maKH)
@@ -454,8 +523,8 @@ namespace QuanLyNhaHang.Presentation
                 sum += double.Parse(tmp2[4]);
             }
 
-            int start = 0, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
-            int end = count <= 6 ? count : 6;
+            int start, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
+            int end;
             do
             {
                 Console.Clear();

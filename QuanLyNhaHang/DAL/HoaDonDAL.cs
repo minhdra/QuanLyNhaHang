@@ -121,7 +121,7 @@ namespace QuanLyNhaHang.DAL
             sw.Close();
         }
 
-        public string TimKiem( string BillID )
+        public string TimKiem( string name )
         {
             StreamReader sr = new StreamReader( FileText );
             string s, result = "";
@@ -129,9 +129,10 @@ namespace QuanLyNhaHang.DAL
             while( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
-                if( tmp[0] == BillID )
+                if( tmp[0].ToLower() == name.ToLower() 
+                    || tmp[1].ToLower().Contains(name.ToLower()))
                 {
-                    result = s;
+                    result += s + "\n";
                     break;
                 }
             }
@@ -175,35 +176,17 @@ namespace QuanLyNhaHang.DAL
             sw2.Close();
         }
 
-        public int Thongkengay(DateTime ngay)
+        public double Thongkengay(DateTime ngay)
         {
             StreamReader sr1 = new StreamReader(FileText);
             
             string s;
-            int total = 0;
+            double total = 0;
             while ((s = sr1.ReadLine()) != null)
             {
                 string[] tmp1 = s.Split('#');
                 if (tmp1[2] == ngay.ToString("d"))
-                {
-                    StreamReader sr2 = new StreamReader(FileText_detail);
-                    while ((s = sr2.ReadLine()) != null)
-                    {
-                        string[] tmp2 = s.Split('#');
-                        if (tmp1[0] == tmp2[0])
-                        {
-                            StreamReader sr3 = new StreamReader(FileText_Goods);
-                            while ((s = sr3.ReadLine()) != null)
-                            {
-                                string[] tmp3 = s.Split('#');
-                                if(tmp2[1] == tmp3[0])
-                                    total += Convert.ToInt32(tmp3[2]) * Convert.ToInt32(tmp2[2]);
-                            }
-                            sr3.Close();
-                        }
-                    }
-                    sr2.Close(); 
-                }
+                    total += Convert.ToDouble(tmp1[4]);
             }
 
             sr1.Close(); 
@@ -211,37 +194,18 @@ namespace QuanLyNhaHang.DAL
             return total;
         }
 
-        public int Thongkethang(DateTime thang)
+        public double Thongkethang(DateTime thang)
         {
             StreamReader sr1 = new StreamReader(FileText);
             
             string s;
-            int total = 0;
+            double total = 0;
             while ((s = sr1.ReadLine()) != null)
             {
                 string[] tmp1 = s.Split('#');
                 DateTime dateMM = DateTime.Parse(tmp1[2]);
                 if ( dateMM.Month == thang.Month && dateMM.Year == thang.Year)
-                {
-
-                    StreamReader sr2 = new StreamReader(FileText_detail);
-                    while ((s = sr2.ReadLine()) != null)
-                    {
-                        string[] tmp2 = s.Split('#');
-                        if (tmp1[0] == tmp2[0])
-                        {
-                            StreamReader sr3 = new StreamReader(FileText_Goods);
-                            while ((s = sr3.ReadLine()) != null)
-                            {
-                                string[] tmp3 = s.Split('#');
-                                if (tmp2[1] == tmp3[0])
-                                    total += Convert.ToInt32(tmp3[2]) * Convert.ToInt32(tmp2[2]);
-                            }
-                            sr3.Close();
-                        }
-                    }
-                    sr2.Close(); 
-                }
+                    total += Convert.ToDouble(tmp1[4]);
             }
 
             sr1.Close(); 
@@ -249,37 +213,18 @@ namespace QuanLyNhaHang.DAL
             return total;
         }
 
-        public int Thongkenam(DateTime nam)
+        public double Thongkenam(DateTime nam)
         {
             StreamReader sr1 = new StreamReader(FileText);
 
             string s;
-            int total = 0;
+            double total = 0;
             while ((s = sr1.ReadLine()) != null)
             {
                 string[] tmp1 = s.Split('#');
                 DateTime dateMM = DateTime.Parse(tmp1[2]);
                 if (dateMM.Year == nam.Year)
-                {
-
-                    StreamReader sr2 = new StreamReader(FileText_detail);
-                    while ((s = sr2.ReadLine()) != null)
-                    {
-                        string[] tmp2 = s.Split('#');
-                        if (tmp1[0] == tmp2[0])
-                        {
-                            StreamReader sr3 = new StreamReader(FileText_Goods);
-                            while ((s = sr3.ReadLine()) != null)
-                            {
-                                string[] tmp3 = s.Split('#');
-                                if (tmp2[1] == tmp3[0])
-                                    total += Convert.ToInt32(tmp3[2]) * Convert.ToInt32(tmp2[2]);
-                            }
-                            sr3.Close();
-                        }
-                    }
-                    sr2.Close();
-                }
+                    total += Convert.ToDouble(tmp1[4]);
             }
 
             sr1.Close();
@@ -292,7 +237,7 @@ namespace QuanLyNhaHang.DAL
             StreamReader sr1 = new StreamReader(FileText);
 
             string s;
-            int total = 0;
+            double total = 0;
             while ((s = sr1.ReadLine()) != null)
             {
                 string[] tmp1 = s.Split('#');
@@ -310,7 +255,7 @@ namespace QuanLyNhaHang.DAL
                             {
                                 string[] tmp3 = s.Split('#');
                                 if (tmp2[1] == tmp3[0])
-                                    total += Convert.ToInt32(tmp3[2]) * Convert.ToInt32(tmp2[2]);
+                                    total += Convert.ToDouble(tmp3[2]) * Convert.ToDouble(tmp2[2]);
                             }
                             sr3.Close();
                         }
@@ -344,14 +289,14 @@ namespace QuanLyNhaHang.DAL
             return list;
         }
 
-        public string Laythongtin(string maKH)
+        public string Laythongtin(string ID)
         {
             StreamReader sr = new StreamReader(FileText);
             string s, result = "";
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                if (tmp[3] == maKH)
+                if (tmp[3] == ID || tmp[0] == ID)
                     result += tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3]  + "\t" + tmp[4] + "\n";
             }
             sr.Close();

@@ -11,7 +11,6 @@ namespace QuanLyNhaHang.DAL
         private string FileText = "NhanVien.txt";
         //private string FileText_inCharge = "PhucVu.txt";
         private string ACC = "TaiKhoanNV.txt";
-        private KhachHangDAL khDAL = new KhachHangDAL();
 
         public int GetID()
         {
@@ -40,7 +39,7 @@ namespace QuanLyNhaHang.DAL
             return i;
         }
 
-        public void ThemNV( string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string CMT, string Email )
+        public void ThemNV( string maNV, string tenNV, DateTime NgaySinh, bool gioiTinh, string DiaChi, string SDT, string CMT, string Email, string ChucVu )
         {
             if( !File.Exists( FileText ) )
             {
@@ -54,22 +53,10 @@ namespace QuanLyNhaHang.DAL
                 GT = "Nu";
 
             StreamWriter sw = new StreamWriter( FileText, true );
-            sw.WriteLine( maNV + "#" + tenNV + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT + "#" + DiaChi + "#" + SDT + "#" + CMT + "#" + Email );
+            sw.WriteLine( maNV + "#" + tenNV + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT 
+                + "#" + DiaChi + "#" + SDT + "#" + CMT + "#" + Email + "#" + ChucVu);
             sw.Close();
         }
-
-        //public void ThemPhucVu(string maNV, string maKH)
-        //{
-        //    if (!File.Exists(FileText_inCharge))
-        //    {
-        //        FileStream fs = File.Create(FileText_inCharge);
-        //        fs.Close();
-        //    }
-
-        //    StreamWriter sw = new StreamWriter(FileText_inCharge, true);
-        //    sw.WriteLine(maNV + "#" + maKH);
-        //    sw.Close();
-        //}
 
         public string ThemTK()
         {
@@ -223,7 +210,8 @@ namespace QuanLyNhaHang.DAL
                 if( tmp[0] != maNV )
                     result += s + "\n";
                 else
-                    result += maNV + "#" + tenNV + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT + "#" + DiaChi + "#" + SDT + "#" + CMT + "#" + Email;
+                    result += maNV + "#" + tenNV + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT 
+                        + "#" + DiaChi + "#" + SDT + "#" + CMT + "#" + Email + "#" + tmp[8];
             }
             sr.Close();
             StreamWriter sw = new StreamWriter( FileText );
@@ -231,23 +219,25 @@ namespace QuanLyNhaHang.DAL
             sw.Close();
         }
 
-        //public void SuaPV(string maNV, string maKH)
-        //{
-        //    StreamReader sr = new StreamReader(FileText_inCharge);
-        //    string s, result = "";
-        //    while ((s = sr.ReadLine()) != null)
-        //    {
-        //        string[] tmp = s.Split('#');
-        //        if (tmp[0] != maNV && tmp[1] != maKH)
-        //            result += s + "\n";
-        //        else
-        //            result += maNV + "#" + maKH;
-        //    }
-        //    sr.Close();
-        //    StreamWriter sw = new StreamWriter(FileText_inCharge);
-        //    sw.Write(result);
-        //    sw.Close();
-        //}
+        public void SuaCV(string maNV, string ChucVu)
+        {
+            StreamReader sr = new StreamReader(FileText);
+            string s, result = "";
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                string[] tmp = s.Split('#');
+                if (tmp[0] != maNV)
+                    result += s + "\n";
+                else
+                    result += maNV + "#" + tmp[1] + "#" + tmp[2] + "#" + tmp[3]
+                        + "#" + tmp[4] + "#" + tmp[5] + "#" + tmp[6] + "#" + tmp[7] + "#" + ChucVu;
+            }
+            sr.Close();
+            StreamWriter sw = new StreamWriter(FileText);
+            sw.Write(result);
+            sw.Close();
+        }
 
         public string TimKiem(string name)
         {
@@ -322,6 +312,35 @@ namespace QuanLyNhaHang.DAL
             return check;
         }
 
+        public string QuenMK(string SDT)
+        {
+            StreamReader sr1 = new StreamReader(FileText);
+            string s, result = "";
+
+            while ((s = sr1.ReadLine()) != null)
+            {
+                string[] tmp = s.Split('#');
+                if (tmp[3] == SDT)
+                {
+                    StreamReader sr2 = new StreamReader(ACC);
+                    while ((s = sr2.ReadLine()) != null)
+                    {
+                        string[] tmp2 = s.Split('#');
+                        if (tmp2[2] == tmp[0])
+                        {
+                            result = "Tài khoản: " + tmp2[0] + "\nMật khẩu: " + tmp2[1];
+                            sr2.Close();
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            sr1.Close();
+
+            return result;
+        }
+
         public List<string> Laydanhsach()
         {
             List<string> list = new List<string>();
@@ -331,7 +350,8 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4] + "\t" + tmp[5] + "\t" + tmp[6] + "\t" + tmp[7];
+                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" 
+                    + tmp[4] + "\t" + tmp[5] + "\t" + tmp[6] + "\t" + tmp[7] + "\t" + tmp[8];
                 list.Add(result);
             }
             sr.Close();
@@ -339,24 +359,22 @@ namespace QuanLyNhaHang.DAL
             return list;
         }
 
-        //public List<string> HienPhucVu(string maNV)
-        //{
-        //    List<string> list = new List<string>();
-        //    StreamReader sr = new StreamReader(FileText_inCharge);
-        //    string s, result;
+        public List<string> LaydanhsachAcc()
+        {
+            List<string> list = new List<string>();
+            StreamReader sr = new StreamReader(ACC);
+            string s, result;
 
-        //    while ((s = sr.ReadLine()) != null)
-        //    {
-        //        string[] tmp = s.Split('#');
-        //        if (maNV == tmp[0])
-        //        {
-        //            result = tmp[0] + "\t" + khDAL.Laythongtin(tmp[1]);
-        //        }
-        //    }
-        //    sr.Close();
+            while ((s = sr.ReadLine()) != null)
+            {
+                string[] tmp = s.Split('#');
+                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2];
+                list.Add(result);
+            }
+            sr.Close();
 
-        //    return list;
-        //}
+            return list;
+        }
 
         public string LaythongtinTK(string TK)
         {
@@ -391,6 +409,32 @@ namespace QuanLyNhaHang.DAL
 
             sr.Close();
             return result;
+        }
+
+        public int Count()
+        {
+            int d = 0;
+            StreamReader sr = new StreamReader(FileText);
+            string s;
+            while ((s = sr.ReadLine()) != null)
+            {
+                d++;
+            }
+            sr.Close();
+            return d;
+        }
+
+        public int CountAcc()
+        {
+            int d = 0;
+            StreamReader sr = new StreamReader(ACC);
+            string s;
+            while ((s = sr.ReadLine()) != null)
+            {
+                d++;
+            }
+            sr.Close();
+            return d;
         }
     }
 }

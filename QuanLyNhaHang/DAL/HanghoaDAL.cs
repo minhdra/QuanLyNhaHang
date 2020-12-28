@@ -36,7 +36,7 @@ namespace QuanLyNhaHang.DAL
             return i;
         }
 
-        public void Them(string ten, int gia)
+        public void Them(string ten, double gia)
         {
             if (!File.Exists(FileText))
             {
@@ -49,7 +49,7 @@ namespace QuanLyNhaHang.DAL
             sw.Close();
         }
 
-        public void Sua(string ID, string ten, int gia)
+        public void Sua(string ID, string ten, double gia)
         {
             StreamReader sr = new StreamReader(FileText);
             string s, result = "";
@@ -121,6 +121,25 @@ namespace QuanLyNhaHang.DAL
 
                 if (tmp[0] == ID)
                     result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2];
+            }
+
+            sr.Close();
+
+            return result;
+        }
+
+        public string TimKiem(string name)
+        {
+            StreamReader sr = new StreamReader(FileText);
+            string s, result = "";
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                string[] tmp = s.Split('#');
+
+                if (tmp[0].ToLower() == name.ToLower() 
+                    || tmp[1].ToLower().Contains(name.ToLower()))
+                    result += s + "\n";
             }
 
             sr.Close();

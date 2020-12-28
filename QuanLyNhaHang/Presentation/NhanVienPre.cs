@@ -21,7 +21,9 @@ namespace QuanLyNhaHang.Presentation
                 int check = 0;
                 if (nvBUS.Laythongtin(maNV) != "")
                 {
-                    check = 1;
+                    string[] pro = nvBUS.Laythongtin(maNV).Split('#');
+                    if(pro[1] != "empty")
+                        check = 1;
                 }
 
                 Console.Clear();
@@ -128,9 +130,6 @@ namespace QuanLyNhaHang.Presentation
         {
             Console.Clear();
 
-            Console.Clear();
-
-
             Console.Write("\n\t\t╔═══════════════════════════════════════════════════════╗");
             Console.Write("\n\t\t║                     THÊM THÔNG TIN                    ║");
             Console.Write("\n\t\t╠═══════════════════════════════════════════════════════╣");
@@ -190,7 +189,7 @@ namespace QuanLyNhaHang.Presentation
             string email = Console.ReadLine();
             email = conP.Email2(email, 38, 22, 38, 26);
 
-            nvBUS.ThemNV(maNV, conP.Capitalize(tenNV), date, GT, conP.Capitalize(dchi), SDT, CMT, email);
+            nvBUS.SuaNV(maNV, conP.Capitalize(tenNV), date, GT, conP.Capitalize(dchi), SDT, CMT, email);
 
             Console.SetCursorPosition(29, 26);
             Console.Write("Bạn đã thêm thông tin thành công!!!");
@@ -324,13 +323,13 @@ namespace QuanLyNhaHang.Presentation
             string[] tmp = nvBUS.Laythongtin(maNV).Split('#');
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("  ╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("  ║                                                                      THÔNG TIN CỦA BẠN,   {0, -27}                                  ║", tmp[1]);
-            Console.WriteLine("  ╠═════════╦════════════════════════════════╦══════════════╦═══════════╦═══════════════════╦═════════════════╦══════════════╦═════════════════════════════╣");
-            Console.WriteLine("  ║    Mã   ║             Họ tên             ║   Ngày sinh  ║ Giới tính ║      Địa chỉ      ║  Số điện thoại  ║     CCCD     ║            Email            ║");
-            Console.WriteLine("  ╠═════════╬════════════════════════════════╬══════════════╬═══════════╬═══════════════════╬═════════════════╬══════════════╬═════════════════════════════╣");
-            Console.WriteLine("  ║  {0,-7}║\t{1,-27}  ║  {2,-10}  ║    {3,-3}    ║  {4,-17}║   {5,-10}    ║ {6,-12} ║  {7,-27}║", tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7]);
-            Console.WriteLine("  ╚═════════╩════════════════════════════════╩══════════════╩═══════════╩═══════════════════╩═════════════════╩══════════════╩═════════════════════════════╝");
+            Console.WriteLine("  ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("  ║                                                                      THÔNG TIN CỦA BẠN,   {0, -27}                                            ║", tmp[1]);
+            Console.WriteLine("  ╠═════════╦═════════════════════════════╦════════════╦═══════════╦═══════════════════╦═════════════════╦══════════════╦═════════════════════════════╦══════════════╣");
+            Console.WriteLine("  ║    Mã   ║            Họ tên           ║ Ngày sinh  ║ Giới tính ║      Địa chỉ      ║  Số điện thoại  ║     CCCD     ║            Email            ║   Chức vụ    ║");
+            Console.WriteLine("  ╠═════════╬═════════════════════════════╬════════════╬═══════════╬═══════════════════╬═════════════════╬══════════════╬═════════════════════════════╬══════════════╣");
+            Console.WriteLine("  ║  {0,-7}║ {1,-27} ║ {2,-10} ║    {3,-3}    ║  {4,-17}║   {5,-10}    ║ {6,-12} ║  {7,-27}║ {8,-12} ║", tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8]);
+            Console.WriteLine("  ╚═════════╩═════════════════════════════╩════════════╩═══════════╩═══════════════════╩═════════════════╩══════════════╩═════════════════════════════╩══════════════╝");
             Console.Write("\n  Nhấn phím bất kì để kết thúc!");
         }
         

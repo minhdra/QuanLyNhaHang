@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -37,33 +38,48 @@ namespace QuanLyNhaHang.DAL
             return i;
         }
 
-        public void Them(string maKH, string tenKH, string DiaChi, string SDT, string Email)
+        public void Them(string maKH, string tenKH, DateTime NgaySinh, bool gioiTinh,
+            string DiaChi, string SDT, string CMT, string Email)
         {
             if( !File.Exists( FileText ) )
             {
                 FileStream fs = File.Create(FileText);
                 fs.Close();
             }
+
+            string GT;
+            if (gioiTinh == true)
+                GT = "Nam";
+            else
+                GT = "Nu";
+
             StreamWriter sw = new StreamWriter( FileText, true );
-            sw.WriteLine( maKH + "#" + tenKH + "#" + DiaChi + "#" + SDT + "#" + Email);
+            sw.WriteLine( maKH + "#" + tenKH + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT 
+                + "#" + DiaChi + "#" + SDT + "#" + CMT + "#" + Email);
             sw.Close();
         }
 
 
-        public void Sua(string maKH, string tenKH, string DiaChi, string SDT, string Email)
+        public void Sua(string maKH, string tenKH, DateTime NgaySinh, bool gioiTinh,
+            string DiaChi, string SDT, string CMT, string Email)
         {
             StreamReader sr = new StreamReader( FileText );
             string s, result = "";
 
-            while( (s = sr.ReadLine()) != null )
+            string GT;
+            if (gioiTinh == true)
+                GT = "Nam";
+            else
+                GT = "Nu";
+
+            while ( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
                 if( tmp[0] != maKH )
                     result += s + "\n";
                 else
-                {
-                    result += maKH + "#" + tenKH + "#" + DiaChi + "#" + SDT + "#" + Email + "\n";
-                }
+                    result += maKH + "#" + tenKH + "#" + NgaySinh.ToString("dd/MM/yyyy") + "#" + GT 
+                        + "#" + DiaChi + "#" + SDT + "#" + CMT + "#" + Email + "\n";
             }
 
             sr.Close();
@@ -152,16 +168,16 @@ namespace QuanLyNhaHang.DAL
             sw2.Close();
         }
 
-        // Kiểm tra số điện thoại đã tồn tại chưa
-        public int checkSDT(string SDT)
+        // Kiểm tra tồn tại SDT, CCCD
+        public int checkNum(string Num)
         {
             StreamReader sr = new StreamReader(FileText);
             string s;
             int check = 0;
-            while((s = sr.ReadLine()) != null)
+            while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                if (tmp[3] == SDT)
+                if (tmp[3] == Num || tmp[6] == Num)
                 {
                     check = 1;
                 }
@@ -179,7 +195,25 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4];
+                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t"
+                    + tmp[4] + "\t" + tmp[5] + "\t" + tmp[6] + "\t" + tmp[7];
+                list.Add(result);
+            }
+            sr.Close();
+
+            return list;
+        }
+
+        public List<string> LaydanhsachAcc()
+        {
+            List<string> list = new List<string>();
+            StreamReader sr = new StreamReader(ACC);
+            string s, result;
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                string[] tmp = s.Split('#');
+                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2];
                 list.Add(result);
             }
             sr.Close();
@@ -195,7 +229,8 @@ namespace QuanLyNhaHang.DAL
             {
                 string[] tmp = s.Split('#');
                 if (tmp[0] == maKH)
-                    result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4];
+                    result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t"
+                    + tmp[4] + "\t" + tmp[5] + "\t" + tmp[6] + "\t" + tmp[7];
             }
             sr.Close();
 
@@ -350,5 +385,51 @@ namespace QuanLyNhaHang.DAL
             return result;
         }
 
+
+        public int Count()
+        {
+            int d = 0;
+            StreamReader sr = new StreamReader(FileText);
+            string s;
+            while((s = sr.ReadLine()) != null)
+            {
+                d++;
+            }
+            sr.Close();
+            return d;
+        }
+
+        public int CountAcc()
+        {
+            int d = 0;
+            StreamReader sr = new StreamReader(ACC);
+            string s;
+            while ((s = sr.ReadLine()) != null)
+            {
+                d++;
+            }
+            sr.Close();
+            return d;
+        }
+
+        public void Sort()
+        {
+            StreamReader sr = new StreamReader(FileText);
+            string s;
+            List<string> list = new List<string>();
+            while((s = sr.ReadLine()) != null)
+            {
+                list.Add(s);
+            }
+            sr.Close();
+            list.Sort();
+                                
+            StreamWriter sw = new StreamWriter(FileText);
+            foreach(string x in list)
+            {
+                sw.WriteLine(x);
+            }
+            sw.Close();
+        }
     }
 }

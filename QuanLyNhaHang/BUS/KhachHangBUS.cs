@@ -9,9 +9,10 @@ namespace QuanLyNhaHang.BUS
     {
         private KhachHangDAL khDAL = new KhachHangDAL();
 
-        public void Them(string maKH, string tenKH, string DiaChi, string SDT, string Email)
+        public void Them(string maKH, string tenKH, DateTime NgaySinh, bool gioiTinh,
+            string DiaChi, string SDT, string CMT, string Email)
         {
-            khDAL.Them(maKH, tenKH, DiaChi, SDT, Email);
+            khDAL.Them(maKH, tenKH, NgaySinh, gioiTinh, DiaChi, SDT, CMT, Email);
         }
 
         public void ThemTK(string TK, string MK)
@@ -39,9 +40,10 @@ namespace QuanLyNhaHang.BUS
             return khDAL.checkTK(TK);
         }
 
-        public void Sua(string maKH, string tenKH, string DiaChi, string SDT, string Email)
+        public void Sua(string maKH, string tenKH, DateTime NgaySinh, bool gioiTinh,
+            string DiaChi, string SDT, string CMT, string Email)
         {
-            khDAL.Sua(maKH, tenKH, DiaChi, SDT, Email);
+            khDAL.Sua(maKH, tenKH, NgaySinh, gioiTinh, DiaChi, SDT, CMT, Email);
         }
 
         public void SuaTK(string TK, string MK, string maKH)
@@ -64,6 +66,8 @@ namespace QuanLyNhaHang.BUS
             return khDAL.Laydanhsach();
         }
 
+        public List<string> LaydanhsachAcc() => khDAL.LaydanhsachAcc();
+
         public string LaythongtinTK(string TK)
         {
             return khDAL.LaythongtinTK(TK);
@@ -79,9 +83,18 @@ namespace QuanLyNhaHang.BUS
             return khDAL.QuenMK(SDT);
         }
 
-        public int checkSDT(string SDT)
+        public int checkNum(string Num)
         {
-            return khDAL.checkSDT(SDT);
+            return khDAL.checkNum(Num);
+        }
+
+        public int Count() => khDAL.Count();
+
+        public int CountAcc() => khDAL.CountAcc();
+
+        public void Sort()
+        {
+            khDAL.Sort();
         }
     }
 }

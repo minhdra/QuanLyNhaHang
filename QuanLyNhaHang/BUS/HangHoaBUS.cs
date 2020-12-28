@@ -9,12 +9,12 @@ namespace QuanLyNhaHang.BUS
     {
         private HanghoaDAL hhDAL = new HanghoaDAL();
 
-        public void Them(string tenhh, int gia)
+        public void Them(string tenhh, double gia)
         {
             hhDAL.Them(tenhh, gia);
         }
 
-        public void Sua(string ID, string tenhh, int gia)
+        public void Sua(string ID, string tenhh, double gia)
         {
             hhDAL.Sua(ID, tenhh, gia);
         }
@@ -33,5 +33,7 @@ namespace QuanLyNhaHang.BUS
         {
             return hhDAL.LayThongTin(ID);
         }
+
+        public string TimKiem(string name) => hhDAL.TimKiem(name);
     }
 }

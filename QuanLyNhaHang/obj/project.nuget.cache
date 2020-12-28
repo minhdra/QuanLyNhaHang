@@ -1,8 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "jyWk51KxeFRk8oGW6YO1Dyrb9aApNOJ8bQ2vEMKkerqADGgPX4BfyJIUG9gO0GLVoHVgX+CLMODp1F+PU4pJgA==",
+  "dgSpecHash": "v+r6qUKXmGIyNIHzuixydutj24TVmrdFZWF/CVfez2SLUeAy4aAZJaf+CsVa0SKa2Owh1DrbWOHDt3LWhez4Cw==",
   "success": true,
   "projectFilePath": "D:\\Đồ án 1 - Lê Đình Minh\\QuanLyNhaHang\\QuanLyNhaHang\\QuanLyNhaHang.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\MinhDra\\.nuget\\packages\\analytics\\3.5.0\\analytics.3.5.0.nupkg.sha512",
+    "C:\\Users\\MinhDra\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\MinhDra\\.nuget\\packages\\microsoft.netcore.targets\\1.1.2\\microsoft.netcore.targets.1.1.2.nupkg.sha512",
+    "C:\\Users\\MinhDra\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\MinhDra\\.nuget\\packages\\system.console\\4.3.1\\system.console.4.3.1.nupkg.sha512",
+    "C:\\Users\\MinhDra\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
+    "C:\\Users\\MinhDra\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
+    "C:\\Users\\MinhDra\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
+    "C:\\Users\\MinhDra\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512"
+  ],
   "logs": []
 }

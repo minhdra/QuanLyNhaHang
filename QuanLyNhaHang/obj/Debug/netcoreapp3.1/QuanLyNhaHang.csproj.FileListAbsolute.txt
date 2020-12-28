@@ -24,3 +24,6 @@ D:\Đồ án 1 - Lê Đình Minh\QuanLyNhaHang\QuanLyNhaHang\obj\Debug\netcoreap
 D:\Đồ án 1 - Lê Đình Minh\QuanLyNhaHang\QuanLyNhaHang\obj\Debug\netcoreapp3.1\QuanLyNhaHang.dll
 D:\Đồ án 1 - Lê Đình Minh\QuanLyNhaHang\QuanLyNhaHang\obj\Debug\netcoreapp3.1\QuanLyNhaHang.pdb
 D:\Đồ án 1 - Lê Đình Minh\QuanLyNhaHang\QuanLyNhaHang\obj\Debug\netcoreapp3.1\QuanLyNhaHang.genruntimeconfig.cache
+D:\Đồ án 1 - Lê Đình Minh\QuanLyNhaHang\QuanLyNhaHang\bin\Debug\netcoreapp3.1\Analytics.dll
+D:\Đồ án 1 - Lê Đình Minh\QuanLyNhaHang\QuanLyNhaHang\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\Đồ án 1 - Lê Đình Minh\QuanLyNhaHang\QuanLyNhaHang\obj\Debug\netcoreapp3.1\QuanLyNhaHang.csproj.CopyComplete

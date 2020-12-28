@@ -1,7 +1,7 @@
-NV1#Le Xuan Thu#01/01/2000#Nu#Hung Yen#0938443748#033200005697#aty@gmail.com
-NV2#Nguyen Hong Hanh#01/04/2000#Nu#Hung Yen#0984935735#033200005865#gjt@gmail.com
-NV3#Ho Bat Lao#29/05/2000#Nam#Ha Noi#0954854856#033200000349#ght@gmail.com
-NV4#Vo Trang Nguyen#07/11/2000#Nam#Hung Yen#0983402105#033200002342#kgl@gmail.com
-NV5#Vu Nham#01/10/2000#Nam#Hung Yen#0949885433#033200005342#uyt@gmail.com
-NV6#Quynh anh#22/03/2001#Nu#Hung Yen#0923482333#033200002345#QA223@gmail.com
-NV9#Duc Cho#10/12/2001#Nam#Hung Yen#0923848238#034234829392#skf@gmail.com
+NV1#Le Xuan Thu#01/01/2000#Nu#Hung Yen#0938443748#033200005697#aty@gmail.com#Giam docNV2#Nguyen Hong Hanh#01/04/2000#Nu#Hung Yen#0984935735#033200005865#gjt@gmail.com#Quan ly
+NV3#Ho Bat Lao#29/05/2000#Nam#Ha Noi#0954854856#033200000349#ght@gmail.com#Le tan
+NV4#Vo Trang Nguyen#07/11/2000#Nam#Hung Yen#0983402105#033200002342#kgl@gmail.com#Phuc vu
+NV5#Vu Nham#01/10/2000#Nam#Hung Yen#0949885433#033200005342#uyt@gmail.com#Dau bep
+NV9#Nguyen Thu#01/04/1997#Nu#Hung Yen#0984936765#033200003453#gfdd@gmail.com#Quan ly
+NV75#empty#27/12/2020#Nam#empty#empty#empty#empty#Giam sat
+NV93#empty#28/12/2020#Nam#empty#empty#empty#empty#Quan ly

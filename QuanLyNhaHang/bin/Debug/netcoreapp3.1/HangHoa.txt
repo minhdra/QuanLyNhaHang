@@ -4,4 +4,5 @@ HH3#Ga hap la chanh#218000
 HH4#Chim cau rang tuong#198000
 HH5#Sup ga ngo kem#45000
 HH50#Rau xao#20000
-HH17#Thit kho hot vit#30000
+HH16#Sup Ga Ngo Kem#45000
+HH68#Sup To Yen#1280000

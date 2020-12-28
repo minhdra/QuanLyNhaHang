@@ -8,6 +8,7 @@ namespace QuanLyNhaHang.Constraint
     class constraint
     {
         private KhachHangBUS khBUS = new KhachHangBUS();
+        private NhanVienBUS nvBUS = new NhanVienBUS();
         
         public string Email(string email)
         {
@@ -96,7 +97,8 @@ namespace QuanLyNhaHang.Constraint
                     if (!char.IsDigit(SDT[x])        // Là số
                         || SDT.Length != 10          // 10 ký tự
                         || SDT[0] != '0'             // Bắt đầu bằng số 0
-                        || khBUS.checkSDT(SDT) == 1) // Kiểm tra đã tồn tại chưa
+                        || khBUS.checkNum(SDT) == 1
+                        || nvBUS.checkNum(SDT) == 1) // Kiểm tra đã tồn tại chưa
                     {
                         
                         SDT = Console.ReadLine();
@@ -128,7 +130,8 @@ namespace QuanLyNhaHang.Constraint
                     if (!char.IsDigit(SDT[x])        // Là số
                         || SDT.Length != 10          // 10 ký tự
                         || SDT[0] != '0'             // Bắt đầu bằng số 0
-                        || khBUS.checkSDT(SDT) == 1) // Kiểm tra đã tồn tại chưa
+                        || khBUS.checkNum(SDT) == 1
+                        || nvBUS.checkNum(SDT) == 1) // Kiểm tra đã tồn tại chưa
                     {
                         Console.SetCursorPosition(cursorL2, cursorT2);
                         Console.Write(tmp);
@@ -179,7 +182,7 @@ namespace QuanLyNhaHang.Constraint
             string tmp;
             while (name.Length > Len || name == "")
             {
-                tmp = "Không hợp lệ!";
+                tmp = "Không hợp lệ! Không thể quá " + Len + " ký tự";
                 Console.SetCursorPosition(cursorL2, cursorT2);
                 Console.Write(tmp);
 
@@ -236,6 +239,7 @@ namespace QuanLyNhaHang.Constraint
 
         public DateTime Date(string DateStr)
         {
+            //Create a DateTime, default is "01/01/0001"
             DateTime date = new DateTime();
             while (date.ToString("dd/MM/yyyy") == "01/01/0001" || date.Year > DateTime.Now.Year - 18)
             {
@@ -329,7 +333,8 @@ namespace QuanLyNhaHang.Constraint
                     if (!char.IsDigit(CMTstr[x])        // Là số
                         || CMTstr.Length != 12          // 12 ký tự
                         || CMTstr[0] != '0'             // Bắt đầu bằng số 0
-                        || khBUS.checkSDT(CMTstr) == 1) // Kiểm tra đã tồn tại chưa
+                        || khBUS.checkNum(CMTstr) == 1
+                        || nvBUS.checkNum(CMTstr) == 1) // Kiểm tra đã tồn tại chưa
                     {
                         Console.Write("Nhập lại: ");
                         CMTstr = Console.ReadLine();
@@ -359,7 +364,8 @@ namespace QuanLyNhaHang.Constraint
                     if (!char.IsDigit(CMTstr[x])        // Là số
                         || CMTstr.Length != 12          // 12 ký tự
                         || CMTstr[0] != '0'             // Bắt đầu bằng số 0
-                        || khBUS.checkSDT(CMTstr) == 1) // Kiểm tra đã tồn tại chưa
+                        || khBUS.checkNum(CMTstr) == 1
+                        || nvBUS.checkNum(CMTstr) == 1) // Kiểm tra đã tồn tại chưa
                     {
 
                         Console.SetCursorPosition(cursorL2, cursorT2);
@@ -395,6 +401,71 @@ namespace QuanLyNhaHang.Constraint
                     break;
             }
             return CMTstr;
+        }
+
+        public string Price2(string price, int cursorL1, int cursorT1, int cursorL2, int cursorT2)
+        {
+            string tmp;
+
+            while (true)
+            {
+
+                tmp = "Không hợp lệ!";
+                for (int x = 0; x < price.Length; x++)
+                {
+                    // Kiểm tra
+                    if (!char.IsDigit(price[x])        // Là số
+                         ) 
+                    {
+                        Console.SetCursorPosition(cursorL2, cursorT2);
+                        Console.Write(tmp);
+
+                        Console.SetCursorPosition(cursorL1, cursorT1);
+                        Console.Write(new string(' ', price.Length));
+
+                        Console.SetCursorPosition(cursorL1, cursorT1);
+                        price = Console.ReadLine();
+                        x = -1;
+
+                        Console.SetCursorPosition(cursorL2, cursorT2);
+                        Console.Write(new string(' ', tmp.Length));
+                    }
+                }
+                if (price == "")
+                {
+                    Console.SetCursorPosition(cursorL2, cursorT2);
+                    Console.Write(tmp);
+
+                    Console.SetCursorPosition(cursorL1, cursorT1);
+                    Console.Write(new string(' ', price.Length));
+
+                    Console.SetCursorPosition(cursorL1, cursorT1);
+                    price = Console.ReadLine();
+
+                    Console.SetCursorPosition(cursorL2, cursorT2);
+                    Console.Write(new string(' ', tmp.Length));
+                }
+                else
+                    break;
+            }
+            return price;
+        }
+
+        public double Price(double price)
+        {
+            while (price <= 0)
+            {
+                try
+                {
+                    Console.Write("Nhập giá: ");
+                    price = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    Console.WriteLine("Dữ liệu là số!");
+                }
+            }
+            return price;
         }
     }
 }

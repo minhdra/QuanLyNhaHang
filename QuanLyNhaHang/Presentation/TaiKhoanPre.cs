@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Text;
+using QuanLyNhaHang.Constraint;
+using QuanLyNhaHang.Presentation;
 
 namespace QuanLyNhaHang.Presentation
 {
@@ -13,6 +15,7 @@ namespace QuanLyNhaHang.Presentation
         {
             private KhachHangBUS khBUS = new KhachHangBUS();
             private KhachHangPre khShow = new KhachHangPre();
+            private constraint conP = new constraint();
 
             public void HienMenuKhach()
             {
@@ -68,7 +71,7 @@ namespace QuanLyNhaHang.Presentation
                                 khShow.HienMenuKH(s);
                             else
                             {
-                                Console.WriteLine("\n\n\t\tĐăng nhập không thành công!");
+                                Console.Write("\n\n\tĐăng nhập không thành công!");
                                 Console.ReadKey();
                             }
                             break;
@@ -121,33 +124,44 @@ namespace QuanLyNhaHang.Presentation
             {
                 Console.Clear();
                 Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
-                Console.Write("\n\t║                          ĐĂNG NHẬP QUẢN LÝ                            ║");
+                Console.Write("\n\t║                          ĐĂNG KÝ TÀI KHOẢN                            ║");
                 Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
                 Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
+                Console.Write("\n\t║ NHẤN ENTER ĐỂ THOÁT                                                   ║");
+                Console.Write("\n\t║                                                                       ║");
                 Console.Write("\n\t║     TÀI KHOẢN        :                                                ║");
                 Console.Write("\n\t║                                                                       ║");
                 Console.Write("\n\t║     MẬT KHẨU         :                                                ║");
                 Console.Write("\n\t║                                                                       ║");
                 Console.Write("\n\t║ NHẬP LẠI MẬT KHẨU    :                                                ║");
                 Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
-                Console.SetCursorPosition(34, 5);
-                string TK = Console.ReadLine();
+                
                 Console.SetCursorPosition(34, 7);
-                string MK1 = Console.ReadLine();
+                string TK = Console.ReadLine();
+                if (TK == "") return;
+                TK = conP.CheckStr2(TK, 20, 34, 7, 28, 13);
+
                 Console.SetCursorPosition(34, 9);
+                string MK1 = Console.ReadLine();
+                MK1 = conP.CheckStr2(MK1, 10, 34, 9, 28, 13);
+
+                Console.SetCursorPosition(34, 11);
                 string MK2 = Console.ReadLine();
+                MK2 = conP.CheckStr2(MK2, 10, 34, 11, 28, 13);
 
 
                 if (MK1 == MK2)
                 {
                     if (khBUS.CheckTK(TK) == true)
-                        Console.WriteLine("\n\n\t\tTài khoản đã tồn tại!");
+                        Console.Write("\n\n\tTài khoản đã tồn tại!");
                     else
                     {
                         khBUS.ThemTK(TK, MK1);
-                        Console.WriteLine("\n\n\t\tTạo tài khoản thành công");
+                        Console.Write("\n\n\tTạo tài khoản thành công");
                     }
                 }
+                else
+                    Console.Write("\n\n\tMật khẩu không giống nhau");
             }
 
 
@@ -193,6 +207,9 @@ namespace QuanLyNhaHang.Presentation
                     Console.Write("\n\t\t║ ║              ║ 1.║         ĐĂNG NHẬP            ║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
+                    Console.Write("\n\t\t║ ║              ║ 2.║        QUÊN MẬT KHẨU         ║                 ║ ║");
+                    Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
+                    Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║ 9.║          QUAY LẠI            ║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
                     Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
@@ -207,7 +224,7 @@ namespace QuanLyNhaHang.Presentation
                     Console.Write("\n\t\t║ ╚═══════════════════════════════════════════════════════════════════╝ ║");
                     Console.Write("\n\t\t║                                                                       ║");
                     Console.Write("\n\t\t╚═══════════════════════════════════════════════════════════════════════╝");
-                    Console.SetCursorPosition(65, 20);
+                    Console.SetCursorPosition(65, 23);
 
                     char chose = char.ToUpper(Console.ReadKey(true).KeyChar);
                     string s;
@@ -219,9 +236,13 @@ namespace QuanLyNhaHang.Presentation
                                 nvShow.HienMenuNV(s);
                             else
                             {
-                                Console.WriteLine("\n\n\t\tĐăng nhập không thành công!");
+                                Console.Write("\n\n\tĐăng nhập không thành công!");
                                 Console.ReadKey();
                             }
+                            break;
+                        case '2':
+                            QuenMkNv();
+                            Console.ReadKey();
                             break;
                         case '9':
                             MenuChinh menu = new MenuChinh();
@@ -259,11 +280,28 @@ namespace QuanLyNhaHang.Presentation
                     result = tmp[2];
                 return result;
             }
+
+            private void QuenMkNv()
+            {
+                Console.Clear();
+                Console.Write("Nhập số điện thoại : ");
+                string SDT = Console.ReadLine();
+                if (nvBUS.QuenMK(SDT) != "")
+                {
+                    Console.Clear();
+                    Console.WriteLine(nvBUS.QuenMK(SDT));
+                }
+                else
+                {
+                    Console.Write("Không thành công!");
+                }
+            }
         }
         
         public class QuanLy
         {
             private QuanLyPre qlShow = new QuanLyPre();
+            private NhanVienBUS nvBUS = new NhanVienBUS();
             public void HienMenuQL()
             {
                 while (true)
@@ -302,14 +340,13 @@ namespace QuanLyNhaHang.Presentation
                     Console.SetCursorPosition(65, 20);
 
                     char chose = char.ToUpper(Console.ReadKey(true).KeyChar);
-
                     switch (chose)
                     {
                         case '1':
-                            if (DangNhapQL() == 1)
+                            if (DangNhapQL() != "")
                                 qlShow.MenuQuanLy();
                             else
-                                Console.WriteLine("\n\n\t\tĐăng nhập không thành công!");
+                                Console.Write("\n\n\tĐăng nhập không thành công!");
                             Console.ReadKey();
                             break;
                         case '9':
@@ -325,7 +362,7 @@ namespace QuanLyNhaHang.Presentation
                     }
                 }
             }
-            private int DangNhapQL()
+            private string DangNhapQL()
             {
                 Console.Clear();
                 Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
@@ -340,10 +377,29 @@ namespace QuanLyNhaHang.Presentation
                 string TK = Console.ReadLine();
                 Console.SetCursorPosition(26, 7);
                 string MK = Console.ReadLine();
-                int check = 0;
-                if (TK == "" && MK == "")
-                    check = 1;
-                return check;
+
+                string result = "";
+
+                if (nvBUS.DangNhap(TK, MK) == 1)
+                {
+                    string[] tmp = nvBUS.LaythongtinTK(TK).Split('\t');
+                    string[] tmp2 = nvBUS.Laythongtin(tmp[2]).Split('#');
+                    QLNhanVien qlnv = new QLNhanVien();
+                    /*
+                     * Những nhân viên có chức vụ để đăng nhập vào chức năng quản lý
+                     * Giám đốc
+                     * Quản lý
+                     * Giám sát
+                     * Lễ tân
+                     */
+                    if (
+                    tmp2[8] == qlnv.listPosition[0]
+                    || tmp2[8] == qlnv.listPosition[1]
+                    || tmp2[8] == qlnv.listPosition[2]
+                    || tmp2[8] == qlnv.listPosition[3])
+                        result = tmp[2];
+                }
+                return result;
             }
         }
     }

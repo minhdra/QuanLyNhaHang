@@ -15,17 +15,17 @@ namespace QuanLyNhaHang
         {
             while (true)
             {
-                Console.Title = ("CHƯƠNG TRÌNH QUẢN LÝ NHÀ HÀNG ĂN").ToUpper();
+                Console.Title = ("CHƯƠNG TRÌNH QUẢN LÝ NHÀ HÀNG ĂN - LÊ ĐÌNH MINH").ToUpper();
                 Console.Clear();
 
                 Console.SetWindowSize(103, 35);
                 Console.Write("\n\t\t╔═══════════════════════════════════════════════════════════════════════╗");
-                Console.Write("\n\t\t║                  CHƯƠNG TRÌNH QUẢN LÝ NHÀ HÀNG ĂN                     ║");
+                Console.Write("\n\t\t║               GIẢNG VIÊN HƯỚNG DẪN : NGUYỄN VĂN HẬU                   ║");
                 Console.Write("\n\t\t╠═══════════════════════════════════════════════════════════════════════╣");
                 Console.Write("\n\t\t║                                                                       ║");
                 Console.Write("\n\t\t║ ╔═══════════════════════════════════════════════════════════════════╗ ║");
                 Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ║                           CHỨC NĂNG                               ║ ║");
+                Console.Write("\n\t\t║ ║                           NHÀ HÀNG @                              ║ ║");
                 Console.Write("\n\t\t║ ║                                                                   ║ ║");
                 Console.Write("\n\t\t║ ║              ╔═══╦══════════════════════════════╗                 ║ ║");
                 Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
@@ -45,8 +45,8 @@ namespace QuanLyNhaHang
                 Console.Write("\n\t\t║ ║              ╚═══╩══════════════════════════════╝                 ║ ║");
                 Console.Write("\n\t\t║ ║                                                                   ║ ║");
                 Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ║                                                                   ║ ║");
+                Console.Write("\n\t\t║ ║ Phone: 0964-xxx-841                                               ║ ║");
+                Console.Write("\n\t\t║ ║                                                 Địa chỉ: xxx      ║ ║");
                 Console.Write("\n\t\t║ ╚═══════════════════════════════════════════════════════════════════╝ ║");
                 Console.Write("\n\t\t║                                                                       ║");
                 Console.Write("\n\t\t╚═══════════════════════════════════════════════════════════════════════╝");
@@ -84,8 +84,8 @@ namespace QuanLyNhaHang
         {
             Console.OutputEncoding = Encoding.UTF8;
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("vi-VN");
-            //console.backgroundcolor = consolecolor.gray;
-            //console.foregroundcolor = consolecolor.black;
+            //Console.BackgroundColor = ConsoleColor.Gray;
+            //Console.ForegroundColor = ConsoleColor.Black;
             MenuChinh menu = new MenuChinh();
             menu.Menu();
             
