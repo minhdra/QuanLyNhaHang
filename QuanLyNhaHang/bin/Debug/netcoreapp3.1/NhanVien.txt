@@ -5,3 +5,5 @@ NV5#Vu Nham#01/10/2000#Nam#Hung Yen#0949885433#033200005342#uyt@gmail.com#Dau be
 NV9#Nguyen Thu#01/04/1997#Nu#Hung Yen#0984936765#033200003453#gfdd@gmail.com#Quan ly
 NV75#empty#27/12/2020#Nam#empty#empty#empty#empty#Giam sat
 NV93#empty#28/12/2020#Nam#empty#empty#empty#empty#Quan ly
+NV28#empty#29/12/2020#Nam#empty#empty#empty#empty#Giam doc
+NV58#Vu Dinh#01/12/1995#Nam#Ho Chi Minh#0932838882#034500003849#ghit@gmail.com#Giam sat

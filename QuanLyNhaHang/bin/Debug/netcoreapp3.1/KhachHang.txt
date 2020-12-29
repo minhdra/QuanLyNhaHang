@@ -5,3 +5,4 @@ KH4#Luu Bang#13/01/1999#Nam#Hung Yen#0924398443#033200008593# dfc@gmail.com
 KH5#Ho Đao#12/05/1997#Nu#Hung Yen#0934348392#033200003745# khj@gmail.com
 KH32#Luffy#01/01/0001#Nam#Brazil#0923842121#<Trống>#<Trống>
 KH89#Ly Tin#03/11/1994#Nam#Tuyen Quang#0923823921#<Trống>#<Trống>
+KH63#Kim Trong#01/01/0001#Nam#Vu Dai#0932848294#<Trống>#<Trống>

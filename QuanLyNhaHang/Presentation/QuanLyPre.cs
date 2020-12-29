@@ -163,7 +163,6 @@ namespace QuanLyNhaHang.Presentation
                         break;
                     case '4':
                         Xoa();
-                        Console.ReadKey();
                         break;
                     case '5':
                         MenuThongKe();
@@ -235,15 +234,12 @@ namespace QuanLyNhaHang.Presentation
                 {
                     case '1':
                         ThongKeNgay();
-                        Console.ReadKey();
                         break;
                     case '2':
                         ThongKeThang();
-                        Console.ReadKey();
                         break;
                     case '3':
                         ThongKeNam();
-                        Console.ReadKey();
                         break;
                     case '9':
                         MenuHD();
@@ -461,7 +457,7 @@ namespace QuanLyNhaHang.Presentation
 
                     qlHH.Show();
 
-                    Console.Write("\t\tNhập mã hàng hóa hoặc nhấn 'Enter' để thoát: ");
+                    Console.Write("\n\t\tNhập mã hàng hóa hoặc nhấn 'Enter' để thoát: ");
                     string ID = Console.ReadLine().ToUpper();
 
                     if (ID != "")
@@ -698,151 +694,263 @@ namespace QuanLyNhaHang.Presentation
 
         private void Xoa()
         {
-            Console.Clear();
-            Console.WriteLine("Xóa hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập mã hóa đơn: ");
-            string maHD = Console.ReadLine().ToUpper();
-            if (maHD != "")
+            while (true) 
             {
-                if (hdBUS.LayThongTin(maHD) != "")
+                Console.Clear();
+                Show();
+                Console.WriteLine("\n\t\tXóa hóa đơn hoặc nhấn 'Enter' để thoát.");
+                Console.Write("\t\tNhập mã hóa đơn: ");
+                string maHD = Console.ReadLine().ToUpper();
+                if (maHD != "" && hdBUS.LayThongTin(maHD) != "")
                 {
-                    Console.Write("Xác nhận xóa? (Y/N): ");
+                    Console.Write("\t\tXác nhận xóa? (Y/N): ");
                     string check = Console.ReadLine().ToUpper();
                     while (check != "Y" && check != "N")
                     {
-                        Console.Write("Không hợp lệ! Nhập lại: ");
+                        Console.Write("\t\tKhông hợp lệ! Nhập lại: ");
                         check = Console.ReadLine().ToUpper();
                     }
                     if (check == "Y")
                     {
                         hdBUS.Xoa(maHD);
-                        Console.WriteLine("Đã xóa thành công!!!");
+                        Console.Write("\t\tĐã xóa thành công!!!");
+                        Console.ReadKey();
                     }
                     else
-                        Console.WriteLine("Đã hủy xóa!!!");
+                    {
+                        Console.Write("\t\tĐã hủy xóa!!!");
+                        Console.ReadKey();
+                    }
                 }
                 else
-                    Console.WriteLine("Không thành công!");
+                {
+                    if (maHD == "") return;
+                    Console.Write("\n\t\tMã {0} không tồn tại!", maHD);
+                }
+
             }
-            else
-                Console.WriteLine("Đã thoát!");
         }
 
         private void ThongKeNgay()
         {
-            Console.Clear();
-            Console.WriteLine("Thống kê hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập ngày muốn thống kê (dd/MM/yyyy): ");
-            string ngay = Console.ReadLine();
-            if (ngay != "")
+            while (true)
             {
-                DateTime date = new DateTime();
-                bool check = false;
-                while (!check)
-                {
-
-                    try
-                    {
-                        date = DateTime.Parse(ngay);
-                    }
-                    catch
-                    {
-                        Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
-                        ngay = Console.ReadLine();
-                    }
-                    if (date.ToString("dd/MM/yyyy") == "01/01/0001")
-                    {
-                        Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
-                        ngay = Console.ReadLine();
-                    }
-                    else
-                        check = true;
-                }
                 Console.Clear();
-                Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t\t║ Thống kê ngày '{0, -10}':  {1,-12}VND                   ║", date.ToString("dd/MM/yyyy"), hdBUS.ThongKeNgay(date).ToString("N2"));
-                Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
-                Console.Write("\t\tNhấn phím bất kì để kết thúc!");
+                Console.WriteLine("Thống kê hoặc nhấn 'Enter' để thoát.");
+                Console.Write("Nhập ngày muốn thống kê (dd/MM/yyyy): ");
+                string ngay = Console.ReadLine();
+                if (ngay != "")
+                {
+                    DateTime date = new DateTime();
+                    bool check = false;
+                    while (!check)
+                    {
+
+                        try
+                        {
+                            date = DateTime.Parse(ngay);
+                        }
+                        catch
+                        {
+                            Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
+                            ngay = Console.ReadLine();
+                        }
+                        if (date.ToString("dd/MM/yyyy") == "01/01/0001")
+                        {
+                            Console.Write("Không hợp lệ! Nhập lại (dd/MM/yyyy): ");
+                            ngay = Console.ReadLine();
+                        }
+                        else
+                            check = true;
+                    }
+                }
+                else break;
+
+
+                double sum = 0;
+
+                List<string> list = new List<string>();
+                // Tổng hóa đơn theo ngày
+                for (int x = 0; x < hdBUS.LayDanhSach().Count; x++)
+                {
+                    string[] tmp = hdBUS.LayDanhSach()[x].Split('\t');
+                    if(ngay == tmp[2])
+                    {
+                        list.Add(hdBUS.LayDanhSach()[x]);
+                        sum += double.Parse(tmp[4]);
+                    }
+                }
+                int i = DanhSachThongKe(list, sum);
+                if (i == 0) return;
+                
             }
 
+        }
+
+        private int DanhSachThongKe(List<string> list, double sum)
+        {
+            int count = list.Count;
+
+            int start, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
+            int end;
+            do
+            {
+                Console.Clear();
+                start = (curpage - 1) * 6;
+                end = curpage * 6 < count ? curpage * 6 : count;
+
+                Console.SetWindowSize(140, 30);
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("\t\t║                                             DANH SÁCH HÓA ĐƠN                                   ║");
+                Console.WriteLine("\t\t╠═════════╦══════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╣");
+                Console.WriteLine("\t\t║    Mã   ║ Mã khách ║         Tên khách hàng           ║        Ngày       ║     Thành tiền      ║");
+                Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╣");
+                for (int x = start; x < end; x++)
+                {
+                    string[] tmp = list[x].Split('\t');
+                    Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║", tmp[0], tmp[3], tmp[1], tmp[2], double.Parse(tmp[4]).ToString("N0"));
+                }
+                Console.WriteLine("\t\t╚═════════╩══════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╝");
+
+                Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("\t\t║ Tổng tiền của tất cả hóa đơn:  {0,-24}        ║", sum.ToString("N0"));
+                Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
+
+                Console.Write("\t\tTrang " + curpage + "/" + totalpage + "          Ấn <-, -> để xem tiếp, ESC để thoát, nhấn ENTER để tiếp tục...");
+                ConsoleKeyInfo key = Console.ReadKey();
+                if (key.Key == ConsoleKey.RightArrow)
+                {
+                    if (curpage < totalpage) curpage++;
+                    else curpage = 1;
+                }
+                else if (key.Key == ConsoleKey.LeftArrow)
+                {
+                    if (curpage > 1) curpage--;
+                    else curpage = totalpage;
+                }
+                else if (key.Key == ConsoleKey.Escape)
+                    return 0;
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    return 1;
+                }
+
+            } while (true);
 
         }
 
         private void ThongKeThang()
         {
-            Console.Clear();
-            Console.WriteLine("Thống kê hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập tháng muốn thống kê (MM/yyyy): ");
-            string thang = Console.ReadLine();
-            if (thang != "")
+            while (true)
             {
-                DateTime date = new DateTime();
-                bool check = false;
-                while (!check)
+                Console.Clear();
+                Console.WriteLine("Thống kê hoặc nhấn 'Enter' để thoát.");
+                Console.Write("Nhập tháng muốn thống kê (MM/yyyy): ");
+                string thang = Console.ReadLine();
+                if (thang != "")
                 {
+                    DateTime date = new DateTime();
+                    bool check = false;
+                    while (!check)
+                    {
 
-                    try
-                    {
-                        date = DateTime.Parse(thang);
+                        try
+                        {
+                            date = DateTime.Parse(thang);
+                        }
+                        catch
+                        {
+                            Console.Write("Không hợp lệ! Nhập lại (MM/yyyy): ");
+                            thang = Console.ReadLine();
+                        }
+                        if (date.ToString("MM/yyyy") == "01/0001")
+                        {
+                            Console.Write("Không hợp lệ! Nhập lại (MM/yyyy): ");
+                            thang = Console.ReadLine();
+                        }
+                        else
+                            check = true;
                     }
-                    catch
+                }
+                else break;
+
+
+                double sum = 0;
+                DateTime DateMM = DateTime.Parse(thang);
+                List<string> list = new List<string>();
+                // Tổng hóa đơn theo ngày
+                for (int x = 0; x < hdBUS.LayDanhSach().Count; x++)
+                {
+                    string[] tmp = hdBUS.LayDanhSach()[x].Split('\t');
+                    DateTime DateTMP = DateTime.Parse(tmp[2]);
+                    
+
+                    if (DateMM.Month == DateTMP.Month && DateMM.Year == DateMM.Year)
                     {
-                        Console.Write("Không hợp lệ! Nhập lại (MM/yyyy): ");
-                        thang = Console.ReadLine();
+                        list.Add(hdBUS.LayDanhSach()[x]);
+                        sum += double.Parse(tmp[4]);
                     }
-                    if (date.ToString("MM/yyyy") == "01/0001")
-                    {
-                        Console.Write("Không hợp lệ! Nhập lại (MM/yyyy): ");
-                        thang = Console.ReadLine();
-                    }
-                    else
-                        check = true;
                 }
 
-                Console.Clear();
-                Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t\t║ Thống kê tháng {0, -10}:  {1,-12}VND                    ║", date.ToString("MM/yyyy"), hdBUS.ThongKeThang(date).ToString("N2"));
-                Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
-                Console.Write("\t\tNhấn phím bất kì để kết thúc!");
+                int i = DanhSachThongKe(list, sum);
+                if (i == 0) return;
+
             }
         }
 
         private void ThongKeNam()
         {
-            Console.Clear();
-            Console.WriteLine("Thống kê hoặc nhấn 'Enter' để thoát.");
-            Console.Write("Nhập năm muốn thống kê (yyyy): ");
-            string nam = "01/" + Console.ReadLine();
-            if (nam != "")
-            {
-                DateTime date = new DateTime();
-                bool check = false;
-                while (!check)
-                {
 
-                    try
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Thống kê hoặc nhấn 'Enter' để thoát.");
+                Console.Write("Nhập năm muốn thống kê (yyyy): ");
+                string year = Console.ReadLine();
+                if (year != "")
+                {
+                    while (true)
                     {
-                        date = DateTime.Parse(nam);
+                        for (int x = 0; x < year.Length; x++)
+                        {
+                            // Kiểm tra SDT
+                            if (!char.IsDigit(year[x])) 
+                            {
+                                Console.Write("Nhập lại (yyyy): ");
+                                year = Console.ReadLine();
+                                x = -1;
+                            }
+                        }
+                        if (year == "")
+                        {
+                            Console.Write("Nhập lại (yyyy): ");
+                            year = Console.ReadLine();
+                        }
+                        else
+                            break;
                     }
-                    catch
+                }
+                else break;
+
+
+                double sum = 0;
+
+                List<string> list = new List<string>();
+                // Tổng hóa đơn theo ngày
+                for (int x = 0; x < hdBUS.LayDanhSach().Count; x++)
+                {
+                    string[] tmp = hdBUS.LayDanhSach()[x].Split('\t');
+                    if (int.Parse(year) == DateTime.Parse(tmp[2]).Year)
                     {
-                        Console.Write("Không hợp lệ! Nhập lại (yyyy): ");
-                        nam = "01/" + Console.ReadLine();
+                        list.Add(hdBUS.LayDanhSach()[x]);
+                        sum += double.Parse(tmp[4]);
                     }
-                    if (date.ToString("yyyy") == "0001")
-                    {
-                        Console.Write("Không hợp lệ! Nhập lại (yyyy): ");
-                        nam = "01/" + Console.ReadLine();
-                    }
-                    else
-                        check = true;
                 }
 
-                Console.Clear();
-                Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t\t║ Thống kê năm {0, -10}:  {1,-12}VND                      ║", date.ToString("yyyy"), hdBUS.ThongKeNam(date).ToString("N2"));
-                Console.WriteLine("\t\t╚════════════════════════════════════════════════════════════════╝");
-                Console.Write("\t\tNhấn phím bất kì để kết thúc!");
+                int i = DanhSachThongKe(list, sum);
+                if (i == 0) return;
             }
         }
     }
@@ -1033,13 +1141,13 @@ namespace QuanLyNhaHang.Presentation
 
         private void Sua()
         {
+            Show();
+            Console.Write("\n\t\tNhập mã hàng hóa muốn sửa (Nhập mã sai sẽ thoát!): ");
+            string maHH = Console.ReadLine().ToUpper();
+            if (hhBUS.Laythongtin(maHH) == "")
+                return;
             while (true)
             {
-                Console.Clear();
-                Console.Write("Nhập mã hàng hóa muốn sửa (Nhập mã sai sẽ thoát!): ");
-                string maHH = Console.ReadLine().ToUpper();
-                if (hhBUS.Laythongtin(maHH) == "")
-                    break;
                 Console.Clear();
                 string[] tmp = hhBUS.Laythongtin(maHH).Split('\t');
                 string tenHH = tmp[1];
@@ -1057,7 +1165,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t             ║ 2.║  Giá: {0,-9}                     ║                 ", Gia.ToString("N0"));
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
-                Console.Write("\n\t\t             ║ 3.║              Quay lại               ║                 ");
+                Console.Write("\n\t\t             ║ 9.║              Quay lại               ║                 ");
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
                 Console.Write("\n\t\t             ║ 0.║               Thoát                 ║                 ");
@@ -1082,11 +1190,15 @@ namespace QuanLyNhaHang.Presentation
                         Gia = conP.Price(Gia);
                         
                         break;
-                    case '3':
+                    case '9':
                         MenuHH();
                         break;
                     case '0':
                         Environment.Exit(0);
+                        break;
+                    default:
+                        Console.SetCursorPosition(35, 20);
+                        Console.Write("Không hợp lệ!!!");
                         break;
                 }
 
@@ -1282,15 +1394,12 @@ namespace QuanLyNhaHang.Presentation
                         break;
                     case '4':
                         Sua();
-                        Console.ReadKey();
                         break;
                     case '5':
                         Xoa();
-                        Console.ReadKey();
                         break;
                     case '7':
                         TaoTK();
-                        Console.ReadKey();
                         break;
                     case '6':
                         ShowAcc();
@@ -1723,19 +1832,19 @@ namespace QuanLyNhaHang.Presentation
                     if (check == "Y")
                     {
                         nvBUS.Xoa(maNV);
-                        Console.WriteLine("\tĐã xóa thành công!!!");
+                        Console.Write("\tĐã xóa thành công!!!");
                         Console.ReadKey();
                     }
                     else
                     {
-                        Console.WriteLine("\tĐã hủy xóa!!!");
+                        Console.Write("\tĐã hủy xóa!!!");
                         Console.ReadKey();
                     }
                 }
                 else
                 {
                     if (maNV == "") return;
-                    Console.WriteLine("\tNhân viên {0} không tồn tại!", maNV);
+                    Console.Write("\tNhân viên {0} không tồn tại!", maNV);
                 }
 
             }
@@ -1747,6 +1856,10 @@ namespace QuanLyNhaHang.Presentation
             string[] tmp = nvBUS.ThemTK().Split('#');
             Console.WriteLine("Tài khoản: {0}\nMật khẩu: {1}\nMã nhân viên: {2}", tmp[0], tmp[1], tmp[2]);
             Console.Write("Tạo tài khoản thành công");
+            Console.ReadKey();
+            Console.Clear();
+            string pos = chosePosition();
+            nvBUS.ThemNV(tmp[2], "empty", DateTime.Now, true, "empty", "empty", "empty", "empty", pos);
         }
     }
 

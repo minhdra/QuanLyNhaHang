@@ -100,7 +100,7 @@ namespace QuanLyNhaHang.Constraint
                         || khBUS.checkNum(SDT) == 1
                         || nvBUS.checkNum(SDT) == 1) // Kiểm tra đã tồn tại chưa
                     {
-                        
+                        Console.Write("Nhập lại: ");
                         SDT = Console.ReadLine();
                         x = -1;
                     }

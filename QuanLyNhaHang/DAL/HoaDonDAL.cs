@@ -175,62 +175,6 @@ namespace QuanLyNhaHang.DAL
             sw2.Write(result);
             sw2.Close();
         }
-
-        public double Thongkengay(DateTime ngay)
-        {
-            StreamReader sr1 = new StreamReader(FileText);
-            
-            string s;
-            double total = 0;
-            while ((s = sr1.ReadLine()) != null)
-            {
-                string[] tmp1 = s.Split('#');
-                if (tmp1[2] == ngay.ToString("d"))
-                    total += Convert.ToDouble(tmp1[4]);
-            }
-
-            sr1.Close(); 
-
-            return total;
-        }
-
-        public double Thongkethang(DateTime thang)
-        {
-            StreamReader sr1 = new StreamReader(FileText);
-            
-            string s;
-            double total = 0;
-            while ((s = sr1.ReadLine()) != null)
-            {
-                string[] tmp1 = s.Split('#');
-                DateTime dateMM = DateTime.Parse(tmp1[2]);
-                if ( dateMM.Month == thang.Month && dateMM.Year == thang.Year)
-                    total += Convert.ToDouble(tmp1[4]);
-            }
-
-            sr1.Close(); 
-
-            return total;
-        }
-
-        public double Thongkenam(DateTime nam)
-        {
-            StreamReader sr1 = new StreamReader(FileText);
-
-            string s;
-            double total = 0;
-            while ((s = sr1.ReadLine()) != null)
-            {
-                string[] tmp1 = s.Split('#');
-                DateTime dateMM = DateTime.Parse(tmp1[2]);
-                if (dateMM.Year == nam.Year)
-                    total += Convert.ToDouble(tmp1[4]);
-            }
-
-            sr1.Close();
-
-            return total;
-        }
         // Tổng tiền phải trả của 1 khách hàng
         public double TongTien(string maKH, string date)
         {

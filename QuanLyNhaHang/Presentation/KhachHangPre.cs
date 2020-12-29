@@ -1,6 +1,7 @@
 ﻿using QuanLyNhaHang.BUS;
 using System;
 using QuanLyNhaHang.Constraint;
+using System.Collections.Generic;
 
 namespace QuanLyNhaHang.Presentation
 {
@@ -494,10 +495,11 @@ namespace QuanLyNhaHang.Presentation
                     return;
                 }
                 khBUS.DoiMK(maKH, MK1);
-                Console.WriteLine("\n\tBạn đổi mật khẩu thành công!");
+                Console.Write("\n\tBạn đổi mật khẩu thành công!");
             }
             else
                 Console.Write("\n\n\n\n\tĐã thoát!");
+            
         }
 
         private void LichSu(string maKH)
@@ -516,11 +518,14 @@ namespace QuanLyNhaHang.Presentation
             double sum = 0;
             
             int count = tmp.Length - 1;
+            List<string> list = new List<string>();
             // Tổng tất cả hóa đơn
+            
             for (int x = 0; x < count; x++)
             {
                 string[] tmp2 = tmp[x].Split('\t');
                 sum += double.Parse(tmp2[4]);
+                list.Add(tmp[x]);
             }
 
             int start, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
@@ -535,7 +540,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t\t║                                         Hóa đơn của {0,-27}               ║", name[1]);
+                Console.WriteLine("\t\t║                                         Hóa đơn của {0,-27}                 ║", name[1]);
                 Console.WriteLine("\t\t╠═════════╦══════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╣");
                 Console.WriteLine("\t\t║    Mã   ║ Mã khách ║         Tên khách hàng           ║        Ngày       ║     Thành tiền      ║");
                 Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╣");
@@ -578,7 +583,13 @@ namespace QuanLyNhaHang.Presentation
                 bool c = false;
                 while (!c)
                 {
-                    if(hdBUS.HienChiTiet(maHD).Count != 0)
+                    int i = 0;
+                    foreach(string x in list)
+                    {
+                        string[] tmpList = x.Split('\t');
+                        if (maHD == tmpList[0]) i = 1; 
+                    }
+                    if(i == 1)
                     {
                         Console.Clear();
                         int total = 0;

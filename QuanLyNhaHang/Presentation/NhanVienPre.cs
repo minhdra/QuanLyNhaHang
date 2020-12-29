@@ -163,31 +163,31 @@ namespace QuanLyNhaHang.Presentation
             Console.SetCursorPosition(38, 8);
             string tenNV = Console.ReadLine();
             if (tenNV == "") return;
-            tenNV = conP.CheckStr2(tenNV, 27, 38, 8, 38, 26);
+            tenNV = conP.CheckStr2(tenNV, 27, 38, 8, 27, 26);
 
             Console.SetCursorPosition(38, 10);
             string dateStr = Console.ReadLine();
-            DateTime date = conP.Date2(dateStr, 38, 10, 38, 26);
+            DateTime date = conP.Date2(dateStr, 38, 10, 33, 26);
 
             Console.SetCursorPosition(38, 13);
             string chose = Console.ReadLine().ToLower();
-            bool GT = conP.Gender2(chose, 38, 13, 38, 26);
+            bool GT = conP.Gender2(chose, 38, 13, 33, 26);
 
             Console.SetCursorPosition(38, 16);
             string dchi = Console.ReadLine();
-            dchi = conP.CheckStr2(dchi, 17, 38, 16, 38, 26);
+            dchi = conP.CheckStr2(dchi, 17, 38, 16, 27, 26);
 
             Console.SetCursorPosition(38, 18);
             string SDT = Console.ReadLine();
-            SDT = conP.NumberPhone2(SDT, 38, 18, 38, 26);
+            SDT = conP.NumberPhone2(SDT, 38, 18, 33, 26);
 
             Console.SetCursorPosition(38, 20);
             string CMT = Console.ReadLine();
-            CMT = conP.CMT2(CMT, 38, 20, 38, 26);
+            CMT = conP.CMT2(CMT, 38, 20, 33, 26);
 
             Console.SetCursorPosition(38, 22);
             string email = Console.ReadLine();
-            email = conP.Email2(email, 38, 22, 38, 26);
+            email = conP.Email2(email, 38, 22, 33, 26);
 
             nvBUS.SuaNV(maNV, conP.Capitalize(tenNV), date, GT, conP.Capitalize(dchi), SDT, CMT, email);
 
