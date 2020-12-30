@@ -12,6 +12,7 @@ namespace QuanLyNhaHang.DAL
         //private string FileText_inCharge = "PhucVu.txt";
         private string ACC = "TaiKhoanNV.txt";
 
+        // Tạo ID Random
         public int GetID()
         {
             int i, d = 0;

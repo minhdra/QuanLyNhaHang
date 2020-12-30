@@ -274,7 +274,7 @@ namespace QuanLyNhaHang.Presentation
                 start = (curpage - 1) * 6;
                 end = curpage * 6 < count ? curpage * 6 : count;
 
-                Console.SetWindowSize(140, 30);
+                Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
@@ -436,7 +436,6 @@ namespace QuanLyNhaHang.Presentation
 
         private void Them()
         {
-            Console.Clear();
             KhachHangBUS khBUS = new KhachHangBUS();
             HangHoaBUS hhBUS = new HangHoaBUS();
             QLHangHoa qlHH = new QLHangHoa();
@@ -453,8 +452,9 @@ namespace QuanLyNhaHang.Presentation
                 {
                     Console.Clear();
                     string[] tmp = khBUS.Laythongtin(maKH).Split('\t');
+                    // Get Date Now
                     DateTime date = DateTime.Now;
-
+                    // Menu
                     qlHH.Show();
 
                     Console.Write("\n\t\tNhập mã hàng hóa hoặc nhấn 'Enter' để thoát: ");
@@ -481,13 +481,17 @@ namespace QuanLyNhaHang.Presentation
                                         Console.WriteLine("\t\tDữ liệu là số!");
                                     }
                                 }
-                                // Thêm số lượng
-                                int c1 = 0;
+                                int c1 = 0;// Check hóa đơn chi tiết
+                                // Thêm hóa đơn với tên khách, ngày, mã khách, tổng hóa đơn = 0
+                                // Nếu như mã khách hàng và ngày bị trùng thì hóa đơn không được thêm nữa
                                 hdBUS.Them(tmp[1], date, maKH, total);
+                                // Lấy mã hóa đơn
                                 string maHD = hdBUS.LayMaHD(maKH, date);
+                                // Cập nhật số lượng 
                                 for (int x = 0; x < hdBUS.HienChiTiet(maHD).Count; x++)
                                 {
                                     string[] tmp2 = hdBUS.HienChiTiet(maHD)[x].Split('\t');
+                                    //Nếu khách hàng order lần tiếp theo là mã đã nhập rồi thì cộng thêm số lượng
                                     if (tmp2[0] == ID)
                                     {
                                         SL += int.Parse(tmp2[3]);
@@ -495,39 +499,44 @@ namespace QuanLyNhaHang.Presentation
                                         break;
                                     }
                                 }
-
+                                // c1 == 0 Hóa đơn chi tiết chưa tồn tại
                                 if (c1 == 0)
                                     hdBUS.ThemChiTiet(maHD, ID, SL);
+                                // c1 == 1 Hóa đơn đã tồn tại
                                 else
-                                    hdBUS.SuaChiTiet(maHD, ID, SL);
+                                    hdBUS.SuaChiTiet(maHD, ID, SL); //Cập nhật lại hóa đơn chi tiết
                                 Console.Write("\t\tBạn có muốn thêm tiếp không? (Nhấp 'Enter' để tiếp tục): ");
                                 string q = Console.ReadLine();
                                 if (q != "")
                                     c = true;
                                 else
                                 {
-                                    c = true;
                                     Them();
+                                    return;
+                                    
                                 }
 
                             }
                             else
                             {
-                                Console.Write("\t\tMã hàng hóa không tồn tại! Mời nhập lại (Nhấp 'Enter' để bỏ qua): ");
+                                Console.Write("\t\tMã hàng hóa không tồn tại! Mời nhập lại (Nhấp 'Enter' để thoát: ");
                                 ID = Console.ReadLine().ToUpper();
                                 if (ID == "")
                                     c = true;
                             }
                         }
 
-                        // Cập nhật lại hóa đơn
+                        // Lấy thông tin của hóa đơn
                         string[] tmp3 = hdBUS.LayThongTin(maKH).Split('\n');
                         for (int x = 0; x < tmp3.Length - 1; x++)
                         {
                             string[] tmp4 = tmp3[x].Split('\t');
+                            // Nếu mã khách hàng và ngày có trong hệ thống
                             if (tmp4[3] == maKH && tmp4[2] == DateTime.Now.ToString("dd/MM/yyyy"))
                             {
+                                // Tính tổng tiền những gì khách hàng đã nhập
                                 total = hdBUS.TongTien(maKH, tmp4[2]);
+                                // Cập nhật hóa đơn
                                 hdBUS.Sua(tmp4[0], conP.Capitalize(tmp4[1]), DateTime.Parse(tmp4[2]), tmp4[3], total);
                             }
                         }
@@ -535,8 +544,8 @@ namespace QuanLyNhaHang.Presentation
                 }
                 else
                     Console.WriteLine("\nKhách hàng không tồn tại!");
-
                 Console.Clear();
+                Console.WriteLine("\nĐặt hàng thành công!!!");
                 Console.Write("Bạn có muốn tiếp tục thêm hóa đơn không? (Enter để tiếp tục): ");
                 key = Console.ReadKey();
 
@@ -555,6 +564,12 @@ namespace QuanLyNhaHang.Presentation
                 Console.Clear();
                 string[] tmp = hdBUS.TimKiem(name).Split('\n');
 
+                foreach(string x in tmp)
+                {
+                    string[] tmpID = x.Split('\t');
+                    list.Add(tmpID[0]);
+                }
+
                 int count = tmp.Length - 1;
                 int start, curpage = 1, totalpage = count % 6 == 0 ? count / 6 : count / 6 + 1;
                 int end;
@@ -564,7 +579,7 @@ namespace QuanLyNhaHang.Presentation
                     start = (curpage - 1) * 6;
                     end = curpage * 6 < count ? curpage * 6 : count;
 
-                    Console.SetWindowSize(140, 30);
+                    Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                     Console.WriteLine();
                     Console.WriteLine();
                     Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
@@ -576,7 +591,7 @@ namespace QuanLyNhaHang.Presentation
                     {
                         string[] tmp2 = tmp[x].Split('#');
                         Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║", tmp2[0], tmp2[3], tmp2[1], tmp2[2], double.Parse(tmp2[4]).ToString("N0"));
-                        list.Add(tmp2[0]);
+                        
                     }
                     Console.WriteLine("\t\t╚═════════╩══════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╝");
 

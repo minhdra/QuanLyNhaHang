@@ -11,6 +11,8 @@ namespace QuanLyNhaHang.DAL
     {
         private string FileText = "KhachHang.txt";
         private string ACC = "TaiKhoanKhach.txt";
+
+        // Tạo ID Random
         public int GetID()
         {
             int i, d = 0;

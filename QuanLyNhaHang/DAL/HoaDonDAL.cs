@@ -12,6 +12,7 @@ namespace QuanLyNhaHang.DAL
         private string FileText_Goods = "HangHoa.txt";
         HanghoaDAL hhDAL = new HanghoaDAL();
 
+        // Tạo ID Random
         private int GetID()
         {
             int i, d = 0;
@@ -27,11 +28,12 @@ namespace QuanLyNhaHang.DAL
                 l.Add(tmp[0]);
             }
             sr.Close();
-            // Kiểm tra mã hóa đơn đã tồn tại chưa? tồn tại thì random lần nữa
+            // Check ID
             for (int x = 0; x < d; x++)
             {
                 if (l[x] == ("HD" + i))
                 {
+                    // Random again
                     i = ran.Next(1, 100);
                     x = -1;
                 }
@@ -49,15 +51,20 @@ namespace QuanLyNhaHang.DAL
             StreamReader sr = new StreamReader(FileText);
             string s;
             string BillID = "HD" + GetID();
-            int d = 0;
-            // Nếu khác mã khách hàng và ngày bán thì thêm hóa đơn mới
+            int d = 0; // Count
+            
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
+                // Nếu mã khách hàng và ngày đã tồn tại thì break
                 if (tmp[3] == maKH && tmp[2] == ngay.ToString("dd/MM/yyyy"))
+                {
                     d++;
+                    break;
+                }
             }
             sr.Close();
+            // Nếu mã khách hàng và ngày chưa có trong hệ thống thì tạo mới bản ghi
             if(d == 0)
             {
                 StreamWriter sw = new StreamWriter(FileText, true);
@@ -108,10 +115,9 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                if (tmp[0] != BillID)
-                    result += s + "\n";
-                else
+                if (tmp[1] == maHH && tmp[0] == BillID)
                     result += BillID + "#" + maHH + "#" + SL + "\n";
+                else result += s + "\n";
             }
 
             sr.Close();

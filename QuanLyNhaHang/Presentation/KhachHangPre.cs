@@ -387,6 +387,7 @@ namespace QuanLyNhaHang.Presentation
         {
             Console.Clear();
             QLHangHoa qlHH = new QLHangHoa();
+            // Menu
             qlHH.Show();
             Console.WriteLine();
             Console.WriteLine("\t\tĐặt món hoặc nhấn 'Enter' để thoát.");
@@ -397,6 +398,7 @@ namespace QuanLyNhaHang.Presentation
                 if (khBUS.Laythongtin(maKH) != "")
                 {
                     string[] tmp = khBUS.Laythongtin(maKH).Split('\t');
+                    // Get Date Now
                     DateTime date = DateTime.Now;
                     bool c = false;
                     double total = 0;
@@ -417,13 +419,18 @@ namespace QuanLyNhaHang.Presentation
                                     Console.WriteLine("\t\tDữ liệu là số!");
                                 }
                             }
-                            int c1 = 0;
+                            
+                            int c1 = 0; // Check hóa đơn chi tiết
+                            // Thêm hóa đơn với tên khách, ngày, mã khách, tổng hóa đơn = 0
+                            // Nếu như mã khách hàng và ngày bị trùng thì hóa đơn không được thêm nữa
                             hdBUS.Them(tmp[1], date, maKH, total);
+                            // Lấy mã hóa đơn
                             string maHD = hdBUS.LayMaHD(maKH, date);
                             // Cập nhật số lượng 
                             for(int x = 0; x < hdBUS.HienChiTiet(maHD).Count; x++)
                             {
                                 string[] tmp2 = hdBUS.HienChiTiet(maHD)[x].Split('\t');
+                                //Nếu khách hàng order lần tiếp theo là mã đã nhập rồi thì cộng thêm số lượng
                                 if(tmp2[0] == ID)
                                 {
                                     SL += int.Parse(tmp2[3]);
@@ -431,15 +438,20 @@ namespace QuanLyNhaHang.Presentation
                                     break;
                                 }
                             }
-                            
+                            // c1 == 0 Hóa đơn chi tiết chưa tồn tại
                             if (c1 == 0)
                                 hdBUS.ThemChiTiet(maHD, ID, SL);
+                            // c1 == 1 Hóa đơn đã tồn tại
                             else
-                                hdBUS.SuaChiTiet(maHD, ID, SL);
+                                hdBUS.SuaChiTiet(maHD, ID, SL); //Cập nhật lại hóa đơn chi tiết
+                            Console.WriteLine("\nĐặt hàng thành công!!!");
                             Console.Write("\t\tBạn có muốn thêm tiếp không? (Nhấp 'Enter' để tiếp tục): ");
                             ConsoleKeyInfo key = Console.ReadKey();
                             if (key.Key == ConsoleKey.Enter)
+                            {
                                 Order(maKH);
+                                return;
+                            }
 
                             c = true;
                         }
@@ -451,15 +463,19 @@ namespace QuanLyNhaHang.Presentation
                                 c = true;
                         }
                     }
-                    // Cập nhật lại hóa đơn
+                    // Lấy thông tin của hóa đơn
                     string[] tmp3 = hdBUS.LayThongTin(maKH).Split('\n');
                     for(int x = 0; x < tmp3.Length - 1; x++)
                     {
                         string[] tmp4 = tmp3[x].Split('\t');
+                        // Nếu mã khách hàng và ngày có trong hệ thống
                         if(tmp4[3] == maKH && tmp4[2] == DateTime.Now.ToString("dd/MM/yyyy"))
                         {
+                            // Tính tổng tiền những gì khách hàng đã nhập
                             total = hdBUS.TongTien(maKH, tmp4[2]);
+                            // Cập nhật hóa đơn
                             hdBUS.Sua(tmp4[0], conP.Capitalize(tmp4[1]), DateTime.Parse(tmp4[2]), tmp4[3], total);
+                            break;
                         }
                     }
                 }
@@ -584,6 +600,7 @@ namespace QuanLyNhaHang.Presentation
                 while (!c)
                 {
                     int i = 0;
+                    // Kiểm tra mã hóa đơn nhập có tồn tại trong những hóa đơn của khách hàng hay không
                     foreach(string x in list)
                     {
                         string[] tmpList = x.Split('\t');

@@ -9,6 +9,7 @@ namespace QuanLyNhaHang.DAL
     {
         private string FileText = "HangHoa.txt";
 
+        // Create Auto ID
         private int GetID()
         {
             int i, d = 0;
@@ -24,11 +25,12 @@ namespace QuanLyNhaHang.DAL
                 l.Add(tmp[0]);
             }
             sr.Close();
-            // Kiểm tra mã hàng hóa đã tồn tại chưa
+            // Check ID
             for (int x = 0; x < d; x++)
             {
                 if (l[x] == ("HH" + i))
                 {
+                    // Random again
                     i = ran.Next(1, 100);
                     x = -1;
                 }
