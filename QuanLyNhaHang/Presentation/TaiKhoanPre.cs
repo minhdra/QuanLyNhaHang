@@ -74,7 +74,7 @@ namespace QuanLyNhaHang.Presentation
                                 khShow.HienMenuKH(s);
                             else
                             {
-                                Console.Write("\n\n\tĐăng nhập không thành công!");
+                                Console.Write("\n\n\t\t\t\t\tĐăng nhập không thành công!");
                                 Console.ReadKey();
                             }
                             break;
@@ -245,7 +245,7 @@ namespace QuanLyNhaHang.Presentation
                                 nvShow.HienMenuNV(s);
                             else
                             {
-                                Console.Write("\n\n\tĐăng nhập không thành công!");
+                                Console.Write("\n\n\t\t\t\t\tĐăng nhập không thành công!");
                                 Console.ReadKey();
                             }
                             break;
@@ -359,7 +359,7 @@ namespace QuanLyNhaHang.Presentation
                             if (DangNhapQL() != "")
                                 qlShow.MenuQuanLy();
                             else
-                                Console.Write("\n\n\tĐăng nhập không thành công!");
+                                Console.Write("\n\n\t\t\t\t\tĐăng nhập không thành công!");
                             Console.ReadKey();
                             break;
                         case '9':
