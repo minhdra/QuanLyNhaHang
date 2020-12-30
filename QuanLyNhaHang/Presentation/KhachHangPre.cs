@@ -27,51 +27,51 @@ namespace QuanLyNhaHang.Presentation
 
                 Console.Clear();
 
-                Console.SetWindowSize(103, 35);
-                Console.Write("\n\t\t╔═══════════════════════════════════════════════════════════════════════╗");
-                Console.Write("\n\t\t║                  CHƯƠNG TRÌNH QUẢN LÝ NHÀ HÀNG ĂN                     ║");
-                Console.Write("\n\t\t╠═══════════════════════════════════════════════════════════════════════╣");
-                Console.Write("\n\t\t║                                                                       ║");
-                Console.Write("\n\t\t║ ╔═══════════════════════════════════════════════════════════════════╗ ║");
-                Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ║                         XIN CHÀO QUÝ KHÁCH                        ║ ║");
-                Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ║              ╔═══╦══════════════════════════════╗                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 1.║       THÊM THÔNG TIN         ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 2.║        SỬA THÔNG TIN         ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 3.║        XEM THÔNG TIN         ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 4.║           ĐẶT HÀNG           ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 5.║       LỊCH SỬ GIAO DỊCH      ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 6.║         ĐỔI MẬT KHẨU         ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 9.║          QUAY LẠI            ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║                              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║ 0.║           THOÁT              ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║___║______________________________║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ║   ║ Bấm phím theo số để chọn:    ║                 ║ ║");
-                Console.Write("\n\t\t║ ║              ╚═══╩══════════════════════════════╝                 ║ ║");
-                Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ║                                                                   ║ ║");
-                Console.Write("\n\t\t║ ╚═══════════════════════════════════════════════════════════════════╝ ║");
-                Console.Write("\n\t\t║                                                                       ║");
-                Console.Write("\n\t\t╚═══════════════════════════════════════════════════════════════════════╝");
-                Console.SetCursorPosition(65, 35);
+                Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+                Console.Write("\n\t\t\t\t╔═══════════════════════════════════════════════════════════════════════╗");
+                Console.Write("\n\t\t\t\t║                  CHƯƠNG TRÌNH QUẢN LÝ NHÀ HÀNG ĂN                     ║");
+                Console.Write("\n\t\t\t\t╠═══════════════════════════════════════════════════════════════════════╣");
+                Console.Write("\n\t\t\t\t║                                                                       ║");
+                Console.Write("\n\t\t\t\t║ ╔═══════════════════════════════════════════════════════════════════╗ ║");
+                Console.Write("\n\t\t\t\t║ ║                                                                   ║ ║");
+                Console.Write("\n\t\t\t\t║ ║                         XIN CHÀO QUÝ KHÁCH                        ║ ║");
+                Console.Write("\n\t\t\t\t║ ║                                                                   ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ╔═══╦══════════════════════════════╗                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║ 1.║       THÊM THÔNG TIN         ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║ 2.║        SỬA THÔNG TIN         ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║ 3.║        XEM THÔNG TIN         ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║ 4.║           ĐẶT HÀNG           ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║ 5.║       LỊCH SỬ GIAO DỊCH      ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║ 6.║         ĐỔI MẬT KHẨU         ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║ 9.║          QUAY LẠI            ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║                              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║ 0.║           THOÁT              ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║___║______________________________║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ║   ║ Bấm phím theo số để chọn:    ║                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║              ╚═══╩══════════════════════════════╝                 ║ ║");
+                Console.Write("\n\t\t\t\t║ ║                                                                   ║ ║");
+                Console.Write("\n\t\t\t\t║ ║                                                                   ║ ║");
+                Console.Write("\n\t\t\t\t║ ║                                                                   ║ ║");
+                Console.Write("\n\t\t\t\t║ ║                                                                   ║ ║");
+                Console.Write("\n\t\t\t\t║ ╚═══════════════════════════════════════════════════════════════════╝ ║");
+                Console.Write("\n\t\t\t\t║                                                                       ║");
+                Console.Write("\n\t\t\t\t╚═══════════════════════════════════════════════════════════════════════╝");
+                Console.SetCursorPosition(80, 35);
 
                 char chose = char.ToUpper(Console.ReadKey(true).KeyChar);
 
@@ -161,7 +161,7 @@ namespace QuanLyNhaHang.Presentation
         {
             Console.Clear();
 
-
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Console.Write("\n\t\t╔═══════════════════════════════════════════════════════╗");
             Console.Write("\n\t\t║                     THÊM THÔNG TIN                    ║");
             Console.Write("\n\t\t╠═══════════════════════════════════════════════════════╣");
@@ -254,7 +254,7 @@ namespace QuanLyNhaHang.Presentation
                 if (tmp[3] == "Nu")
                     gen = false;
                 string tenKH = tmp[1], dchi = tmp[4], SDT = tmp[5], CMT = tmp[6], email = tmp[7];
-                Console.SetWindowSize(103, 35);
+                Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                 Console.Write("\n\t\t             ╔═══╦═════════════════════════════════════╗                 ");
                 Console.Write("\n\t\t             ║___║_____________________________________║                 ");
                 Console.Write("\n\t\t             ║   ║                                     ║                 ");
@@ -471,7 +471,7 @@ namespace QuanLyNhaHang.Presentation
         private void DoiMatKhau(string maKH)
         {
             Console.Clear();
-
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
             Console.Write("\n\t║                               ĐỔI MẬT KHẨU                            ║");
             Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
@@ -536,7 +536,7 @@ namespace QuanLyNhaHang.Presentation
                 start = (curpage - 1) * 6;
                 end = curpage * 6 < count ? curpage * 6 : count;
 
-                Console.SetWindowSize(140, 30);
+                Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
@@ -607,6 +607,7 @@ namespace QuanLyNhaHang.Presentation
                         do
                         {
                             Console.Clear();
+                            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                             start = (curpage - 1) * 6;
                             end = curpage * 6 < count ? curpage * 6 : count;
 
