@@ -163,7 +163,7 @@ namespace QuanLyNhaHang.Presentation
             Console.SetCursorPosition(38, 8);
             string tenNV = Console.ReadLine();
             if (tenNV == "") return;
-            tenNV = conP.CheckStr2(tenNV, 27, 38, 8, 27, 26);
+            tenNV = conP.CheckStr2(tenNV, 27, 38, 8, 26, 26);
 
             Console.SetCursorPosition(38, 10);
             string dateStr = Console.ReadLine();
@@ -175,7 +175,7 @@ namespace QuanLyNhaHang.Presentation
 
             Console.SetCursorPosition(38, 16);
             string dchi = Console.ReadLine();
-            dchi = conP.CheckStr2(dchi, 17, 38, 16, 27, 26);
+            dchi = conP.CheckStr2(dchi, 17, 38, 16, 26, 26);
 
             Console.SetCursorPosition(38, 18);
             string SDT = Console.ReadLine();

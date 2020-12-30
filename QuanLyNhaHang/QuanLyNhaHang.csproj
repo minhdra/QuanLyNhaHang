@@ -30,7 +30,6 @@
     <Content Include="bin\Debug\netcoreapp3.1\HoaDonXuatChiTiet.txt" />
     <Content Include="bin\Debug\netcoreapp3.1\KhachHang.txt" />
     <Content Include="bin\Debug\netcoreapp3.1\NhanVien.txt" />
-    <Content Include="bin\Debug\netcoreapp3.1\PhucVu.txt" />
     <Content Include="bin\Debug\netcoreapp3.1\TaiKhoanKhach.txt" />
     <Content Include="bin\Debug\netcoreapp3.1\TaiKhoanNV.txt" />
   </ItemGroup>

@@ -55,6 +55,9 @@ namespace QuanLyNhaHang.Constraint
                         Console.SetCursorPosition(cursorL1, cursorT1);
                         Console.Write(new string(' ', email.Length));
 
+                        Console.SetCursorPosition(0, cursorT1-1);
+                        Console.Write("\n\t\t║ ║  Email          :                      @gmail.com ║ ║");
+
                         Console.SetCursorPosition(cursorL1, cursorT1);
                         email = Console.ReadLine();
 
