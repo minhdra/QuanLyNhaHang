@@ -1485,19 +1485,30 @@ namespace QuanLyNhaHang.Presentation
                 Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t\t║                  DANH SÁCH {0,-4} TÀI KHOẢN KHÁCH HÀNG                   ║", nvBUS.CountAcc());
-                Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═════════════════════════════╣");
-                Console.WriteLine("\t\t║    Mã   ║            Tài khoản           ║            Mật khẩu         ║");
-                Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═════════════════════════════╣");
+                Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("\t\t║                             DANH SÁCH {0,-4} TÀI KHOẢN KHÁCH HÀNG                                 ║", nvBUS.CountAcc());
+                Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═════════════════════════════╦════════════════════════╣");
+                Console.WriteLine("\t\t║    Mã   ║            Tài khoản           ║            Mật khẩu         ║         Ghi chú        ║");
+                Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═════════════════════════════╬════════════════════════╣");
                 for (int x = start; x < end; x++)
                 {
                     string[] tmp = nvBUS.LaydanhsachAcc()[x].Split('\t');
-                    Console.WriteLine("\t\t║  {0,-7}║\t{1,-20}       ║\t{2,-10}               ║", tmp[2], tmp[0], tmp[1]);
+                    string Note = "";
+                    foreach(string i in nvBUS.Laydanhsach())
+                    {
+                        string[] checkAcc = i.Split('\t');
+                        if(checkAcc[0] == tmp[2])
+                            if(checkAcc[1] == "empty" && checkAcc[4] == "empty")
+                            {
+                                Note = "Chưa nhập thông tin";
+                                break;
+                            }
+                    }
+                    Console.WriteLine("\t\t║  {0,-7}║\t{1,-20}       ║\t{2,-10}               ║ {3,-20}   ║", tmp[2], tmp[0], tmp[1],Note);
 
                 }
 
-                Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═════════════════════════════╝");
+                Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═════════════════════════════╩════════════════════════╝");
 
                 Console.Write("\t\tTrang " + curpage + "/" + totalpage + "          Ấn <-, -> để xem tiếp, ENTER để thoát...");
                 ConsoleKeyInfo key = Console.ReadKey();
@@ -2016,19 +2027,28 @@ namespace QuanLyNhaHang.Presentation
                 Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t\t║                  DANH SÁCH {0,-4} TÀI KHOẢN KHÁCH HÀNG                   ║", khBUS.CountAcc());
-                Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═════════════════════════════╣");
-                Console.WriteLine("\t\t║    Mã   ║            Tài khoản           ║            Mật khẩu         ║");
-                Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═════════════════════════════╣");
+                Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("\t\t║                            DANH SÁCH {0,-4} TÀI KHOẢN KHÁCH HÀNG                                  ║", khBUS.CountAcc());
+                Console.WriteLine("\t\t╠═════════╦════════════════════════════════╦═════════════════════════════╦════════════════════════╣");
+                Console.WriteLine("\t\t║    Mã   ║            Tài khoản           ║            Mật khẩu         ║         Ghi chú        ║");
+                Console.WriteLine("\t\t╠═════════╬════════════════════════════════╬═════════════════════════════╬════════════════════════╣");
                 for (int x = start; x < end; x++)
                 {
                     string[] tmp = khBUS.LaydanhsachAcc()[x].Split('\t');
-                    Console.WriteLine("\t\t║  {0,-7}║\t{1,-20}       ║\t{2,-10}               ║", tmp[2], tmp[0], tmp[1]);
-
+                    string Note = "Chưa nhập thông tin";
+                    foreach(string i in khBUS.Laydanhsach())
+                    {
+                        string[] checkAcc = i.Split('\t');
+                        if(tmp[2] == checkAcc[0])
+                        {
+                            Note = "";
+                            break;
+                        }
+                    }
+                    Console.WriteLine("\t\t║  {0,-7}║\t{1,-20}       ║\t{2,-10}               ║ {3,-20}   ║", tmp[2], tmp[0], tmp[1], Note);
                 }
 
-                Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═════════════════════════════╝");
+                Console.WriteLine("\t\t╚═════════╩════════════════════════════════╩═════════════════════════════╩════════════════════════╝");
 
                 Console.Write("\t\tTrang " + curpage + "/" + totalpage + "          Ấn <-, -> để xem tiếp, ENTER để thoát...");
                 ConsoleKeyInfo key = Console.ReadKey();
