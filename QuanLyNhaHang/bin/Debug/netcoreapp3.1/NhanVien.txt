@@ -1,4 +1,5 @@
-NV1#Le Xuan Thu#01/01/2000#Nu#Hung Yen#0938443748#033200005697#aty@gmail.com#Giam docNV2#Nguyen Hong Hanh#01/04/2000#Nu#Hung Yen#0984935735#033200005865#gjt@gmail.com#Quan ly
+NV1#Le Xuan Thu#01/01/2000#Nu#Hung Yen#0938443748#033200005697#aty@gmail.com#Giam doc
+NV2#Nguyen Hong Hanh#01/04/2000#Nu#Hung Yen#0984935735#033200005865#gjt@gmail.com#Quan ly
 NV3#Ho Bat Lao#29/05/2000#Nam#Ha Noi#0954854856#033200000349#ght@gmail.com#Le tan
 NV4#Vo Trang Nguyen#07/11/2000#Nam#Hung Yen#0983402105#033200002342#kgl@gmail.com#Phuc vu
 NV5#Vu Nham#01/10/2000#Nam#Hung Yen#0949885433#033200005342#uyt@gmail.com#Dau bep

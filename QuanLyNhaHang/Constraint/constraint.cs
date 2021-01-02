@@ -470,5 +470,24 @@ namespace QuanLyNhaHang.Constraint
             }
             return price;
         }
+
+        public string Password(int cursorL, int cursorT)
+        {
+            Console.SetCursorPosition(cursorL, cursorT);
+            string s = "";
+            ConsoleKeyInfo key;
+            while (true)
+            {
+                key = Console.ReadKey(true); // Ẩn phím đã nhập
+                if (key.Key == ConsoleKey.Enter || key.Key == ConsoleKey.Escape) break;
+                else
+                {
+                    Console.Write("*");
+                    s += key.KeyChar.ToString();
+                }
+            }
+
+            return s;
+        }
     }
 }

@@ -116,8 +116,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t\t╚═══════════════════════════════════════════════════════════════════════╝");
                 Console.SetCursorPosition(41, 6);
                 string TK = Console.ReadLine();
-                Console.SetCursorPosition(41, 8);
-                string MK = Console.ReadLine();
+                string MK = conP.Password(41, 8);
                 string result = "";
                 string[] tmp = khBUS.LaythongtinTK(TK).Split('\t');
                 if (khBUS.DangNhap(TK, MK) == 1)
@@ -192,6 +191,8 @@ namespace QuanLyNhaHang.Presentation
         {
             private NhanVienBUS nvBUS = new NhanVienBUS();
             private NhanVienPre nvShow = new NhanVienPre();
+            private constraint conP = new constraint();
+            
             public void HienMenuNV()
             {
                 while (true)
@@ -282,8 +283,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t\t╚═══════════════════════════════════════════════════════════════════════╝");
                 Console.SetCursorPosition(41, 6);
                 string TK = Console.ReadLine().ToUpper();
-                Console.SetCursorPosition(41, 8);
-                string MK = Console.ReadLine();
+                string MK = conP.Password(41, 8);
                 string result = "";
                 string[] tmp = nvBUS.LaythongtinTK(TK).Split('\t');
                 if (nvBUS.DangNhap(TK, MK) == 1)
@@ -312,6 +312,7 @@ namespace QuanLyNhaHang.Presentation
         {
             private QuanLyPre qlShow = new QuanLyPre();
             private NhanVienBUS nvBUS = new NhanVienBUS();
+            private constraint conP = new constraint();
             public void HienMenuQL()
             {
                 while (true)
@@ -390,8 +391,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\n\t\t\t╚═══════════════════════════════════════════════════════════════════════╝");
                 Console.SetCursorPosition(41, 6);
                 string TK = Console.ReadLine();
-                Console.SetCursorPosition(41, 8);
-                string MK = Console.ReadLine();
+                string MK = conP.Password(41, 8);
 
                 string result = "";
 
