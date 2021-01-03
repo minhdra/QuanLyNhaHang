@@ -354,11 +354,12 @@ namespace QuanLyNhaHang.Presentation
                     Console.SetCursorPosition(89, 23);
 
                     char chose = char.ToUpper(Console.ReadKey(true).KeyChar);
+                    string s;
                     switch (chose)
                     {
                         case '1':
-                            if (DangNhapQL() != "")
-                                qlShow.MenuQuanLy();
+                            if ((s = DangNhapQL()) != "")
+                                qlShow.MenuQuanLy(s);
                             else
                                 Console.Write("\n\n\t\t\t\t\tĐăng nhập không thành công!");
                             Console.ReadKey();

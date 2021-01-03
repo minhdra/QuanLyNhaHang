@@ -15,9 +15,9 @@ namespace QuanLyNhaHang.Presentation
         private QLNhanVien qlNV = new QLNhanVien();
         private NhanVienBUS nvBUS = new NhanVienBUS();
 
-        public void MenuQuanLy()
+        public void MenuQuanLy(string maNV)
         {
-            
+            string[] tmp = nvBUS.Laythongtin(maNV).Split('#');
             while (true)
             {
                 Console.Clear();
@@ -67,16 +67,26 @@ namespace QuanLyNhaHang.Presentation
                 switch (chose)
                 {
                     case '1':
-                        qlK.MenuKH();
+                        qlK.MenuKH(maNV);
                         break;
                     case '2':
-                        qlNV.MenuNV();
+                        if(tmp[8] != qlNV.listPosition[3]) // Lễ tân không thể quản lý nhân viên
+                            qlNV.MenuNV(maNV);
+                        else
+                        {
+                            Console.Clear();
+                            Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
+                            Console.Write("\n\t║                      BẠN KHÔNG CÓ QUYỀN TRUY CẬP                      ║");
+                            Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
+                            Console.ReadKey();
+                        }
                         break;
                     case '3':
-                        qlHH.MenuHH();
+                        
+                        qlHH.MenuHH(maNV);
                         break;
                     case '4':
-                        qlHD.MenuHD();
+                        qlHD.MenuHD(maNV);
                         break;
                     case '9':
                         TaiKhoanPre.QuanLy ql = new TaiKhoanPre.QuanLy();
@@ -86,7 +96,7 @@ namespace QuanLyNhaHang.Presentation
                         Environment.Exit(0);
                         break;
                     default:
-                        MenuQuanLy();
+                        MenuQuanLy(maNV);
                         break;
                 }
             }
@@ -99,7 +109,7 @@ namespace QuanLyNhaHang.Presentation
         private HoaDonBUS hdBUS = new HoaDonBUS();
         private constraint conP = new constraint();
 
-        public void MenuHD()
+        public void MenuHD(string maNV)
         {
             while (true)
             {
@@ -165,7 +175,7 @@ namespace QuanLyNhaHang.Presentation
                         Xoa();
                         break;
                     case '5':
-                        MenuThongKe();
+                        MenuThongKe(maNV);
                         Console.ReadKey();
                         break;
                     //case '6':
@@ -173,19 +183,19 @@ namespace QuanLyNhaHang.Presentation
                     //    break;
                     case '9':
                         QuanLyPre ql = new QuanLyPre();
-                        ql.MenuQuanLy();
+                        ql.MenuQuanLy(maNV);
                         break;
                     case '0':
                         Environment.Exit(0);
                         break;
                     default:
-                        MenuHD();
+                        MenuHD(maNV);
                         break;
                 }
             }
         }
 
-        private void MenuThongKe()
+        private void MenuThongKe(string maNV)
         {
             while (true)
             {
@@ -242,13 +252,13 @@ namespace QuanLyNhaHang.Presentation
                         ThongKeNam();
                         break;
                     case '9':
-                        MenuHD();
+                        MenuHD(maNV);
                         break;
                     case '0':
                         Environment.Exit(0);
                         break;
                     default:
-                        MenuThongKe();
+                        MenuThongKe(maNV);
                         break;
                 }
             }
@@ -975,9 +985,12 @@ namespace QuanLyNhaHang.Presentation
     {
         private HangHoaBUS hhBUS = new HangHoaBUS();
         private constraint conP = new constraint();
+        private QLNhanVien qlNV = new QLNhanVien();
+        private NhanVienBUS nvBUS = new NhanVienBUS();
 
-        public void MenuHH()
+        public void MenuHH(string maNV)
         {
+            string[] tmp = nvBUS.Laythongtin(maNV).Split('#');
             while (true)
             {
                 Console.Clear();
@@ -1033,27 +1046,56 @@ namespace QuanLyNhaHang.Presentation
                         Show();
                         break;
                     case '2':
-                        Them();
-                        Console.ReadKey();
+                        // Lễ tân không thể truy cập vào đây
+                        if(tmp[8] != qlNV.listPosition[3])
+                            Them();
+                        else
+                        {
+                            Console.Clear();
+                            Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
+                            Console.Write("\n\t║                      BẠN KHÔNG CÓ QUYỀN TRUY CẬP                      ║");
+                            Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
+                            Console.ReadKey();
+                        }
                         break;
                     case '3':
-                        Sua();
+                        // Lễ tân không thể truy cập vào đây
+                        if (tmp[8] != qlNV.listPosition[3])
+                            Sua(maNV);
+                        else
+                        {
+                            Console.Clear();
+                            Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
+                            Console.Write("\n\t║                      BẠN KHÔNG CÓ QUYỀN TRUY CẬP                      ║");
+                            Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
+                            Console.ReadKey();
+                        }
                         break;
                     case '4':
-                        Xoa();
+                        // Lễ tân không thể truy cập vào đây
+                        if (tmp[8] != qlNV.listPosition[3])
+                            Xoa();
+                        else
+                        {
+                            Console.Clear();
+                            Console.Write("\n\t╔═══════════════════════════════════════════════════════════════════════╗");
+                            Console.Write("\n\t║                      BẠN KHÔNG CÓ QUYỀN TRUY CẬP                      ║");
+                            Console.Write("\n\t╚═══════════════════════════════════════════════════════════════════════╝");
+                            Console.ReadKey();
+                        }
                         break;
                     case '5':
                         TimKiem();
                         break;
                     case '9':
                         QuanLyPre ql = new QuanLyPre();
-                        ql.MenuQuanLy();
+                        ql.MenuQuanLy(maNV);
                         break;
                     case '0':
                         Environment.Exit(0);
                         break;
                     default:
-                        MenuHH();
+                        MenuHH(maNV);
                         break;
                 }
             }
@@ -1155,7 +1197,7 @@ namespace QuanLyNhaHang.Presentation
             }
         }
 
-        private void Sua()
+        private void Sua(string maNV)
         {
             Show();
             Console.Write("\n\t\tNhập mã hàng hóa muốn sửa (Nhập mã sai sẽ thoát!): ");
@@ -1208,7 +1250,7 @@ namespace QuanLyNhaHang.Presentation
                         
                         break;
                     case '9':
-                        MenuHH();
+                        MenuHH(maNV);
                         break;
                     case '0':
                         Environment.Exit(0);
@@ -1340,7 +1382,7 @@ namespace QuanLyNhaHang.Presentation
                                 "Phuc vu",
                                 "Dau bep"};
 
-        public void MenuNV()
+        public void MenuNV(string maNV)
         {
             while (true)
             {
@@ -1410,7 +1452,7 @@ namespace QuanLyNhaHang.Presentation
                         TimKiem();
                         break;
                     case '4':
-                        Sua();
+                        Sua(maNV);
                         break;
                     case '5':
                         Xoa();
@@ -1423,13 +1465,13 @@ namespace QuanLyNhaHang.Presentation
                         break;
                     case '9':
                         QuanLyPre ql = new QuanLyPre();
-                        ql.MenuQuanLy();
+                        ql.MenuQuanLy(maNV);
                         break;
                     case '0':
                         Environment.Exit(0);
                         break;
                     default:
-                        MenuNV();
+                        MenuNV(maNV);
                         break;
                 }
             }
@@ -1704,7 +1746,7 @@ namespace QuanLyNhaHang.Presentation
             } while (true);
         }
 
-        private void Sua()
+        private void Sua(string ID)
         {
             while (true)
             {
@@ -1715,8 +1757,17 @@ namespace QuanLyNhaHang.Presentation
                 {
                     while (true)
                     {
-                        Console.Clear();
                         string[] tmp = nvBUS.Laythongtin(maNV).Split('#');
+                        string[] tmp2 = nvBUS.Laythongtin(ID).Split('#');
+
+                        // Nếu người sửa không phải là giám đốc mà muốn sửa giám đốc thì thoát chương trình
+                        if(tmp[8] == listPosition[0] && tmp2[8] != listPosition[0])
+                        {
+                            Console.Write("\nBạn không thể sửa thông tin người này!!!");
+                            Console.ReadKey();
+                            return;
+                        }
+                        Console.Clear();
                         Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                         Console.Write("\n\t\t             ╔═══╦═════════════════════════════════════╗                 ");
                         Console.Write("\n\t\t             ║___║_____________________________________║                 ");
@@ -1750,7 +1801,7 @@ namespace QuanLyNhaHang.Presentation
                                 SuaTK(maNV);
                                 break;
                             case '9':
-                                MenuNV();
+                                MenuNV(ID);
                                 break;
                             case '0':
                                 Environment.Exit(0);
@@ -1896,7 +1947,7 @@ namespace QuanLyNhaHang.Presentation
     {
         private KhachHangBUS khBUS = new KhachHangBUS();
 
-        public void MenuKH()
+        public void MenuKH(string maNV)
         {
             while (true)
             {
@@ -1963,7 +2014,7 @@ namespace QuanLyNhaHang.Presentation
                         TimKiem();
                         break;
                     case '4':
-                        Sua();
+                        Sua(maNV);
                         break;
                     case '5':
                         Xoa();
@@ -1974,13 +2025,13 @@ namespace QuanLyNhaHang.Presentation
                         break;
                     case '9':
                         QuanLyPre ql = new QuanLyPre();
-                        ql.MenuQuanLy();
+                        ql.MenuQuanLy(maNV);
                         break;
                     case '0':
                         Environment.Exit(0);
                         break;
                     default:
-                        MenuKH();
+                        MenuKH(maNV);
                         break;
                 }
             }
@@ -2240,7 +2291,7 @@ namespace QuanLyNhaHang.Presentation
             }
         }
 
-        private void Sua()
+        private void Sua(string maNV)
         {
             while (true)
             {
@@ -2286,7 +2337,7 @@ namespace QuanLyNhaHang.Presentation
                                 SuaTK(maKH);
                                 break;
                             case '9':
-                                MenuKH();
+                                MenuKH(maNV);
                                 break;
                             case '0':
                                 Environment.Exit(0);
