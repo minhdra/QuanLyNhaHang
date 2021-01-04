@@ -68,7 +68,7 @@ namespace QuanLyNhaHang.DAL
             if(d == 0)
             {
                 StreamWriter sw = new StreamWriter(FileText, true);
-                sw.WriteLine(BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total);
+                sw.WriteLine(BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total + "#" + maNV);
                 sw.Close();
             }
         }

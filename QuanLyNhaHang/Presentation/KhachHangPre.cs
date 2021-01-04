@@ -445,7 +445,7 @@ namespace QuanLyNhaHang.Presentation
                             // c1 == 1 Hóa đơn đã tồn tại
                             else
                                 hdBUS.SuaChiTiet(maHD, ID, SL); //Cập nhật lại hóa đơn chi tiết
-                            Console.WriteLine("\nĐặt hàng thành công!!!");
+                            Console.WriteLine("\n\t\tĐặt hàng thành công!!!");
                             Console.Write("\t\tBạn có muốn thêm tiếp không? (Nhấp 'Enter' để tiếp tục): ");
                             ConsoleKeyInfo key = Console.ReadKey();
                             if (key.Key == ConsoleKey.Enter)
@@ -563,9 +563,15 @@ namespace QuanLyNhaHang.Presentation
                 Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╬══════════╬══════════════════════════════════╣");
                 for (int x = start; x < end; x++)
                 {
+                    string maNV = "<Trống>", tenNV = "<Trống>";
                     string[] tmp2 = tmp[x].Split('\t');
-                    string[] tmp3 = nvBUS.Laythongtin(tmp2[5]).Split("#");
-                    Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║ {5,-7}  ║\t{6,-27}     ║", tmp2[0], tmp2[3], tmp2[1], tmp2[2], double.Parse(tmp2[4]).ToString("N0"), tmp2[5], tmp3[1]);
+                    if (tmp2[5] != "<Trống>")
+                    {
+                        string[] tmp3 = nvBUS.Laythongtin(tmp2[5]).Split("#");
+                        maNV = tmp3[0];
+                        tenNV = tmp3[1];
+                    }
+                    Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║ {5,-7}  ║\t{6,-27}     ║", tmp2[0], tmp2[3], tmp2[1], tmp2[2], double.Parse(tmp2[4]).ToString("N0"), maNV, tenNV);
                 }
                 Console.WriteLine("\t\t╚═════════╩══════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╩══════════╩══════════════════════════════════╝");
 

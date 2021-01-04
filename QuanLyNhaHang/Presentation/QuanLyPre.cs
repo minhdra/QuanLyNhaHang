@@ -295,9 +295,15 @@ namespace QuanLyNhaHang.Presentation
                 Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╬══════════╬══════════════════════════════════╣");
                 for (int x = start; x < end; x++)
                 {
+                    string maNV = "<Trống>", tenNV = "<Trống>";
                     string[] tmp = hdBUS.LayDanhSach()[x].Split('\t');
-                    string[] tmp2 = nvBUS.Laythongtin(tmp[5]).Split('#'); // Lấy thông tin nhân viên
-                    Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║ {5,-7}  ║\t{6,-27}     ║", tmp[0], tmp[3], tmp[1], tmp[2], double.Parse(tmp[4]).ToString("N0"), tmp[5], tmp2[1]);
+                    if (tmp[5] != "<Trống>")
+                    {
+                        string[] tmp2 = nvBUS.Laythongtin(tmp[5]).Split('#'); // Lấy thông tin nhân viên
+                        maNV = tmp2[0];
+                        tenNV = tmp2[1];
+                    }
+                    Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║ {5,-7}  ║\t{6,-27}     ║", tmp[0], tmp[3], tmp[1], tmp[2], double.Parse(tmp[4]).ToString("N0"), maNV, tenNV);
                 }
                 Console.WriteLine("\t\t╚═════════╩══════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╩══════════╩══════════════════════════════════╝");
 
