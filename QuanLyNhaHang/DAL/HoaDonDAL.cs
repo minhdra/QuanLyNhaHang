@@ -41,7 +41,7 @@ namespace QuanLyNhaHang.DAL
             return i;
         }
 
-        public void Them(string tenKH, DateTime ngay, string maKH, double total)
+        public void Them(string tenKH, DateTime ngay, string maKH, double total, string maNV)
         {
             if( !File.Exists( FileText ) )
             {
@@ -86,7 +86,7 @@ namespace QuanLyNhaHang.DAL
             sw.Close();
         }
 
-        public void Sua(string BillID, string tenKH, DateTime ngay, string maKH, double total)
+        public void Sua(string BillID, string tenKH, DateTime ngay, string maKH, double total, string maNV)
         {
             StreamReader sr = new StreamReader(FileText);
             string s, result = "";
@@ -97,7 +97,7 @@ namespace QuanLyNhaHang.DAL
                 if (tmp[0] != BillID)
                     result += s + "\n";
                 else
-                    result += BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total + "\n";
+                    result += BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total + "#" + maNV + "\n";
             }
 
             sr.Close();
@@ -230,7 +230,7 @@ namespace QuanLyNhaHang.DAL
             while( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
-                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4];
+                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4] + "\t" + tmp[5];
                 list.Add( result );
             }
 
@@ -247,7 +247,8 @@ namespace QuanLyNhaHang.DAL
             {
                 string[] tmp = s.Split('#');
                 if (tmp[3] == ID || tmp[0] == ID)
-                    result += tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3]  + "\t" + tmp[4] + "\n";
+                    result += tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3]  + "\t" + tmp[4] + "\t" + 
+                        tmp[5] + "\n";
             }
             sr.Close();
             return result;

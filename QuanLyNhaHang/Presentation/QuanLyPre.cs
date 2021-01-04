@@ -108,6 +108,7 @@ namespace QuanLyNhaHang.Presentation
     {
         private HoaDonBUS hdBUS = new HoaDonBUS();
         private constraint conP = new constraint();
+        private NhanVienBUS nvBUS = new NhanVienBUS();
 
         public void MenuHD(string maNV)
         {
@@ -166,7 +167,7 @@ namespace QuanLyNhaHang.Presentation
                         Show();
                         break;
                     case '2':
-                        Them();
+                        Them(maNV);
                         break;
                     case '3':
                         TimKiem();
@@ -287,17 +288,18 @@ namespace QuanLyNhaHang.Presentation
                 Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("\t\t║                                             DANH SÁCH HÓA ĐƠN                                   ║");
-                Console.WriteLine("\t\t╠═════════╦══════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╣");
-                Console.WriteLine("\t\t║    Mã   ║ Mã khách ║         Tên khách hàng           ║        Ngày       ║     Thành tiền      ║");
-                Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╣");
+                Console.WriteLine("\t\t╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("\t\t║                                                         DANH SÁCH HÓA ĐƠN                                                                     ║");
+                Console.WriteLine("\t\t╠═════════╦══════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╦══════════╦══════════════════════════════════╣");
+                Console.WriteLine("\t\t║    Mã   ║ Mã khách ║         Tên khách hàng           ║        Ngày       ║       Đơn giá       ║   Mã NV  ║        Nhân viên giao dịch       ║");
+                Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╬══════════╬══════════════════════════════════╣");
                 for (int x = start; x < end; x++)
                 {
                     string[] tmp = hdBUS.LayDanhSach()[x].Split('\t');
-                    Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║", tmp[0], tmp[3], tmp[1], tmp[2], double.Parse(tmp[4]).ToString("N0"));
+                    string[] tmp2 = nvBUS.Laythongtin(tmp[5]).Split('#'); // Lấy thông tin nhân viên
+                    Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║ {5,-7}  ║\t{6,-27}     ║", tmp[0], tmp[3], tmp[1], tmp[2], double.Parse(tmp[4]).ToString("N0"), tmp[5], tmp2[1]);
                 }
-                Console.WriteLine("\t\t╚═════════╩══════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╝");
+                Console.WriteLine("\t\t╚═════════╩══════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╩══════════╩══════════════════════════════════╝");
 
                 Console.WriteLine("\t\t╔════════════════════════════════════════════════════════════════╗");
                 Console.WriteLine("\t\t║ Tổng tiền của tất cả hóa đơn:  {0,-24}        ║", sum.ToString("N0"));
@@ -444,7 +446,7 @@ namespace QuanLyNhaHang.Presentation
                 Console.Write("\t\tĐã thoát!");
         }
 
-        private void Them()
+        private void Them(string maNV)
         {
             KhachHangBUS khBUS = new KhachHangBUS();
             HangHoaBUS hhBUS = new HangHoaBUS();
@@ -494,7 +496,7 @@ namespace QuanLyNhaHang.Presentation
                                 int c1 = 0;// Check hóa đơn chi tiết
                                 // Thêm hóa đơn với tên khách, ngày, mã khách, tổng hóa đơn = 0
                                 // Nếu như mã khách hàng và ngày bị trùng thì hóa đơn không được thêm nữa
-                                hdBUS.Them(tmp[1], date, maKH, total);
+                                hdBUS.Them(tmp[1], date, maKH, total, maNV);
                                 // Lấy mã hóa đơn
                                 string maHD = hdBUS.LayMaHD(maKH, date);
                                 // Cập nhật số lượng 
@@ -521,7 +523,7 @@ namespace QuanLyNhaHang.Presentation
                                     c = true;
                                 else
                                 {
-                                    Them();
+                                    Them(maNV);
                                     return;
                                     
                                 }
@@ -547,7 +549,7 @@ namespace QuanLyNhaHang.Presentation
                                 // Tính tổng tiền những gì khách hàng đã nhập
                                 total = hdBUS.TongTien(maKH, tmp4[2]);
                                 // Cập nhật hóa đơn
-                                hdBUS.Sua(tmp4[0], conP.Capitalize(tmp4[1]), DateTime.Parse(tmp4[2]), tmp4[3], total);
+                                hdBUS.Sua(tmp4[0], conP.Capitalize(tmp4[1]), DateTime.Parse(tmp4[2]), tmp4[3], total, maNV);
                             }
                         }
                     }
