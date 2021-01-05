@@ -468,96 +468,103 @@ namespace QuanLyNhaHang.Presentation
                 string maKH = Console.ReadLine().ToUpper();
                 if (khBUS.Laythongtin(maKH) != "")
                 {
-                    Console.Clear();
-                    string[] tmp = khBUS.Laythongtin(maKH).Split('\t');
-                    // Get Date Now
-                    DateTime date = DateTime.Now;
-                    // Menu
-                    qlHH.Show();
-
-                    Console.Write("\n\t\tNhập mã hàng hóa hoặc nhấn 'Enter' để thoát: ");
-                    string ID = Console.ReadLine().ToUpper();
-
-                    if (ID != "")
+                    while (true)
                     {
-                        bool c = false;
-                        double total = 0;
-                        while (!c)
+                        Console.Clear();
+                        string[] tmp = khBUS.Laythongtin(maKH).Split('\t');
+                        // Get Date Now
+                        DateTime date = DateTime.Now;
+                        // Menu
+                        qlHH.Show();
+
+                        Console.Write("\n\t\tNhập mã hàng hóa hoặc nhấn 'Enter' để thoát: ");
+                        string ID = Console.ReadLine().ToUpper();
+
+                        if (ID != "")
                         {
-                            if (hhBUS.Laythongtin(ID) != "")
+                            //bool c = false;
+                            double total = 0;
+                            while (true)
                             {
-                                int SL = 0;
-                                while (SL <= 0)
+                                if (hhBUS.Laythongtin(ID) != "")
                                 {
-                                    try
+                                    int SL = 0;
+                                    while (SL <= 0)
                                     {
-                                        Console.Write("\t\tSố lượng: ");
-                                        SL = Int16.Parse(Console.ReadLine());
+                                        try
+                                        {
+                                            Console.Write("\t\tSố lượng: ");
+                                            SL = Int16.Parse(Console.ReadLine());
+                                        }
+                                        catch
+                                        {
+                                            Console.WriteLine("\t\tDữ liệu là số!");
+                                        }
                                     }
-                                    catch
+                                    int c1 = 0;// Check hóa đơn chi tiết
+                                    // Thêm hóa đơn với tên khách, ngày, mã khách, tổng hóa đơn = 0
+                                    // Nếu như mã khách hàng và ngày bị trùng thì hóa đơn không được thêm nữa
+                                    hdBUS.Them(date, maKH, total, maNV);
+                                    // Lấy mã hóa đơn
+                                    string maHD = hdBUS.LayMaHD(maKH, date);
+                                    // Cập nhật số lượng 
+                                    for (int x = 0; x < hdBUS.HienChiTiet(maHD).Count; x++)
                                     {
-                                        Console.WriteLine("\t\tDữ liệu là số!");
+                                        string[] tmp2 = hdBUS.HienChiTiet(maHD)[x].Split('\t');
+                                        //Nếu khách hàng order lần tiếp theo là mã đã nhập rồi thì cộng thêm số lượng
+                                        if (tmp2[0] == ID)
+                                        {
+                                            SL += int.Parse(tmp2[3]);
+                                            c1 = 1;
+                                            break;
+                                        }
                                     }
-                                }
-                                int c1 = 0;// Check hóa đơn chi tiết
-                                // Thêm hóa đơn với tên khách, ngày, mã khách, tổng hóa đơn = 0
-                                // Nếu như mã khách hàng và ngày bị trùng thì hóa đơn không được thêm nữa
-                                hdBUS.Them(tmp[1], date, maKH, total, maNV);
-                                // Lấy mã hóa đơn
-                                string maHD = hdBUS.LayMaHD(maKH, date);
-                                // Cập nhật số lượng 
-                                for (int x = 0; x < hdBUS.HienChiTiet(maHD).Count; x++)
-                                {
-                                    string[] tmp2 = hdBUS.HienChiTiet(maHD)[x].Split('\t');
-                                    //Nếu khách hàng order lần tiếp theo là mã đã nhập rồi thì cộng thêm số lượng
-                                    if (tmp2[0] == ID)
+                                    // c1 == 0 Hóa đơn chi tiết chưa tồn tại
+                                    if (c1 == 0)
+                                        hdBUS.ThemChiTiet(maHD, ID, SL);
+                                    // c1 == 1 Hóa đơn đã tồn tại
+                                    else
+                                        hdBUS.SuaChiTiet(maHD, ID, SL); //Cập nhật lại hóa đơn chi tiết
+                                    Console.Write("\t\tBạn có muốn thêm tiếp không? (Nhấp 'Enter' để tiếp tục): ");
+                                    string q = Console.ReadLine();
+                                    if (q != "")
+                                        return;
+                                    else
                                     {
-                                        SL += int.Parse(tmp2[3]);
-                                        c1 = 1;
                                         break;
+                                    
                                     }
+
                                 }
-                                // c1 == 0 Hóa đơn chi tiết chưa tồn tại
-                                if (c1 == 0)
-                                    hdBUS.ThemChiTiet(maHD, ID, SL);
-                                // c1 == 1 Hóa đơn đã tồn tại
-                                else
-                                    hdBUS.SuaChiTiet(maHD, ID, SL); //Cập nhật lại hóa đơn chi tiết
-                                Console.Write("\t\tBạn có muốn thêm tiếp không? (Nhấp 'Enter' để tiếp tục): ");
-                                string q = Console.ReadLine();
-                                if (q != "")
-                                    c = true;
                                 else
                                 {
-                                    Them(maNV);
-                                    return;
-                                    
+                                    Console.Write("\t\tMã hàng hóa không tồn tại! Mời nhập lại (Nhấp 'Enter' để thoát: ");
+                                    ID = Console.ReadLine().ToUpper();
+                                    if (ID == "")
+                                        return;
                                 }
-
                             }
-                            else
+
+                            // Lấy thông tin của hóa đơn
+                            string[] tmp3 = hdBUS.LayThongTin(maKH).Split('\n');
+                            for (int x = 0; x < tmp3.Length - 1; x++)
                             {
-                                Console.Write("\t\tMã hàng hóa không tồn tại! Mời nhập lại (Nhấp 'Enter' để thoát: ");
-                                ID = Console.ReadLine().ToUpper();
-                                if (ID == "")
-                                    c = true;
+                                string[] tmp4 = tmp3[x].Split('\t');
+                                // Nếu mã khách hàng và ngày có trong hệ thống
+                                if (tmp4[3] == maKH && tmp4[2] == DateTime.Now.ToString("dd/MM/yyyy"))
+                                {
+                                    // Tính tổng tiền những gì khách hàng đã nhập
+                                    total = hdBUS.TongTien(maKH, tmp4[2]);
+                                    // Cập nhật hóa đơn
+                                    hdBUS.Sua(tmp4[0], DateTime.Parse(tmp4[1]), tmp4[2], total, maNV);
+                                }
                             }
                         }
-
-                        // Lấy thông tin của hóa đơn
-                        string[] tmp3 = hdBUS.LayThongTin(maKH).Split('\n');
-                        for (int x = 0; x < tmp3.Length - 1; x++)
+                        else
                         {
-                            string[] tmp4 = tmp3[x].Split('\t');
-                            // Nếu mã khách hàng và ngày có trong hệ thống
-                            if (tmp4[3] == maKH && tmp4[2] == DateTime.Now.ToString("dd/MM/yyyy"))
-                            {
-                                // Tính tổng tiền những gì khách hàng đã nhập
-                                total = hdBUS.TongTien(maKH, tmp4[2]);
-                                // Cập nhật hóa đơn
-                                hdBUS.Sua(tmp4[0], conP.Capitalize(tmp4[1]), DateTime.Parse(tmp4[2]), tmp4[3], total, maNV);
-                            }
+                            return;
                         }
+
                     }
                 }
                 else
@@ -600,18 +607,25 @@ namespace QuanLyNhaHang.Presentation
                     Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
                     Console.WriteLine();
                     Console.WriteLine();
-                    Console.WriteLine("\t\t╔═════════════════════════════════════════════════════════════════════════════════════════════════╗");
-                    Console.WriteLine("\t\t║                                       TÌM THẤY {0,-5} KẾT QUẢ                                    ║", count);
-                    Console.WriteLine("\t\t╠═════════╦══════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╣");
-                    Console.WriteLine("\t\t║    Mã   ║ Mã khách ║         Tên khách hàng           ║        Ngày       ║     Thành tiền      ║");
-                    Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╣");
+                    Console.WriteLine("\t\t╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                    Console.WriteLine("\t\t║                                                           TÌM THẤY {0,-5} KẾT QUẢ                                                              ║", count);
+                    Console.WriteLine("\t\t╠═════════╦══════════╦══════════════════════════════════╦═══════════════════╦═════════════════════╦══════════╦══════════════════════════════════╣");
+                    Console.WriteLine("\t\t║    Mã   ║ Mã khách ║         Tên khách hàng           ║        Ngày       ║       Đơn giá       ║   Mã NV  ║        Nhân viên giao dịch       ║");
+                    Console.WriteLine("\t\t╠═════════╬══════════╬══════════════════════════════════╬═══════════════════╬═════════════════════╬══════════╬══════════════════════════════════╣");
                     for (int x = start; x < end; x++)
                     {
+                        string maNV = "<Trống>", tenNV = "<Trống>";
                         string[] tmp2 = tmp[x].Split('#');
-                        Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║", tmp2[0], tmp2[3], tmp2[1], tmp2[2], double.Parse(tmp2[4]).ToString("N0"));
-                        
+                        if (tmp2[5] != "<Trống>")
+                        {
+                            string[] tmp3 = nvBUS.Laythongtin(tmp2[5]).Split('#');
+                            maNV = tmp3[0];
+                            tenNV = tmp3[1];
+                        }
+                        Console.WriteLine("\t\t║ {0,-7} ║ {1,-7}  ║\t{2,-27}     ║  {3,-10}       ║ {4,-15}     ║ {5,-7}  ║\t{6,-27}     ║", tmp2[0], tmp2[3], tmp2[1], tmp2[2], double.Parse(tmp2[4]).ToString("N0"), maNV, tenNV);
+
                     }
-                    Console.WriteLine("\t\t╚═════════╩══════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╝");
+                    Console.WriteLine("\t\t╚═════════╩══════════╩══════════════════════════════════╩═══════════════════╩═════════════════════╩══════════╩══════════════════════════════════╝");
 
                     Console.Write("\t\tTrang " + curpage + "/" + totalpage + "          Ấn <-, -> để xem tiếp, nhấn ENTER để thoát...");
                     ConsoleKeyInfo key = Console.ReadKey();

@@ -10,7 +10,8 @@ namespace QuanLyNhaHang.DAL
         private string FileText = "HoaDonXuat.txt";
         private string FileText_detail = "HoaDonXuatChiTiet.txt";
         private string FileText_Goods = "HangHoa.txt";
-        HanghoaDAL hhDAL = new HanghoaDAL();
+        private HanghoaDAL hhDAL = new HanghoaDAL();
+        private KhachHangDAL khDAL = new KhachHangDAL();
 
         // Tạo ID Random
         private int GetID()
@@ -41,7 +42,7 @@ namespace QuanLyNhaHang.DAL
             return i;
         }
 
-        public void Them(string tenKH, DateTime ngay, string maKH, double total, string maNV)
+        public void Them(DateTime ngay, string maKH, double total, string maNV)
         {
             if( !File.Exists( FileText ) )
             {
@@ -68,7 +69,7 @@ namespace QuanLyNhaHang.DAL
             if(d == 0)
             {
                 StreamWriter sw = new StreamWriter(FileText, true);
-                sw.WriteLine(BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total + "#" + maNV);
+                sw.WriteLine(BillID + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total + "#" + maNV);
                 sw.Close();
             }
         }
@@ -86,7 +87,7 @@ namespace QuanLyNhaHang.DAL
             sw.Close();
         }
 
-        public void Sua(string BillID, string tenKH, DateTime ngay, string maKH, double total, string maNV)
+        public void Sua(string BillID, DateTime ngay, string maKH, double total, string maNV)
         {
             StreamReader sr = new StreamReader(FileText);
             string s, result = "";
@@ -97,7 +98,7 @@ namespace QuanLyNhaHang.DAL
                 if (tmp[0] != BillID)
                     result += s + "\n";
                 else
-                    result += BillID + "#" + tenKH + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total + "#" + maNV + "\n";
+                    result += BillID + "#" + ngay.ToString("dd/MM/yyyy") + "#" + maKH + "#" + total + "#" + maNV + "\n";
             }
 
             sr.Close();
@@ -135,10 +136,12 @@ namespace QuanLyNhaHang.DAL
             while( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
+                //Lấy thông tin khách hàng
+                string[] tmp2 = khDAL.Laythongtin(tmp[2]).Split('\t');
                 if( tmp[0].ToLower() == name.ToLower() 
-                    || tmp[1].ToLower().Contains(name.ToLower()))
+                    || tmp2[1].ToLower().Contains(name.ToLower()))
                 {
-                    result += s + "\n";
+                    result += tmp[0] + "#" + tmp2[1] + "#" + tmp[1] + "#" + tmp[2] + "#" + tmp[3] + "#" + tmp[4] + "\n";
                     break;
                 }
             }
@@ -191,7 +194,7 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr1.ReadLine()) != null)
             {
                 string[] tmp1 = s.Split('#');
-                if (tmp1[3] == maKH && date == tmp1[2])
+                if (tmp1[2] == maKH && date == tmp1[1])
                 {
 
                     StreamReader sr2 = new StreamReader(FileText_detail);
@@ -230,7 +233,8 @@ namespace QuanLyNhaHang.DAL
             while( (s = sr.ReadLine()) != null )
             {
                 string[] tmp = s.Split( '#' );
-                result = tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4] + "\t" + tmp[5];
+                string[] tmp2 = khDAL.Laythongtin(tmp[2]).Split('\t');
+                result = tmp[0] + "\t" + tmp2[1] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3] + "\t" + tmp[4];
                 list.Add( result );
             }
 
@@ -246,9 +250,9 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                if (tmp[3] == ID || tmp[0] == ID)
-                    result += tmp[0] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3]  + "\t" + tmp[4] + "\t" + 
-                        tmp[5] + "\n";
+                string[] tmp2 = khDAL.Laythongtin(tmp[2]).Split('\t');
+                if (tmp[2] == ID || tmp[0] == ID)
+                    result += tmp[0] + "\t" + tmp2[1] + "\t" + tmp[1] + "\t" + tmp[2] + "\t" + tmp[3]  + "\t" + tmp[4] + "\n";
             }
             sr.Close();
             return result;
@@ -282,7 +286,7 @@ namespace QuanLyNhaHang.DAL
             while ((s = sr.ReadLine()) != null)
             {
                 string[] tmp = s.Split('#');
-                if (tmp[3] == maKH && tmp[2] == ngay.ToString("dd/MM/yyyy"))
+                if (tmp[2] == maKH && tmp[1] == ngay.ToString("dd/MM/yyyy"))
                     result = tmp[0];
             }
             sr.Close();

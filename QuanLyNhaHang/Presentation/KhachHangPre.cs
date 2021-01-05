@@ -356,12 +356,12 @@ namespace QuanLyNhaHang.Presentation
 
                 khBUS.Sua(maKH, conP.Capitalize(tenKH), date, gen, conP.Capitalize(dchi), SDT, CMT, email);
                 // Cập nhật tên khách hàng vào hóa đơn
-                string[] tmp2 = hdBUS.LayThongTin(maKH).Split('\n');
-                for(int x = 0; x < tmp2.Length - 1; x++)
-                {
-                    string[] tmp3 = tmp2[x].Split('\t');
-                    hdBUS.Sua(tmp3[0], conP.Capitalize(tenKH), DateTime.Parse(tmp3[2]), tmp3[3], double.Parse(tmp3[4]), tmp3[5]);
-                }
+                //string[] tmp2 = hdBUS.LayThongTin(maKH).Split('\n');
+                //for(int x = 0; x < tmp2.Length - 1; x++)
+                //{
+                //    string[] tmp3 = tmp2[x].Split('\t');
+                //    hdBUS.Sua(tmp3[0], conP.Capitalize(tenKH), DateTime.Parse(tmp3[2]), tmp3[3], double.Parse(tmp3[4]), tmp3[5]);
+                //}
             }
         }
 
@@ -424,7 +424,7 @@ namespace QuanLyNhaHang.Presentation
                             int c1 = 0; // Check hóa đơn chi tiết
                             // Thêm hóa đơn với tên khách, ngày, mã khách, tổng hóa đơn = 0
                             // Nếu như mã khách hàng và ngày bị trùng thì hóa đơn không được thêm nữa
-                            hdBUS.Them(tmp[1], date, maKH, total, "<Trống>");
+                            hdBUS.Them(date, maKH, total, "<Trống>");
                             // Lấy mã hóa đơn
                             string maHD = hdBUS.LayMaHD(maKH, date);
                             // Cập nhật số lượng 
@@ -475,7 +475,7 @@ namespace QuanLyNhaHang.Presentation
                             // Tính tổng tiền những gì khách hàng đã nhập
                             total = hdBUS.TongTien(maKH, tmp4[2]);
                             // Cập nhật hóa đơn
-                            hdBUS.Sua(tmp4[0], conP.Capitalize(tmp4[1]), DateTime.Parse(tmp4[2]), tmp4[3], total, tmp4[5]);
+                            hdBUS.Sua(tmp4[0], DateTime.Parse(tmp4[1]), tmp4[2], total, tmp4[4]);
                             break;
                         }
                     }

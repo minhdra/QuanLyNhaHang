@@ -8,3 +8,4 @@ KH89#Ly Tin#03/11/1994#Nam#Tuyen Quang#0923823921#<Trống>#<Trống>
 KH63#Kim Trong#01/01/0001#Nam#Vu Dai#0932848294#<Trống>#<Trống>
 KH70#Hukong#09/11/2000#Nam#Hoa Qua Son#0932848234#034300002349#ok@gmail.com
 KH76#Thien Bong#02/12/1987#Nam#Thien Dinh#0923848223#<Trống>#tbg.td@gmail.com
+KH45#Thay Quyet#01/01/0001#Nam#Hung Yen#0923435454#<Trống>#<Trống>
